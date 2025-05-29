@@ -14,15 +14,8 @@ $(document).ready(function () {
             <li>Diminutivos: -cito, -ecillo → <em>panecillo, pececito</em>.</li>
         </ul>
         <h4>Video educativo</h4>
-        <video width="320" height="240" controls>
-            <source src="videos/video_C.mp4" type="video/mp4">
-            Tu navegador no soporta el video.
-        </video>
-        <h4>Audio explicativo</h4>
-        <audio controls>
-            <source src="audios/audio_C.mp3" type="audio/mpeg">
-            Tu navegador no soporta el audio.
-        </audio>`,
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/f70wOCc7DEg?si=EwAqWtfIHLYdKXPC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        `,
     2: `<h3>Módulo 1 - Lección 2: La letra 'S'</h3>
         <p><strong>Objetivo:</strong> Aprender cuándo se usa la letra 'S' y sus diferencias con la 'C'.</p>
         <p>La letra 'S' siempre suena /s/: <em>silla, sol, sonrisa</em>.</p>
@@ -33,15 +26,8 @@ $(document).ready(function () {
         </ul>
         <p><strong>Curiosidad:</strong> En algunas zonas la 'S' se aspira o se pierde al final de sílaba.</p>
         <h4>Video educativo</h4>
-        <video width="320" height="240" controls>
-            <source src="videos/video_S.mp4" type="video/mp4">
-            Tu navegador no soporta el video.
-        </video>
-        <h4>Audio explicativo</h4>
-        <audio controls>
-            <source src="audios/audio_S.mp3" type="audio/mpeg">
-            Tu navegador no soporta el audio.
-        </audio>`,
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/DybSazkSpUo?si=HznDramDF1sLNrmZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+       `,
 
     3: `<h3>Módulo 2 - Lección 1: La letra 'Z'</h3>
         <p><strong>Objetivo:</strong> Conocer cómo y cuándo usar la letra 'Z'.</p>
@@ -56,15 +42,8 @@ $(document).ready(function () {
             <li>Singulares con plural en -ces: <em>pez → peces</em>.</li>
         </ul>
         <h4>Video educativo</h4>
-        <video width="320" height="240" controls>
-            <source src="video_Z.mp4" type="video/mp4">
-            Tu navegador no soporta el video.
-        </video>
-        <h4>Audio explicativo</h4>
-        <audio controls>
-            <source src="audio_Z.mp3" type="audio/mpeg">
-            Tu navegador no soporta el audio.
-        </audio>`,
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/0UXDUbWOQjs?si=W4yY5mStLbOgyLCk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+         `,
 
     4: `<h3>Módulo 2 - Lección 2: La letra 'X'</h3>
         <p><strong>Objetivo:</strong> Identificar los diferentes sonidos de la 'X'.</p>
@@ -80,15 +59,8 @@ $(document).ready(function () {
             <li>Palabras con ex- como prefijo: <em>examen, extender, exilio</em>.</li>
         </ul>
         <h4>Video educativo</h4>
-        <video width="320" height="240" controls>
-            <source src="video_X.mp4" type="video/mp4">
-            Tu navegador no soporta el video.
-        </video>
-        <h4>Audio explicativo</h4>
-        <audio controls>
-            <source src="audio_X.mp3" type="audio/mpeg">
-            Tu navegador no soporta el audio.
-        </audio>`,
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/_ula_OAqUYA?si=XOTQWFPtZpbX2XrY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        `,
   };
 
   // --- Practice Section (Modified Feedback) ---
