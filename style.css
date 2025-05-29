@@ -1,0 +1,307 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+/* General Reset & Body */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navigation Bar Styles */
+#main-nav {
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1em 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #111;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.logo img {
+    width: 32px;
+    margin-right: 10px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2em;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #7952b3;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1em;
+}
+
+.login-btn,
+.signup-btn {
+    padding: 0.6em 1.4em;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 0.95em;
+}
+
+.login-btn {
+    background-color: transparent;
+    color: #555;
+    border: 1px solid #ccc;
+}
+
+.login-btn:hover {
+    background-color: #e2e8f0;
+}
+
+.signup-btn {
+    background-color: #7952b3;
+    color: #fff;
+    border: none;
+}
+
+.signup-btn:hover {
+    background-color: #6741a7;
+}
+
+/* Main Content Container */
+main {
+    max-width: 1000px;
+    margin: 2em auto;
+    padding: 1em;
+}
+
+/* Section Base Style */
+section {
+    margin-bottom: 2em;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+section:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Individual Sections */
+#lessons, #practice, #evaluation, #progress {
+    border-left: 6px solid #7952b3;
+}
+
+/* Accordion-style Lesson Toggle */
+#lessons {
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border-left: 6px solid #7952b3;
+}
+.lesson-box {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #f4f3ff;
+    transition: box-shadow 0.3s;
+}
+
+.lesson-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e9e6ff;
+    padding: 15px 20px;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid #dcd7f2;
+    transition: background-color 0.3s;
+}
+
+.lesson-toggle.orange {
+    background-color: #fbe8dc;
+}
+
+.lesson-toggle:hover {
+    background-color: #cf87de;
+}
+
+.lesson-toggle .arrow {
+    font-size: 0.9em;
+    transition: transform 0.3s ease;
+}
+
+.lesson-toggle.active .arrow {
+    transform: rotate(180deg);
+}
+
+.lesson-content {
+    display: none;
+    padding: 20px;
+    background-color: #fff;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.lesson-content p {
+    margin-bottom: 10px;
+}
+
+.lesson-content button {
+    margin-right: 10px;
+    padding: 8px 15px;
+    background-color: #7952b3;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.lesson-content button:hover {
+    background-color: #5a3ca0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        margin-top: 1em;
+    }
+
+    .nav-links li {
+        margin-bottom: 0.5em;
+    }
+
+    .nav-buttons {
+        margin-top: 1em;
+    }
+
+    .lesson-toggle {
+        font-size: 1em;
+    }
+}
+#practice-area{
+  padding: 10px;
+}
+#practice button{
+    margin-top: 20px;
+    margin-right: 20px;
+    padding: 8px 15px;
+    background-color: #8a71b0;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+ #practice button:hover{
+  background-color: #b7a1e7;
+ }
+
+#evaluation-area #submit-evaluation{
+  padding: 10px;
+}
+#submit-evaluation{
+  margin-top: 20px;
+}
+#evaluation button{
+    margin-top: 20px;
+    margin-right: 20px;
+    padding: 8px 15px;
+    background-color: #8a71b0;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+ #evaluation button:hover{
+  background-color: #b7a1e7;
+ }
+
+#main-footer {
+    background-color: #2d2d39;
+    color: #ccc;
+    padding: 2em 0;
+    font-size: 0.9em;
+    margin-top: 3em;
+    margin-bottom: 0;
+}
+
+.footer-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.footer-container p {
+    margin: 0.5em 0;
+}
+
+.footer-links {
+    margin-top: 1em;
+    display: flex;
+    gap: 1.5em;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
