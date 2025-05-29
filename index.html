@@ -27,20 +27,22 @@
   </head>
 
   <body>
-    <nav id="main-nav">
-      <div class="nav-container">
-        <a href="images/savila.png" class="logo">
-          <img src="images/savila.png" alt="Logo" />
-          Grafema
-        </a>
-        <ul class="nav-links">
-          <li><a href="#lessons">Clases</a></li>
-          <li><a href="#practice">Práctica</a></li>
-          <li><a href="#evaluation">Evaluación</a></li>
-          <li><a href="#progress">Progreso</a></li>
-        </ul>
-      </div>
-    </nav>
+<nav id="main-nav">
+  <div class="nav-container">
+    <a href="images/savila.png" class="logo">
+      <img src="images/savila.png" alt="Logo" />
+      Grafema
+    </a>
+    <button class="hamburger">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="#lessons">Clases</a></li>
+      <li><a href="#practice">Práctica</a></li>
+      <li><a href="#evaluation">Evaluación</a></li>
+      <li><a href="#progress">Progreso</a></li>
+    </ul>
+  </div>
+</nav>
+
 
     <main>
       <section id="lessons">
@@ -130,5 +132,14 @@
         });
       });
     </script>
+    <script>
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+</script>
+
   </body>
 </html>

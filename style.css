@@ -69,35 +69,45 @@ body {
     gap: 1em;
 }
 
-.login-btn,
-.signup-btn {
-    padding: 0.6em 1.4em;
-    border-radius: 6px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-size: 0.95em;
-}
-
-.login-btn {
-    background-color: transparent;
-    color: #555;
-    border: 1px solid #ccc;
-}
-
-.login-btn:hover {
-    background-color: #e2e8f0;
-}
-
-.signup-btn {
-    background-color: #7952b3;
-    color: #fff;
+/* responsive nav */
+/* BOTÓN HAMBURGUESA INICIALMENTE OCULTO */
+.hamburger {
+    display: none;
+    font-size: 1.8em;
+    background: none;
     border: none;
+    color: #111;
+    cursor: pointer;
 }
 
-.signup-btn:hover {
-    background-color: #6741a7;
+/* MEDIA QUERY PARA MÓVIL */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 1em 0;
+    }
+
+    .nav-links li {
+        margin: 0.5em 0;
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
 }
+
 
 /* Main Content Container */
 main {
@@ -314,8 +324,12 @@ section:hover {
   line-height: 1.6;
 }
 
+/* Estilo responsive para videos incrustados */
+#lesson-content-area iframe,
 #lesson-content-area video {
-  margin-top: 10px;
+  width: 100%;
+  height: auto;
   max-width: 100%;
   border-radius: 8px;
+  display: block;
 }
