@@ -52,8 +52,12 @@
           </div>
           <div class="lesson-content">
             <p>Ejemplos: Casa (C), Sopa (S)</p>
-            <button>Empezar Lección sobre la C</button>
-            <button>Empezar Lección sobre la S</button>
+            <button class="start-lesson" data-lesson="1">
+              Empezar Lección sobre la C
+            </button>
+            <button class="start-lesson" data-lesson="2">
+              Empezar Lección sobre la S
+            </button>
           </div>
         </div>
 
@@ -69,12 +73,18 @@
               diferentes contextos.
             </p>
             <p>Ejemplos: Zorro (Z), Taxi (X)</p>
-            <button>Empezar Lección sobre la Z</button>
-            <button>Empezar Lección sobre la X</button>
+            <button class="start-lesson" data-lesson="3">
+              Empezar Lección sobre la Z
+            </button>
+            <button class="start-lesson" data-lesson="4">
+              Empezar Lección sobre la X
+            </button>
+            
           </div>
         </div>
+        <div id="lesson-content-area" class="lesson-display"></div>
+        
       </section>
-
       <section id="practice">
         <h2>Práctica</h2>
         <p>Selecciona la respuesta correcta:</p>
@@ -101,29 +111,24 @@
       </section>
     </main>
 
-<footer id="main-footer">
-  <div class="footer-container">
-    <p>&copy; 2025 Aprende Letras. Todos los derechos reservados.</p>
-    <div class="footer-links">
-      <a href="#">Inicio</a>
-      <a href="#">Contacto</a>
-      <a href="#">Política de Privacidad</a>
-    </div>
-  </div>
-</footer>
-   <script>
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".lesson-toggle").forEach(toggle => {
-    toggle.addEventListener("click", () => {
-      const content = toggle.nextElementSibling;
-      const isActive = toggle.classList.contains("active");
+    <footer id="main-footer">
+      <div class="footer-container">
+        <p>&copy; 2025 Aprende Letras. Todos los derechos reservados.</p>
+      </div>
+    </footer>
 
-      toggle.classList.toggle("active", !isActive);
-      content.style.display = isActive ? "none" : "block";
-    });
-  });
-});
-</script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".lesson-toggle").forEach((toggle) => {
+          toggle.addEventListener("click", () => {
+            const content = toggle.nextElementSibling;
+            const isActive = toggle.classList.contains("active");
 
+            toggle.classList.toggle("active", !isActive);
+            content.style.display = isActive ? "none" : "block";
+          });
+        });
+      });
+    </script>
   </body>
 </html>

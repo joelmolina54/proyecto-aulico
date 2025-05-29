@@ -289,19 +289,33 @@ section:hover {
     margin: 0.5em 0;
 }
 
-.footer-links {
-    margin-top: 1em;
-    display: flex;
-    gap: 1.5em;
-    flex-wrap: wrap;
+
+/* Área donde se muestra la lección */
+#lesson-content-area {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fefefe;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease-in-out;
 }
 
-.footer-links a {
-    color: #bbb;
-    text-decoration: none;
-    transition: color 0.3s ease;
+#lesson-content-area h3 {
+  color: #2c3e50;
+  margin-bottom: 10px;
 }
 
-.footer-links a:hover {
-    color: #fff;
+#lesson-content-area p,
+#lesson-content-area ul {
+  color: #333;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+#lesson-content-area video {
+  margin-top: 10px;
+  max-width: 100%;
+  border-radius: 8px;
 }
