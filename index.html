@@ -1,145 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Práctica de Grafemas: C, S, Z, X</title>
-    <link rel="shortcut icon" href="images/savila.png" type="image/x-icon" />
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Práctica de Grafemas: C, S, Z, X</title>
+  <link rel="shortcut icon" href="images/savila.png" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- jQuery DEBE ir primero -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <!-- Luego Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#7952b3',
+            secondary: '#8a71b0',
+            dark: '#2d2d39',
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
 
-  <body>
-<nav id="main-nav">
-  <div class="nav-container">
-    <a href="images/savila.png" class="logo">
-      <img src="images/savila.png" alt="Logo" />
-      Grafema
-    </a>
-    <button class="hamburger">&#9776;</button>
-    <ul class="nav-links">
-      <li><a href="#lessons">Clases</a></li>
-      <li><a href="#practice">Práctica</a></li>
-      <li><a href="#evaluation">Evaluación</a></li>
-      <li><a href="#progress">Progreso</a></li>
-    </ul>
-  </div>
-</nav>
+  <!-- Barra de navegación -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="images/savila.png" class="flex items-center text-xl font-bold text-gray-900">
+        <img src="images/savila.png" alt="Logo" class="w-8 h-8 mr-2" />
+        Grafema
+      </a>
+      <button class="md:hidden text-2xl" id="mobile-menu-button">&#9776;</button>
+      <ul class="hidden md:flex space-x-8">
+        <li><a href="#lessons" class="text-gray-600 hover:text-primary font-medium transition">Clases</a></li>
+        <li><a href="#practice" class="text-gray-600 hover:text-primary font-medium transition">Práctica</a></li>
+        <li><a href="#evaluation" class="text-gray-600 hover:text-primary font-medium transition">Evaluación</a></li>
+        <li><a href="#progress" class="text-gray-600 hover:text-primary font-medium transition">Progreso</a></li>
+      </ul>
+    </div>
+    <!-- Menú móvil -->
+    <div class="md:hidden hidden bg-white w-full py-2 px-4 shadow-lg" id="mobile-menu">
+      <a href="#Clases" class="block py-2 text-gray-600 hover:text-primary">Clases</a>
+      <a href="#practice" class="block py-2 text-gray-600 hover:text-primary">Práctica</a>
+      <a href="#evaluation" class="block py-2 text-gray-600 hover:text-primary">Evaluación</a>
+      <a href="#progress" class="block py-2 text-gray-600 hover:text-primary">Progreso</a>
+    </div>
+  </nav>
 
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Sección de Lecciones -->
+<section id="lessons" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-primary hover:shadow-md transition">
+<div class="flex justify-between items-center mb-4">
+  <h2 class="text-2xl font-bold text-gray-800" id="Clases">Módulos de Aprendizaje</h2>
+  <button id="toggle-all-lessons" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md text-sm hover:bg-gray-300 transition">
+    Mostrar Todas
+  </button>
+</div>
+      <h2 class="text-2xl font-bold mb-4 text-gray-800" id="Clases">Módulo 1: Introducción a la 'C' y la 'S'</h2>
 
-    <main>
-      <section id="lessons">
-        <h2>Módulo 1: Introducción a la 'C' y la 'S'</h2>
-
-        <div class="lesson-box">
-          <div class="lesson-toggle">
-            <span>📘 Lección: Conceptos clave</span>
-          </div>
-          <div class="lesson-content">
-            <p>Ejemplos: Casa (C), Sopa (S)</p>
-            <button class="start-lesson" data-lesson="1">
+      <div class="mb-6 rounded-lg overflow-hidden bg-purple-50">
+        <div class="flex justify-between items-center p-4 bg-purple-100 cursor-pointer lesson-toggle">
+          <span class="font-semibold text-gray-800">📘 Lección: Conceptos clave</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="hidden p-4 bg-white lesson-content">
+          <p class="mb-4">Ejemplos: Casa (C), Sopa (S)</p>
+          <div class="space-x-3">
+            <button class="start-lesson px-4 py-2 bg-primary text-white rounded-md hover:bg-purple-800 transition" data-lesson="1">
               Empezar Lección sobre la C
             </button>
-            <button class="start-lesson" data-lesson="2">
+            <button class="start-lesson px-4 py-2 bg-primary text-white rounded-md hover:bg-purple-800 transition" data-lesson="2">
               Empezar Lección sobre la S
             </button>
           </div>
         </div>
+      </div>
 
-        <h2>Módulo 2: Dominando la 'Z' y la 'X'</h2>
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">Módulo 2: Dominando la 'Z' y la 'X'</h2>
 
-        <div class="lesson-box">
-          <div class="lesson-toggle orange">
-            <span>📙 Lección: Conceptos clave</span>
-          </div>
-          <div class="lesson-content">
-            <p>
-              Aprenderemos los sonidos y usos de las letras 'Z' y 'X' en
-              diferentes contextos.
-            </p>
-            <p>Ejemplos: Zorro (Z), Taxi (X)</p>
-            <button class="start-lesson" data-lesson="3">
+      <div class="mb-6 rounded-lg overflow-hidden bg-orange-50">
+        <div class="lesson-toggle flex justify-between items-center p-4 bg-orange-100 cursor-pointer" id="modulo2">
+          <span class="font-semibold">📙 Lección: Conceptos clave</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="hidden p-4 bg-white lesson-content">
+          <p class="mb-2">Aprenderemos los sonidos y usos de las letras 'Z' y 'X' en diferentes contextos.</p>
+          <p class="mb-4">Ejemplos: Zorro (Z), Taxi (X)</p>
+          <div class="space-x-3">
+            <button class="start-lesson px-4 py-2 bg-primary text-white rounded-md hover:bg-purple-800 transition" data-lesson="3">
               Empezar Lección sobre la Z
             </button>
-            <button class="start-lesson" data-lesson="4">
+            <button class="start-lesson px-4 py-2 bg-primary text-white rounded-md hover:bg-purple-800 transition" data-lesson="4">
               Empezar Lección sobre la X
             </button>
-            
           </div>
         </div>
-        <div id="lesson-content-area" class="lesson-display"></div>
-        
-      </section>
-      <section id="practice">
-        <h2>Práctica</h2>
-        <p>Selecciona la respuesta correcta:</p>
-        <div id="practice-area">
-          <!-- Interactive practice elements will load here -->
-        </div>
-      </section>
-
-      <section id="evaluation">
-        <h2>Evaluación</h2>
-        <p>Pon a prueba tus conocimientos con esta evaluación interactiva.</p>
-        <div id="evaluation-area">
-          <!-- Dynamic evaluation questions will load here -->
-        </div>
-        <button id="submit-evaluation" style="display: none">
-          Enviar Evaluación
-        </button>
-      </section>
-
-      <section id="progress">
-        <h2>Progreso</h2>
-        <p>Visualiza tu progreso a lo largo del tiempo.</p>
-        <canvas id="progress-chart" width="400" height="200"></canvas>
-      </section>
-    </main>
-
-    <footer id="main-footer">
-      <div class="footer-container">
-        <p>&copy; 2025 Aprende Letras. Todos los derechos reservados.</p>
       </div>
-    </footer>
+      
+      <div id="lesson-content-area" class="mt-6 p-6 bg-white border border-gray-200 rounded-lg shadow-sm"></div>
+    </section>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        document.querySelectorAll(".lesson-toggle").forEach((toggle) => {
-          toggle.addEventListener("click", () => {
-            const content = toggle.nextElementSibling;
-            const isActive = toggle.classList.contains("active");
+    <!-- Sección de Práctica -->
+    <section id="practice" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-primary hover:shadow-md transition">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">Práctica</h2>
+      <p class="mb-4">Selecciona la respuesta correcta:</p>
+      <div id="practice-area" class="p-4"></div>
+    </section>
 
-            toggle.classList.toggle("active", !isActive);
-            content.style.display = isActive ? "none" : "block";
-          });
-        });
-      });
-    </script>
-    <script>
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.querySelector('.nav-links');
+    <!-- Sección de Evaluación -->
+    <section id="evaluation" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-primary hover:shadow-md transition">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">Evaluación</h2>
+      <p class="mb-4">Pon a prueba tus conocimientos con esta evaluación interactiva.</p>
+      <div id="evaluation-area" class="p-4">
+        <button id="start-evaluation-btn" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-purple-800 transition">
+          Comenzar Evaluación
+        </button>
+      </div>
+      <button id="submit-evaluation" class="hidden mt-4 px-4 py-2 bg-secondary text-white rounded-md hover:bg-purple-700 transition">
+        Enviar Evaluación
+      </button>
+    </section>
 
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-  });
-</script>
+    <!-- Sección de Progreso -->
+    <section id="progress" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-primary hover:shadow-md transition">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">Progreso</h2>
+      <p class="mb-4">Visualiza tu progreso a lo largo del tiempo.</p>
+      <canvas id="progress-chart" width="400" height="200"></canvas>
+    </section>
+  </main>
 
-  </body>
-</html>
+  <footer class="bg-dark text-gray-300 py-8 mt-12">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2025 Aprende Letras. Todos los derechos reservados.</p>
+    </div>
+  </footer>
