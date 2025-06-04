@@ -330,27 +330,37 @@ let timePerQuestion = 15;
       let remainingTime = timePerQuestion;
 
       let html = `
-        <div class="mb-4">
-          <h3 class="text-lg font-bold mb-2">${q.question}</h3>
-          <div class="time-remaining mb-2 bg-yellow-100 p-2 rounded text-center">
-            <span class="font-bold">El tiempo se agota en:</span> 
-            <span id="timer-display" class="font-bold text-red-600 text-lg">${remainingTime}s</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2 mb-4" id="choices-container">`;
+  <div class="mb-4">
+    <h3 class="text-lg font-bold mb-2">${q.question}</h3>
+    <div class="time-remaining mb-2 bg-yellow-100 p-2 rounded text-center">
+      <span class="font-bold">El tiempo se agota en:</span> 
+      <span id="timer-display" class="font-bold text-red-600 text-lg">${remainingTime}s</span>
+    </div>
+    <div class="grid grid-cols-2 gap-2 mb-4" id="choices-container">`;
 
-      q.choices.forEach((c, i) => {
-        html += `
-          <button class="evaluation-choice px-4 py-2 bg-primary text-white rounded transition" data-choice="${c}">
-            ${String.fromCharCode(65 + i)}. ${c.toUpperCase()}
-          </button>`;
-      });
+
+q.choices.forEach((c) => {
+  html += `
+    <button class="evaluation-choice px-4 py-2 bg-primary text-white rounded transition" data-choice="${c}">
+      ${c.toUpperCase()}
+    </button>`;
+});
 
       html += `</div>
-          <div class="flex justify-between items-center text-sm">
-            <span>Pregunta ${currentQuestionIndex + 1} / ${evaluationQuestions.length}</span>
-            <span>Puntos posibles: 25</span>
-          </div>
-        </div>`;
+    <div class="flex justify-between items-center text-sm">
+      <span>Pregunta ${currentQuestionIndex + 1} / ${evaluationQuestions.length}</span>
+    </div>
+    <!-- ¡Nuevo! Barra de progreso en tiempo real -->
+    <div class="mt-3">
+      <div class="flex justify-between mb-1">
+        <span class="font-medium">Progreso: ${evaluationScore}/100 puntos</span>
+        <span class="font-medium">${evaluationScore}%</span>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-2.5">
+        <div class="bg-blue-600 h-2.5 rounded-full" style="width: ${evaluationScore}%"></div>
+      </div>
+    </div>
+  </div>`;
 
       $("#evaluation-area").html(html);
 
