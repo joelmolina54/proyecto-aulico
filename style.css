@@ -1,335 +1,108 @@
-/* Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
-/* General Reset & Body */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f3f4f6;
-    color: #333;
-    line-height: 1.6;
+/* Estilos para los botones de práctica */
+.practice-choice {
+  @apply px-4 py-2 bg-secondary text-white rounded-md hover:bg-primary transition mr-2 mb-2;
 }
 
-/* Navigation Bar Styles */
-#main-nav {
-    background-color: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+/* Estilos para el área de contenido de lecciones */
+#lesson-content-area iframe {
+  @apply w-full max-w-full rounded-lg shadow-md mt-4;
 }
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1em 2em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #111;
-    font-weight: bold;
-    font-size: 1.5em;
-}
-
-.logo img {
-    width: 32px;
-    margin-right: 10px;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2em;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #555;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-    color: #7952b3;
-}
-
-.nav-buttons {
-    display: flex;
-    gap: 1em;
-}
-
-/* responsive nav */
-/* BOTÓN HAMBURGUESA INICIALMENTE OCULTO */
-.hamburger {
-    display: none;
-    font-size: 1.8em;
-    background: none;
-    border: none;
-    color: #111;
-    cursor: pointer;
-}
-
-/* MEDIA QUERY PARA MÓVIL */
+/* Estilos responsivos generales */
 @media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        background-color: white;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        padding: 1em 0;
-    }
-
-    .nav-links li {
-        margin: 0.5em 0;
-        text-align: center;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .hamburger {
-        display: block;
-    }
+  /* Ajustar padding en secciones */
+  section {
+    padding: 1.5rem !important;
+  }
+  
+  /* Ajustar tamaño de fuente */
+  h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  /* Ajustar botones */
+  .start-lesson, .practice-choice, .evaluation-choice {
+    padding: 0.5rem 1rem !important;
+    margin-bottom: 0.5rem;
+    display: block;
+    width: 100%;
+  }
+  
+  /* Espaciado entre botones */
+  .space-x-3 > button {
+    margin-right: 0 !important;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Videos responsivos */
+  iframe {
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+  
+  /* Menú móvil mejorado */
+  #mobile-menu {
+    display: none;
+    padding: 1rem 0;
+  }
+  
+  #mobile-menu a {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #eee;
+  }
 }
 
-
-/* Main Content Container */
-main {
-    max-width: 1000px;
-    margin: 2em auto;
-    padding: 1em;
+/* Asegurar que el canvas del gráfico sea responsivo */
+#progress-chart {
+  max-width: 100%;
+  height: auto !important;
 }
 
-/* Section Base Style */
-section {
-    margin-bottom: 2em;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.3s ease;
+/* Mejorar visualización de opciones en práctica */
+.practice-choice, .evaluation-choice {
+  margin: 0.25rem;
+  min-width: 50px;
 }
 
-section:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+@media (max-width: 480px) {
+  /* Ajustes para pantallas muy pequeñas */
+  body {
+    font-size: 14px;
+  }
+  
+  /* Stack vertical para botones de lección */
+  .start-lesson {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
 }
 
-/* Individual Sections */
-#lessons, #practice, #evaluation, #progress {
-    border-left: 6px solid #7952b3;
+.lesson-container {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Accordion-style Lesson Toggle */
-#lessons {
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    border-left: 6px solid #7952b3;
-}
-.lesson-box {
-    margin-bottom: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    background-color: #f4f3ff;
-    transition: box-shadow 0.3s;
-}
-
-.lesson-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #e9e6ff;
-    padding: 15px 20px;
-    font-weight: bold;
-    font-size: 1.1em;
-    cursor: pointer;
-    user-select: none;
-    border-bottom: 1px solid #dcd7f2;
-    transition: background-color 0.3s;
-}
-
-.lesson-toggle.orange {
-    background-color: #fbe8dc;
-}
-
-.lesson-toggle:hover {
-    background-color: #cf87de;
-}
-
-.lesson-toggle .arrow {
-    font-size: 0.9em;
-    transition: transform 0.3s ease;
-}
-
-.lesson-toggle.active .arrow {
-    transform: rotate(180deg);
+.close-lesson {
+  transition: all 0.2s ease;
 }
 
 .lesson-content {
-    display: none;
-    padding: 20px;
-    background-color: #fff;
-    animation: fadeIn 0.3s ease-in-out;
+  border-left: 3px solid #7952b3;
+  margin-top: 0.5rem;
 }
 
-.lesson-content p {
-    margin-bottom: 10px;
+/* Efecto hover para los módulos */
+.lesson-toggle:hover {
+  background-color: rgba(121, 82, 179, 0.355);
 }
-
-.lesson-content button {
-    margin-right: 10px;
-    padding: 8px 15px;
-    background-color: #7952b3;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.lesson-content button:hover {
-    background-color: #5a3ca0;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .nav-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        margin-top: 1em;
-    }
-
-    .nav-links li {
-        margin-bottom: 0.5em;
-    }
-
-    .nav-buttons {
-        margin-top: 1em;
-    }
-
-    .lesson-toggle {
-        font-size: 1em;
-    }
-}
-#practice-area{
-  padding: 10px;
-}
-#practice button{
-    margin-top: 20px;
-    margin-right: 20px;
-    padding: 8px 15px;
-    background-color: #8a71b0;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
- #practice button:hover{
-  background-color: #b7a1e7;
- }
-
-#evaluation-area #submit-evaluation{
-  padding: 10px;
-}
-#submit-evaluation{
-  margin-top: 20px;
-}
-#evaluation button{
-    margin-top: 20px;
-    margin-right: 20px;
-    padding: 8px 15px;
-    background-color: #8a71b0;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
- #evaluation button:hover{
-  background-color: #b7a1e7;
- }
-
-#main-footer {
-    background-color: #2d2d39;
-    color: #ccc;
-    padding: 2em 0;
-    font-size: 0.9em;
-    margin-top: 3em;
-    margin-bottom: 0;
-}
-
-.footer-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 1em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.footer-container p {
-    margin: 0.5em 0;
-}
-
-
-/* Área donde se muestra la lección */
-#lesson-content-area {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #fefefe;
-  border: 2px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Inter', sans-serif;
-  transition: all 0.3s ease-in-out;
-}
-
-#lesson-content-area h3 {
-  color: #2c3e50;
-  margin-bottom: 10px;
-}
-
-#lesson-content-area p,
-#lesson-content-area ul {
-  color: #333;
-  font-size: 20px;
-  line-height: 1.6;
-}
-
-/* Estilo responsive para videos incrustados */
-#lesson-content-area iframe,
-#lesson-content-area video {
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  border-radius: 8px;
-  display: block;
+#modulo2:hover {
+  background-color: rgba(255, 174, 0, 0.383);
 }
