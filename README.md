@@ -26,8 +26,7 @@ Aplicación web interactiva para practicar el uso correcto de los grafemas C, S,
 ## Cómo usar
 
 1. **Accede a la aplicación**:
-   - [Abrir en GitHub Pages](https://tunombredeusuario.github.io/turepositorio) <!-- Reemplaza con tu URL -->
-   - O clona el repositorio y abre `index.html` localmente
+   - clonar el repositorio y abre `index.html` localmente
 
 2. **Flujo de aprendizaje**:
    - Estudia las lecciones en cada módulo
