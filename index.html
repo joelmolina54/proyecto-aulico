@@ -30,6 +30,7 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js.js"></script>
+  <script src="JS/logros.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -49,7 +50,7 @@
         <li><a href="#lessons" class="text-gray-600 hover:text-primary font-medium transition">Clases</a></li>
         <li><a href="#practice" class="text-gray-600 hover:text-primary font-medium transition">Práctica</a></li>
         <li><a href="#evaluation" class="text-gray-600 hover:text-primary font-medium transition">Evaluación</a></li>
-        <li><a href="#progress" class="text-gray-600 hover:text-primary font-medium transition">Progreso</a></li>
+        <li><a href="html/logro.html" class="text-gray-600 hover:text-primary font-medium transition">Progreso</a></li>
       </ul>
     </div>
     <!-- Menú móvil -->
@@ -143,13 +144,19 @@
     </section>
 
   
-<section id="gamification" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-green-500 hover:shadow-md transition">
-  <h2 class="text-2xl font-bold mb-4 text-gray-800">Logros</h2>
-  <div id="level-container" class="mb-6"></div>
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="badges-container">
-    <!-- Las insignias se generarán dinámicamente con JS -->
+<section id="achievements-preview" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-green-500 hover:shadow-md transition">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold text-gray-800">Mis Logros</h2>
+    <a href="html/logro.html" class="text-primary hover:underline">Ver todos</a>
   </div>
-</section>  </main>
+      <section id="achievements-section" class="my-8 p-6 bg-white rounded-lg shadow">
+  <h2 class="text-2xl font-bold mb-6 text-center">Mis Logros</h2>
+  <div id="badges-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+    <!-- Los logros se insertarán aquí dinámicamente -->
+  </div>
+</section>
+</section>
+ </main>
 
   <footer class="bg-dark text-gray-300 py-8 mt-12">
     <div class="container mx-auto px-4 text-center">
