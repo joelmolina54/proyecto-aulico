@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Reset para móvil */
 html, body {
   width: 100% !important;
@@ -154,3 +155,162 @@ input[type="checkbox"] {
 #mobile-menu-button.active .fa-bars {
   transform: rotate(90deg);
 }
+=======
+/* Reset para móvil */
+html, body {
+  width: 100% !important;
+  overflow-x: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Fuerza el viewport móvil */
+meta[name="viewport"] {
+  content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no";
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+/* Estilos para los botones de práctica */
+.practice-choice {
+  @apply px-4 py-2 bg-secondary text-white rounded-md hover:bg-primary transition mr-2 mb-2;
+}
+
+/* Estilos para el área de contenido de lecciones */
+#lesson-content-area iframe {
+  @apply w-full max-w-full rounded-lg shadow-md mt-4;
+}
+/* Estilos responsivos generales */
+@media (max-width: 768px) {
+  /* Ajustar padding en secciones */
+  section {
+    padding: 1.5rem !important;
+  }
+  
+  /* Ajustar tamaño de fuente */
+  h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  /* Ajustar botones */
+  .start-lesson, .practice-choice, .evaluation-choice {
+    padding: 0.5rem 1rem !important;
+    margin-bottom: 0.5rem;
+    display: block;
+    width: 100%;
+  }
+  
+  /* Espaciado entre botones */
+  .space-x-3 > button {
+    margin-right: 0 !important;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Videos responsivos */
+  iframe {
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+  
+
+
+/* Asegurar que el canvas del gráfico sea responsivo */
+#progress-chart {
+  max-width: 100%;
+  height: auto !important;
+}
+
+/* Mejorar visualización de opciones en práctica */
+.practice-choice, .evaluation-choice {
+  margin: 0.25rem;
+  min-width: 50px;
+}
+
+@media (max-width: 480px) {
+  /* Ajustes para pantallas muy pequeñas */
+  body {
+    font-size: 14px;
+  }
+  
+  /* Stack vertical para botones de lección */
+  .start-lesson {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.lesson-container {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.close-lesson {
+  transition: all 0.2s ease;
+}
+
+.lesson-content {
+  border-left: 3px solid #7952b3;
+  margin-top: 0.5rem;
+}
+
+/* Efecto hover para los módulos */
+.lesson-toggle:hover {
+  background-color: rgba(121, 82, 179, 0.355);
+}
+#modulo2:hover {
+  background-color: rgba(255, 174, 0, 0.383);
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 10px;
+}
+
+/* Asegurar que el botón sea fácil de tocar */
+#mobile-menu-button {
+  padding: 12px;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+/* Cambiar ícono de hamburguesa a "X" cuando está activo */
+#mobile-menu-button.active .fa-bars::before {
+  content: "\f00d"; /* Código de FontAwesome para "X" */
+}
+
+/* Mejorar el menú desplegable */
+#mobile-menu {
+  display: none;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  z-index: 1000;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#mobile-menu a {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  display: block;
+}
+
+#mobile-menu a:hover {
+  background: #f9f9f9;
+}
+#mobile-menu-button .fa-bars {
+  transition: transform 0.3s ease;
+}
+#mobile-menu-button.active .fa-bars {
+  transform: rotate(90deg);
+}
+
+>>>>>>> 49990671c458f3bda81901ef860ec91ff7b810d7
