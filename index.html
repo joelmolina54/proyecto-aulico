@@ -2,12 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Práctica de Grafemas: C, S, Z, X</title>
   <link rel="shortcut icon" href="images/savila.png" type="image/x-icon" />
   <link rel="stylesheet" href="style.css">
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- jQuery DEBE ir primero -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
@@ -35,13 +34,17 @@
 <body class="bg-gray-50 text-gray-800">
 
   <!-- Barra de navegación -->
+
   <nav class="bg-white shadow-md sticky top-0 z-50">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <a href="images/savila.png" class="flex items-center text-xl font-bold text-gray-900">
         <img src="images/savila.png" alt="Logo" class="w-8 h-8 mr-2" />
         Grafema
       </a>
-      <button class="md:hidden text-2xl" id="mobile-menu-button">&#9776;</button>
+      <button id="mobile-menu-button" class="md:hidden text-2xl">
+         <i class="fas fa-bars"></i>
+      </button>
+      
       <ul class="hidden md:flex space-x-8">
         <li><a href="#lessons" class="text-gray-600 hover:text-primary font-medium transition">Clases</a></li>
         <li><a href="#practice" class="text-gray-600 hover:text-primary font-medium transition">Práctica</a></li>
@@ -138,10 +141,20 @@
       <p class="mb-4">Visualiza tu progreso a lo largo del tiempo.</p>
       <canvas id="progress-chart" width="400" height="200"></canvas>
     </section>
-  </main>
+
+  
+<section id="gamification" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-green-500 hover:shadow-md transition">
+  <h2 class="text-2xl font-bold mb-4 text-gray-800">Logros</h2>
+  <div id="level-container" class="mb-6"></div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="badges-container">
+    <!-- Las insignias se generarán dinámicamente con JS -->
+  </div>
+</section>  </main>
 
   <footer class="bg-dark text-gray-300 py-8 mt-12">
     <div class="container mx-auto px-4 text-center">
       <p>&copy; 2025 Aprende Letras. Todos los derechos reservados.</p>
     </div>
   </footer>
+  </body>
+  </html>
