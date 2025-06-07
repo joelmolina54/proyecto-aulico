@@ -15,7 +15,7 @@ $(document).ready(function() {
       $(".lesson-toggle .arrow").text("▼");
     } else {
       $(".lesson-content").slideUp(300);
-      $("#lesson-content-area").slideUp(300); // Añadido para ocultar lección activa
+      $("#lesson-content-area").slideUp(300); 
       $(".lesson-toggle .arrow").text("▲");
     }
     
@@ -217,6 +217,8 @@ function loadPracticeQuestion() {
   $(".practice-choice").click(function() {
     const selectedGrapheme = $(this).data("grapheme");
     if (selectedGrapheme === currentPracticeGrapheme) {
+          correctAnswers++;
+          checkAchievements();
       $("#practice-area").prepend('<div class="mb-2 p-2 bg-green-100 text-green-800 rounded">¡Correcto!</div>');
       setTimeout(() => loadPracticeQuestion(), 1000);
     } else {
@@ -271,11 +273,25 @@ function loadEvaluationQuestion() {
     updateProgressChart();
   }
 }
+ 
 
-// Añade esto al final de tu document.ready para manejar el menú móvil
-$("#mobile-menu-button").click(function() {
-  $("#mobile-menu").slideToggle(300);
-});
+  // Menú móvil
+  $("#mobile-menu-button").click(function(e) {
+    e.stopPropagation(); // Evita que el evento se propague
+    $(this).toggleClass("active");
+    $("#mobile-menu").slideToggle(300);
+  });
+
+  // Cierra el menú al tocar fuera
+  $(document).click(function() {
+    $("#mobile-menu").slideUp(300);
+    $("#mobile-menu-button").removeClass("active");
+  });
+
+  // Evita que el menú se cierre al tocar dentro
+  $("#mobile-menu").click(function(e) {
+    e.stopPropagation();
+  });
 
 // Manejar redimensionamiento de pantalla para el gráfico
 $(window).resize(function() {
@@ -313,8 +329,9 @@ $(window).resize(function() {
       explanation: "Contiene el sonido /ks/, representado con 'x'.",
     },
   ];
-
-let timePerQuestion = 15;
+  let lessonsCompleted = 0;
+  let correctAnswers = 0;
+  let timePerQuestion = 15;
   let evaluationTimer;
   let currentQuestionIndex = 0;
   let evaluationScore = 0; // Ahora cada pregunta correcta suma 25 puntos
@@ -492,8 +509,128 @@ q.choices.forEach((c) => {
     });
   }
 
-  // Menú móvil
-  $("#mobile-menu-button").click(() => {
-    $("#mobile-menu").slideToggle(300);
+  function updateBadgesDisplay() {
+  const badgesContainer = $('#badges-container');
+  badgesContainer.empty();
+  
+  Object.keys(achievements).forEach(key => {
+    const achievement = achievements[key];
+    badgesContainer.append(`
+      <div class="text-center p-3 rounded-lg ${achievement.unlocked ? 'bg-green-50 border border-green-200' : 'bg-gray-100 border border-gray-200 opacity-60'}">
+        <div class="text-4xl mb-2">${achievement.unlocked ? achievement.icon : '🔒'}</div>
+        <h3 class="font-bold">${achievement.name}</h3>
+        <p class="text-sm text-gray-600">${achievement.unlocked ? achievement.description : 'Logro bloqueado'}</p>
+        ${achievement.unlocked ? 
+          `<span class="text-xs text-green-600">¡Desbloqueado!</span>` : 
+          `<span class="text-xs text-gray-500">Sigue intentando</span>`}
+      </div>
+    `);
   });
+}
+  // Agrega este código al JS
+const achievements = {
+  firstTry: { 
+    name: "Primer Intento", 
+    description: "Completaste tu primera evaluación",
+    icon: "🥇",
+    unlocked: false
+  },
+  perfectScore: {
+    name: "Perfecto", 
+    description: "Obtuviste 100% en una evaluación",
+    icon: "💯",
+    unlocked: false
+  },
+  fastLearner: {
+    name: "Aprendiz Rápido", 
+    description: "Completaste una lección en menos de 2 minutos",
+    icon: "⚡",
+    unlocked: false
+  },
+};
+
+function checkAchievements() {
+  if(evaluationScores.length === 1 && !achievements.firstTry.unlocked) {
+    achievements.firstTry.unlocked = true;
+    showAchievementNotification(achievements.firstTry);
+  }
+  
+  if(evaluationScores.some(score => score === 100) && !achievements.perfectScore.unlocked) {
+    achievements.perfectScore.unlocked = true;
+    showAchievementNotification(achievements.perfectScore);
+  }
+  
+  // Logro por completar lecciones (deberías llevar un registro)
+  if(lessonsCompleted >= 4 && !achievements.lessonMaster.unlocked) {
+    achievements.lessonMaster.unlocked = true;
+    showAchievementNotification(achievements.lessonMaster);
+  }
+  
+  // Logro por práctica (necesitas contar las respuestas correctas)
+  if(correctAnswers >= 10 && !achievements.practicePro.unlocked) {
+    achievements.practicePro.unlocked = true;
+    showAchievementNotification(achievements.practicePro);
+  }
+  
+  updateBadgesDisplay();
+}
+
+function showAchievementNotification(achievement) {
+  const notification = $(`
+    <div class="fixed bottom-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-lg z-50 max-w-xs animate-bounce">
+      <div class="flex items-start">
+        <span class="text-2xl mr-3">${achievement.icon}</span>
+        <div>
+          <h3 class="font-bold">${achievement.name}</h3>
+          <p class="text-sm">${achievement.description}</p>
+        </div>
+      </div>
+    </div>
+  `);
+  
+  $('body').append(notification);
+  setTimeout(() => notification.remove(), 5000);
+}
+
+// LOGROS
+function updateBadgesDisplay() {
+  const badgesContainer = $('#badges-container');
+  badgesContainer.empty();
+  
+  Object.keys(achievements).forEach(key => {
+    const achievement = achievements[key];
+    badgesContainer.append(`
+      <div class="text-center p-3 rounded-lg ${achievement.unlocked ? 'bg-green-50 border border-green-200' : 'bg-gray-100 border border-gray-200 opacity-60'}">
+        <div class="text-4xl mb-2">${achievement.unlocked ? achievement.icon : '🔒'}</div>
+        <h3 class="font-bold">${achievement.name}</h3>
+        <p class="text-sm text-gray-600">${achievement.unlocked ? achievement.description : 'Logro bloqueado'}</p>
+        ${achievement.unlocked ? 
+          `<span class="text-xs text-green-600">¡Desbloqueado!</span>` : 
+          `<span class="text-xs text-gray-500">Sigue intentando</span>`}
+      </div>
+    `);
+  });
+}
+// Añade estos logros adicionales
+achievements.lessonMaster = {
+  name: "Maestro de Lecciones", 
+  description: "Completaste todas las lecciones",
+  icon: "🎓",
+  unlocked: false
+};
+
+achievements.practicePro = {
+  name: "Profesional de Práctica", 
+  description: "Respondiste 10 preguntas correctamente",
+  icon: "🏆",
+  unlocked: false
+};
+
+
+$(document).on("click", ".close-lesson", function() {
+  lessonsCompleted++;
+  checkAchievements();
+  $("#lesson-content-area").slideUp(300);
+});
+
 });
