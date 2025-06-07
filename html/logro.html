@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Mis Logros | Práctica de Grafemas</title>
+  <link rel="shortcut icon" href="../images/savila.png" type="image/x-icon" />
+  <link rel="stylesheet" href="../css/logro.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../logros.js"></script>
+  <script src="../js.js"></script>
+  <style>
+  .fade-in {
+    animation: fadeInUp 0.7s ease forwards;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .celebration {
+    animation: popIn 0.5s ease-in-out forwards;
+  }
+  @keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+</style>
+
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Navegación -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="../index.html" class="flex items-center text-xl font-bold text-gray-900">
+        <img src="../images/savila.png" alt="Logo" class="w-8 h-8 mr-2" />
+        Grafema
+      </a>
+      <button id="mobile-menu-button" class="md:hidden text-2xl">
+         <i class="fas fa-bars"></i>
+      </button>
+      <ul class="hidden md:flex space-x-8">
+        <li><a href="../index.html" class="text-gray-600 hover:text-primary font-medium transition">Inicio</a></li>
+      </ul>
+    </div>
+    <div class="md:hidden hidden bg-white w-full py-2 px-4 shadow-lg" id="mobile-menu">
+      <a href="../index.html" class="block py-2 text-gray-600 hover:text-primary">Inicio</a>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-bold text-center mb-6">Logros Obtenidos</h2>
+      <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
+        <div id="logros-progress-bar" class="bg-green-500 h-4 rounded-full" style="width: 0%"></div>
+      </div>
+      <p class="text-sm text-gray-600 text-center mb-6">Progreso total en logros por lecciones completadas</p>
+      <div id="logros-detalle" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div id="felicitacion" class="mt-6 text-center text-xl font-bold text-green-700 hidden celebration">
+  🎉 ¡Eres un maestro de grafemas! 🏅
+</div>
+
+        <!-- Aquí se mostrarán los logros -->
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const logros = [
+        { id: 'c_lesson', titulo: 'Lección C', icono: '🅲' },
+        { id: 's_lesson', titulo: 'Lección S', icono: '🆂' },
+        { id: 'z_lesson', titulo: 'Lección Z', icono: '🆉' },
+        { id: 'x_lesson', titulo: 'Lección X', icono: '❌' }
+      ];
+
+      let completados = 0;
+      const contenedor = document.getElementById('logros-detalle');
+
+      logros.forEach(logro => {
+        const unlocked = localStorage.getItem(`achievement_${logro.id}`) === 'unlocked';
+        if (unlocked) completados++;
+
+        const div = document.createElement('div');
+        div.className = `p-4 text-center border rounded-lg ${unlocked ? 'bg-green-100' : 'bg-gray-100 opacity-50'}`;
+        div.innerHTML = `
+          <div class="text-3xl mb-2">${unlocked ? logro.icono : '🔒'}</div>
+          <h3 class="font-bold">${logro.titulo}</h3>
+          <p class="text-sm">${unlocked ? 'Completado' : 'No completado'}</p>
+        `;
+        contenedor.appendChild(div);
+      });
+
+      const porcentaje = Math.round((completados / logros.length) * 100);
+      document.getElementById('logros-progress-bar').style.width = `${porcentaje}%`;
+    });
+    const porcentaje = Math.round((completados / logros.length) * 100);
+document.getElementById('logros-progress-bar').style.width = `${porcentaje}%`;
+
+if (porcentaje === 100) {
+  document.getElementById('felicitacion').classList.remove('hidden');
+}
+
+  </script>
+
+  <footer class="bg-dark text-gray-300 py-8 mt-12">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2025 Aprende Letras. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
