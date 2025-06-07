@@ -10,30 +10,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="../logros.js"></script>
+  <script src="../JS/logros.js"></script>
   <script src="../js.js"></script>
   <style>
-  .fade-in {
-    animation: fadeInUp 0.7s ease forwards;
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  @keyframes fadeInUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
+    .fade-in {
+      animation: fadeInUp 0.7s ease forwards;
+      opacity: 0;
+      transform: translateY(10px);
     }
-  }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  .celebration {
-    animation: popIn 0.5s ease-in-out forwards;
-  }
-  @keyframes popIn {
-    0% { transform: scale(0.5); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-</style>
-
+    .celebration {
+      animation: popIn 0.5s ease-in-out forwards;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -65,11 +64,10 @@
       </div>
       <p class="text-sm text-gray-600 text-center mb-6">Progreso total en logros por lecciones completadas</p>
       <div id="logros-detalle" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <div id="felicitacion" class="mt-6 text-center text-xl font-bold text-green-700 hidden celebration">
-  🎉 ¡Eres un maestro de grafemas! 🏅
-</div>
-
         <!-- Aquí se mostrarán los logros -->
+      </div>
+      <div id="felicitacion" class="mt-6 text-center text-xl font-bold text-green-700 hidden celebration">
+        🎉 ¡Eres un maestro de grafemas! 🏅
       </div>
     </section>
   </main>
@@ -91,25 +89,22 @@
         if (unlocked) completados++;
 
         const div = document.createElement('div');
-        div.className = `p-4 text-center border rounded-lg ${unlocked ? 'bg-green-100' : 'bg-gray-100 opacity-50'}`;
+        div.className = `p-4 text-center border rounded-lg fade-in ${unlocked ? 'bg-green-100' : 'bg-gray-100 opacity-50'}`;
         div.innerHTML = `
           <div class="text-3xl mb-2">${unlocked ? logro.icono : '🔒'}</div>
           <h3 class="font-bold">${logro.titulo}</h3>
-          <p class="text-sm">${unlocked ? 'Completado' : 'No completado'}</p>
+          <p class="text-sm">${unlocked ? '✔ Completado' : 'No completado'}</p>
         `;
         contenedor.appendChild(div);
       });
 
       const porcentaje = Math.round((completados / logros.length) * 100);
       document.getElementById('logros-progress-bar').style.width = `${porcentaje}%`;
+
+      if (porcentaje === 100) {
+        document.getElementById('felicitacion').classList.remove('hidden');
+      }
     });
-    const porcentaje = Math.round((completados / logros.length) * 100);
-document.getElementById('logros-progress-bar').style.width = `${porcentaje}%`;
-
-if (porcentaje === 100) {
-  document.getElementById('felicitacion').classList.remove('hidden');
-}
-
   </script>
 
   <footer class="bg-dark text-gray-300 py-8 mt-12">
