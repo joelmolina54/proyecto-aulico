@@ -64,7 +64,12 @@ $(document).ready(function() {
   $(document).on("click", ".close-lesson", function(e) {
     e.stopPropagation();
     $("#lesson-content-area").slideUp(300);
-  });
+    document.dispatchEvent(new CustomEvent('lessonCompleted', {
+      detail: {
+        lessonId: $(this).find(".lesson-container").data("lesson-id")
+      }
+    }));
+});
 
 // Mostrar contenido de lección (modificado)
 $(".start-lesson").click(function() {
@@ -72,16 +77,20 @@ $(".start-lesson").click(function() {
   $("#lesson-content-area").html(lessonContent[lessonId]);
   $("#lesson-content-area").slideDown(300);
   
+  
   $('html, body').animate({
     scrollTop: $("#lesson-content-area").offset().top - 100
   }, 300);
 });
+
+
   // --- Lesson Content (Combined) ---
   const lessonContent = {
   1: `<div class="lesson-container">
         <div class="flex justify-between items-center mb-4">
           <h3>Módulo 1 - Lección 1: La letra 'C'</h3>
           <button class="close-lesson px-2 py-1 bg-gray-200 rounded-md text-sm hover:bg-gray-300">✕ Cerrar</button>
+          <button class="end-lesson" data-lesson="c_lesson">Terminar Lección</button>
         </div>
         <ul>
             <li><strong>/k/</strong> con a, o, u → <em>casa, color, cuchillo</em>.</li>
@@ -99,6 +108,7 @@ $(".start-lesson").click(function() {
         <div class="flex justify-between items-center mb-4">
           <h3>Módulo 1 - Lección 2: La letra 'S'</h3>
           <button class="close-lesson px-2 py-1 bg-gray-200 rounded-md text-sm hover:bg-gray-300">✕ Cerrar</button>
+         <button class="end-lesson" data-lesson="s_lesson">Terminar Lección</button> 
         </div>
         <p><strong>Objetivo:</strong> Aprender cuándo se usa la letra 'S' y sus diferencias con la 'C'.</p>
         <p>La letra 'S' siempre suena /s/: <em>silla, sol, sonrisa</em>.</p>
@@ -116,6 +126,8 @@ $(".start-lesson").click(function() {
         <div class="flex justify-between items-center mb-4">
           <h3>Módulo 2 - Lección 1: La letra 'Z'</h3>
           <button class="close-lesson px-2 py-1 bg-gray-200 rounded-md text-sm hover:bg-gray-300">✕ Cerrar</button>
+         <button class="end-lesson" data-lesson="z_lesson">Terminar Lección</button>
+
         </div>
         <ul>
             <li><strong>/θ/</strong> en España y <strong>/s/</strong> en Latinoamérica → <em>zapato, zorro</em>.</li>
@@ -136,6 +148,7 @@ $(".start-lesson").click(function() {
         <div class="flex justify-between items-center mb-4">
           <h3>Módulo 2 - Lección 1: La letra 'X'</h3>
           <button class="close-lesson px-2 py-1 bg-gray-200 rounded-md text-sm hover:bg-gray-300">✕ Cerrar</button>
+          <button class="end-lesson" data-lesson="x_lesson">Terminar Lección</button>
         </div>
         <ul>
             <li><strong>/ks/</strong>: <em>examen, taxi</em>.</li>
@@ -151,6 +164,10 @@ $(".start-lesson").click(function() {
         <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/_ula_OAqUYA?si=XOTQWFPtZpbX2XrY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         `,
   };
+
+
+
+
 
   // --- Practice Section (Modified Feedback) ---
   const practiceWords = {
@@ -218,14 +235,20 @@ function loadPracticeQuestion() {
     const selectedGrapheme = $(this).data("grapheme");
     if (selectedGrapheme === currentPracticeGrapheme) {
           correctAnswers++;
-          checkAchievements();
-      $("#practice-area").prepend('<div class="mb-2 p-2 bg-green-100 text-green-800 rounded">¡Correcto!</div>');
-      setTimeout(() => loadPracticeQuestion(), 1000);
-    } else {
-      const reason = practiceWords[currentPracticeWord].reason;
-      $("#practice-area").prepend(`<div class="mb-2 p-2 bg-red-100 text-red-800 rounded">¡Incorrecto! ${reason}</div>`);
-    }
-  });
+       // Disparar evento de respuesta correcta
+    document.dispatchEvent(new CustomEvent('correctAnswer', {
+      detail: {
+        word: currentPracticeWord,
+        grapheme: currentPracticeGrapheme
+      }
+    }));
+    $("#practice-area").prepend('<div class="mb-2 p-2 bg-green-100 text-green-800 rounded">¡Correcto!</div>');
+    setTimeout(() => loadPracticeQuestion(), 1000);
+  } else {
+    const reason = practiceWords[currentPracticeWord].reason;
+    $("#practice-area").prepend(`<div class="mb-2 p-2 bg-red-100 text-red-800 rounded">¡Incorrecto! ${reason}</div>`);
+  }
+});
 }
 
 // Actualiza la función loadEvaluationQuestion para móviles
@@ -414,8 +437,14 @@ q.choices.forEach((c) => {
         `);
 
         if (isCorrect) {
-          evaluationScore += 25; // Suma 25 puntos por respuesta correcta
-        }
+           document.dispatchEvent(new CustomEvent('correctAnswer', {
+      detail: {
+        question: q.question,
+        correctAnswer: q.correctAnswer
+      }
+    }));
+    evaluationScore += 25;
+  }
 
         setTimeout(() => {
           currentQuestionIndex++;
@@ -509,128 +538,24 @@ q.choices.forEach((c) => {
     });
   }
 
-  function updateBadgesDisplay() {
-  const badgesContainer = $('#badges-container');
-  badgesContainer.empty();
-  
-  Object.keys(achievements).forEach(key => {
-    const achievement = achievements[key];
-    badgesContainer.append(`
-      <div class="text-center p-3 rounded-lg ${achievement.unlocked ? 'bg-green-50 border border-green-200' : 'bg-gray-100 border border-gray-200 opacity-60'}">
-        <div class="text-4xl mb-2">${achievement.unlocked ? achievement.icon : '🔒'}</div>
-        <h3 class="font-bold">${achievement.name}</h3>
-        <p class="text-sm text-gray-600">${achievement.unlocked ? achievement.description : 'Logro bloqueado'}</p>
-        ${achievement.unlocked ? 
-          `<span class="text-xs text-green-600">¡Desbloqueado!</span>` : 
-          `<span class="text-xs text-gray-500">Sigue intentando</span>`}
-      </div>
-    `);
-  });
-}
-  // Agrega este código al JS
-const achievements = {
-  firstTry: { 
-    name: "Primer Intento", 
-    description: "Completaste tu primera evaluación",
-    icon: "🥇",
-    unlocked: false
-  },
-  perfectScore: {
-    name: "Perfecto", 
-    description: "Obtuviste 100% en una evaluación",
-    icon: "💯",
-    unlocked: false
-  },
-  fastLearner: {
-    name: "Aprendiz Rápido", 
-    description: "Completaste una lección en menos de 2 minutos",
-    icon: "⚡",
-    unlocked: false
-  },
-};
+$(document).on("click", ".end-lesson", function () {
+  const lessonId = $(this).data("lesson");
 
-function checkAchievements() {
-  if(evaluationScores.length === 1 && !achievements.firstTry.unlocked) {
-    achievements.firstTry.unlocked = true;
-    showAchievementNotification(achievements.firstTry);
-  }
-  
-  if(evaluationScores.some(score => score === 100) && !achievements.perfectScore.unlocked) {
-    achievements.perfectScore.unlocked = true;
-    showAchievementNotification(achievements.perfectScore);
-  }
-  
-  // Logro por completar lecciones (deberías llevar un registro)
-  if(lessonsCompleted >= 4 && !achievements.lessonMaster.unlocked) {
-    achievements.lessonMaster.unlocked = true;
-    showAchievementNotification(achievements.lessonMaster);
-  }
-  
-  // Logro por práctica (necesitas contar las respuestas correctas)
-  if(correctAnswers >= 10 && !achievements.practicePro.unlocked) {
-    achievements.practicePro.unlocked = true;
-    showAchievementNotification(achievements.practicePro);
-  }
-  
-  updateBadgesDisplay();
-}
+  if (localStorage.getItem(`achievement_${lessonId}`) === "unlocked") return;
 
-function showAchievementNotification(achievement) {
-  const notification = $(`
-    <div class="fixed bottom-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-lg z-50 max-w-xs animate-bounce">
-      <div class="flex items-start">
-        <span class="text-2xl mr-3">${achievement.icon}</span>
-        <div>
-          <h3 class="font-bold">${achievement.name}</h3>
-          <p class="text-sm">${achievement.description}</p>
-        </div>
-      </div>
-    </div>
+  localStorage.setItem(`achievement_${lessonId}`, "unlocked");
+
+  document.dispatchEvent(new CustomEvent("lessonFinished", {
+    detail: { lessonId }
+  }));
+
+  $(this).replaceWith(`
+    <span class="inline-block bg-green-100 text-green-800 font-semibold px-4 py-1 rounded shadow">
+      ✔ Lección completada
+    </span>
   `);
-  
-  $('body').append(notification);
-  setTimeout(() => notification.remove(), 5000);
-}
-
-// LOGROS
-function updateBadgesDisplay() {
-  const badgesContainer = $('#badges-container');
-  badgesContainer.empty();
-  
-  Object.keys(achievements).forEach(key => {
-    const achievement = achievements[key];
-    badgesContainer.append(`
-      <div class="text-center p-3 rounded-lg ${achievement.unlocked ? 'bg-green-50 border border-green-200' : 'bg-gray-100 border border-gray-200 opacity-60'}">
-        <div class="text-4xl mb-2">${achievement.unlocked ? achievement.icon : '🔒'}</div>
-        <h3 class="font-bold">${achievement.name}</h3>
-        <p class="text-sm text-gray-600">${achievement.unlocked ? achievement.description : 'Logro bloqueado'}</p>
-        ${achievement.unlocked ? 
-          `<span class="text-xs text-green-600">¡Desbloqueado!</span>` : 
-          `<span class="text-xs text-gray-500">Sigue intentando</span>`}
-      </div>
-    `);
-  });
-}
-// Añade estos logros adicionales
-achievements.lessonMaster = {
-  name: "Maestro de Lecciones", 
-  description: "Completaste todas las lecciones",
-  icon: "🎓",
-  unlocked: false
-};
-
-achievements.practicePro = {
-  name: "Profesional de Práctica", 
-  description: "Respondiste 10 preguntas correctamente",
-  icon: "🏆",
-  unlocked: false
-};
-
-
-$(document).on("click", ".close-lesson", function() {
-  lessonsCompleted++;
-  checkAchievements();
-  $("#lesson-content-area").slideUp(300);
 });
+
+
 
 });
