@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title>Leccion C</title>
+  <link rel="shortcut icon" href="../images/savila.png" type="image/x-icon" />
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- jQuery DEBE ir primero -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <!-- Luego Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#7952b3',
+            secondary: '#8a71b0',
+            dark: '#2d2d39',
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js.js"></script>
+  <script src="JS/logros.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Barra de navegación -->
+
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="../images/savila.png" class="flex items-center text-xl font-bold text-gray-900">
+        <img src="../images/savila.png" alt="Logo" class="w-8 h-8 mr-2" />
+        GRAFI
+      </a>
+      <button id="mobile-menu-button" class="md:hidden text-2xl">
+         <i class="fas fa-bars"></i>
+      </button>
+      
+      <ul class="hidden md:flex space-x-8">
+        <li><a href="#lessons" class="text-gray-600 hover:text-primary font-medium transition">Clases</a></li>
+        <li><a href="#practice" class="text-gray-600 hover:text-primary font-medium transition">Práctica</a></li>
+        <li><a href="#evaluation" class="text-gray-600 hover:text-primary font-medium transition">Evaluación</a></li>
+        <li><a href="html/logro.html" class="text-gray-600 hover:text-primary font-medium transition">Progreso</a></li>
+      </ul>
+    </div>
+    <!-- Menú móvil -->
+    <div class="md:hidden hidden bg-white w-full py-2 px-4 shadow-lg" id="mobile-menu">
+      <a href="#Clases" class="block py-2 text-gray-600 hover:text-primary">Clases</a>
+      <a href="#practice" class="block py-2 text-gray-600 hover:text-primary">Práctica</a>
+      <a href="#evaluation" class="block py-2 text-gray-600 hover:text-primary">Evaluación</a>
+      <a href="html/logro.html" class="block py-2 text-gray-600 hover:text-primary">Progreso</a>
+    </div>
+  </nav>
