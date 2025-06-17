@@ -8,9 +8,16 @@
   <link rel="shortcut icon" href="images/savila.png" type="image/x-icon" />
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" href="models/libro.glb" as="fetch" crossorigin>
   <!-- jQuery DEBE ir primero -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/examples/js/loaders/FontLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/examples/js/geometries/TextGeometry.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    
   <!-- Luego Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -29,9 +36,7 @@
       }
     }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="js.js"></script>
-  <script src="JS/logros.js"></script>
+ 
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -128,14 +133,47 @@
       <h2 class="text-2xl font-bold mb-4 text-gray-800">Evaluación</h2>
       <p class="mb-4">Pon a prueba tus conocimientos con esta evaluación interactiva.</p>
       <div id="evaluation-area" class="p-4">
-        <button id="start-evaluation-btn" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-purple-800 transition">
-          Comenzar Evaluación
-        </button>
+        <div id="animation-container" class="hidden p-6 flex justify-center items-center text-2xl font-bold text-[#7952b3]">
+        </div>
+        <div id="grafema-selection" class="hidden flex flex-col items-center justify-center text-center p-6 bg-white rounded-lg border-2 border-[#7952b3] shadow-lg">
+            <h2 class="text-2xl font-bold text-[#7952b3] mb-6 ">
+              🌟 ¿Con qué grafema quieres empezar? 🌟
+            </h2>
+            <div class="flex flex-wrap justify-center gap-6">
+              <button data-grafema="C" class="grafema-btn transition-all duration-300 transform hover:scale-110 bg-[#7952b3] text-white text-xl px-6 py-4 rounded-xl shadow-lg hover:bg-purple-800 border-4 border-white hover:border-yellow-200">
+                ✨ C
+              </button>
+              <button data-grafema="S" class="grafema-btn transition-all duration-300 transform hover:scale-110 bg-[#7952b3] text-white text-xl px-6 py-4 rounded-xl shadow-lg hover:bg-purple-800 border-4 border-white hover:border-yellow-200">
+                🌟 S
+              </button>
+              <button data-grafema="Z" class="grafema-btn transition-all duration-300 transform hover:scale-110 bg-[#7952b3] text-white text-xl px-6 py-4 rounded-xl shadow-lg hover:bg-purple-800 border-4 border-white hover:border-yellow-200">
+                💫 Z
+              </button>
+              <button data-grafema="X" class="grafema-btn transition-all duration-300 transform hover:scale-110 bg-[#7952b3] text-white text-xl px-6 py-4 rounded-xl shadow-lg hover:bg-purple-800 border-4 border-white hover:border-yellow-200">
+                🌈 X
+              </button>
+            </div>
+        </div>
+
+          <div id="quiz-container" class="hidden bg-white p-6 rounded-lg border-2 border-[#7952b3] shadow-md">
+            <div id="question-box" class="mb-4">
+              <h3 id="question-text" class="text-xl font-bold text-gray-800 mb-4"></h3>
+              <div id="options" class="space-y-2"></div>
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <div id="feedback" class="font-medium text-sm"></div>
+              <div class="text-[#7952b3] font-bold" id="timer">Tiempo: 15s</div>
+            </div>
+          </div>
+
+          <div id="result-box" class="hidden mt-6 text-center">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">¡Evaluación finalizada!</h3>
+            <p id="final-score" class="text-lg text-gray-700 mb-4"></p>
+            <button id="send-score-btn" class="bg-[#7952b3] text-white px-4 py-2 rounded hover:bg-purple-800 transition">Enviar Calificación</button>
+          </div>
       </div>
-      <button id="submit-evaluation" class="hidden mt-4 px-4 py-2 bg-secondary text-white rounded-md hover:bg-purple-700 transition">
-        Enviar Evaluación
-      </button>
-    </section>
+          </section>
+
 
     <!-- Sección de Progreso -->
     <section id="progress" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-primary hover:shadow-md transition">
@@ -164,4 +202,10 @@
       <p>&copy; 2025 Aprende Letras. Todos los derechos reservados.</p>
     </div>
   </footer>
+  
+<script src="js.js"></script>
+<script src="JS/logros.js"></script>
+<script src="JS/evaluacion.js"></script>
+<script src="THREE/escena_letra.js"></script>
+<script src="THREE/libro.js"></script>
   </body>

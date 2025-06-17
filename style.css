@@ -155,3 +155,12 @@ input[type="checkbox"] {
 #mobile-menu-button.active .fa-bars {
   transform: rotate(90deg);
 }
+
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 0.5s linear infinite;
+}
