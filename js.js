@@ -205,37 +205,37 @@ $(".start-lesson").click(function() {
       grapheme: "s",
       reason:
         "Porque 'sopa' empieza con el sonido /s/, que se representa con la letra 's'.",
-         image: "images/sopa.png"
+         image: "images/sopa.webp"
     },
     zorro: {
       grapheme: "z",
       reason:
         "Porque 'zorro' empieza con el sonido /θ/ (en España) o /s/ (en Latinoamérica), que se representa con la letra 'z'.",
-        image: "images/zorro.png"
+        image: "images/zorro.webp"
     },
     taxi: {
       grapheme: "x",
       reason:
         "Porque 'taxi' empieza con el sonido /ks/, que se representa con la letra 'x'.",
-         image: "images/taxi.png"
+         image: "images/taxi.webp"
     },
     cielo: {
       grapheme: "c",
       reason:
         "Porque 'cielo' empieza con el sonido /θj/ o /sj/, que se representa con la letra 'c' cuando va seguida de 'i' o 'e'.",
-         image: "images/cielo.jpg"
+         image: "images/cielo.webp"
     },
     sol: {
       grapheme: "s",
       reason:
         "Porque 'sol' empieza con el sonido /s/, que se representa con la letra 's'.",
-        image: "images/sol.png"
+        image: "images/sol.webp"
     },
     zapato: {
       grapheme: "z",
       reason:
         "Porque 'zapato' empieza con el sonido /θ/ (en España) o /s/ (en Latinoamérica), que se representa con la letra 'z'.",
-        image: "images/zapatos.png"
+        image: "images/zapatos.webp"
     },
     examen: {
       grapheme: "x",

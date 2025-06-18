@@ -121,7 +121,6 @@ function mostrarFeedback(acierto, mensaje) {
     indicePregunta++;
     feedback.textContent = "";
     mostrarPregunta();
-    iniciarAnimacion3D(); 
   }, 1500);
 }
 
@@ -132,14 +131,22 @@ function mostrarResultado() {
   🎉 <strong>¡Evaluación finalizada!</strong><br>
   Obtuviste <span class="text-[#7952b3] text-2xl font-bold">${puntos} puntos</span> en el grafema <span class="uppercase">${grafemaActual}</span>.
 `;
+document.getElementById("start-eval-btn").classList.remove("hidden");
 
 }
 
 document.getElementById("send-score-btn").addEventListener("click", () => {
-  puntuacionesPorGrafema[grafemaActual].push(puntos);
+  puntuacionesPorGrafema[grafemaActual].push({
+    puntos,
+    fecha: new Date().toLocaleString()
+  });
   updateProgressChart();
   document.getElementById("result-box").classList.add("hidden");
+
+  // ✅ Mostramos el botón para que pueda volver a evaluar
+  document.getElementById("start-eval-btn").classList.remove("hidden");
 });
+
 
 function updateProgressChart() {
   const ctx = document.getElementById("progress-chart")?.getContext("2d");
@@ -149,7 +156,7 @@ if (!ctx) return;
 
   const datasets = Object.keys(puntuacionesPorGrafema).map(grafema => ({
     label: `Grafema ${grafema}`,
-    data: puntuacionesPorGrafema[grafema],
+    data: puntuacionesPorGrafema[grafema].map(p => p.puntos),
     borderColor: grafema === "C" ? "#7952b3" :
                  grafema === "S" ? "#f39c12" :
                  grafema === "Z" ? "#e74c3c" : "#1abc9c",
@@ -178,12 +185,15 @@ if (!ctx) return;
 document.addEventListener("DOMContentLoaded", () => {
   const animationContainer = document.getElementById("animation-container");
   const grafemaSelection = document.getElementById("grafema-selection");
+  const threeContainer = document.getElementById("three-container");
   const evaluationSection = document.getElementById("evaluation-area");
 
   const startBtn = document.createElement("button");
   startBtn.textContent = "Comenzar Evaluación";
+  startBtn.id = "start-eval-btn"; // ✅ AGREGA ESTE ID
   startBtn.className = "bg-[#7952b3] hover:bg-purple-800 text-white px-6 py-3 rounded-lg text-lg font-semibold mb-4";
   startBtn.addEventListener("click", () => {
+    startBtn.classList.add("hidden"); // ⬅️ Ocultamos el botón
     animationContainer.classList.remove("hidden");
     playAnimation(animationContainer);
     setTimeout(() => {
@@ -203,62 +213,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
-// ⬇️ Deja esta función afuera para que pueda ser llamada desde cualquier parte del script
-function iniciarAnimacion3D() {
-  const container = document.getElementById("three-animation");
-  container.innerHTML = "";
-
-  if (container.clientWidth === 0 || container.clientHeight === 0) {
-    container.style.width = "100%";
-    container.style.height = "300px";
-  }
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  container.appendChild(renderer.domElement);
-
-  const light = new THREE.PointLight(0xffffff, 1);
-  light.position.set(10, 10, 10);
-  scene.add(light);
-
-  const letras = ["C", "S", "Z", "X"];
-  const letras3D = [];
-
-  const fontLoader = new THREE.FontLoader();
-  fontLoader.load("https://threejs.org/examples/fonts/helvetiker_bold.typeface.json", function (font) {
-    letras.forEach((letra, index) => {
-      const geometry = new THREE.TextGeometry(letra, {
-        font: font,
-        size: 3,
-        height: 0.4,
-        curveSegments: 12,
-        bevelEnabled: true,
-        bevelThickness: 0.1,
-        bevelSize: 0.1,
-        bevelSegments: 5,
-      });
-
-      const material = new THREE.MeshStandardMaterial({ color: 0x7952b3 });
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.x = (index - 1.5) * 6;
-      mesh.position.y = 0;
-      letras3D.push(mesh);
-      scene.add(mesh);
-    });
-
-    animate();
-  });
-
-  camera.position.z = 20;
-
-  function animate() {
-    requestAnimationFrame(animate);
-    letras3D.forEach((letra) => {
-      letra.rotation.x += 0.01;
-      letra.rotation.y += 0.01;
-    });
-    renderer.render(scene, camera);
-  }
-}

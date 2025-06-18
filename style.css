@@ -162,5 +162,5 @@ input[type="checkbox"] {
 }
 
 .animate-spin-slow {
-  animation: spin-slow 0.5s linear infinite;
+  animation: spin-slow 2s linear infinite;
 }
