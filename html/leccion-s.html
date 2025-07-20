@@ -2,17 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  
-  <title>Leccion S</title>
-  <link rel="shortcut icon" href="../images/savila.png" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección Letra C - GRAFI</title>
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- jQuery DEBE ir primero -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  
-  <!-- Luego Tailwind -->
-
+  <link rel="shortcut icon" href="/images/savila.png" type="image/x-icon">
+  <link rel="stylesheet" href="../css/leccion_c.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -30,12 +24,8 @@
       }
     }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="js.js"></script>
-  <script src="JS/logros.js"></script>
 </head>
-<body class="bg-gray-50 text-gray-800">
-
+<body class="bg-gray-50 text-gray-800 font-inter">
 
   <!-- Navegación -->
   <nav class="bg-white shadow-md sticky top-0 z-50">
@@ -55,3 +45,76 @@
       <a href="../index.html" class="block py-2 text-gray-600 hover:text-primary">Inicio</a>
     </div>
   </nav>
+
+  <main class="container mx-auto px-4 py-8 max-w-3xl">
+    <section class="bg-white rounded-xl shadow-md p-6 border-l-4 border-primary">
+      <h1 class="text-3xl font-bold text-primary mb-4">Lección de la letra "C"</h1>
+      <p class="mb-4">La letra <strong>C</strong> tiene dos sonidos:
+        <ul class="list-disc pl-6 mb-6">
+          <li><strong>/k/</strong> cuando va con A, O, U (Ej: casa, coco, cuna).</li>
+          <li><strong>/s/</strong> cuando va con E, I (Ej: cena, cine).</li>
+        </ul>
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div class="bg-purple-100 p-4 rounded-lg shadow text-center">
+          <p class="text-xl font-bold text-gray-800">Casa</p>
+          <img src="../images/casadelgrafema-c.webp" alt="Casa" class="mx-auto w-55 h-55 mt-2 mb-8">
+          <button onclick="toggleAudio(this, '../audio/casa.mp3')" class="btn-audio text-primary mt-2">
+            🔊 <span class="sonido-texto">Escuchar</span>
+          </button>
+
+
+
+        </div>
+        <div class="bg-yellow-100 p-4 rounded-lg shadow text-center">
+          <p class="text-xl font-bold text-gray-800">Cine</p>
+          <img src="../images/cine.webp" alt="Cine" class="mx-auto w-55 h-55 mt-2">
+          <button onclick="toggleAudio(this, '../audio/pronunciation_es_cine.mp3')" class="btn-audio text-primary mt-2">
+            🔊 <span class="sonido-texto">Escuchar</span>
+          </button>
+        </div>
+      </div>
+
+      <h2 class="text-2xl font-semibold mb-4">Actividad 1: ¿Cuál está bien escrita?</h2>
+      <div class="bg-gray-100 p-4 rounded-md shadow mb-6">
+        <p class="mb-2">Selecciona la palabra correcta:</p>
+        <div class="flex flex-col space-y-2" id="actividad1">
+          <button class="practice-choice">Kasa</button>
+          <button class="practice-choice">Caza</button>
+          <button class="practice-choice">Casa</button>
+        </div>
+        <div id="feedback1" class="mt-3 text-sm font-medium"></div>
+        <button id="retry1" class="hidden mt-3 bg-secondary text-white px-4 py-2 rounded hover:bg-primary transition" onclick="reiniciar(1)">Volver a intentar</button>
+      </div>
+
+      <h2 class="text-2xl font-semibold mb-4">Actividad 2: ¿Con qué letra empieza?</h2>
+      <div class="bg-gray-100 p-4 rounded-md shadow mb-6">
+        <p class="mb-2">¿Con qué letra empieza esta palabra?</p>
+        <p class="text-lg font-bold text-center">🍬 _aramelo</p>
+        <div class="flex flex-col space-y-2" id="actividad2">
+          <button class="practice-choice">K</button>
+          <button class="practice-choice">S</button>
+          <button class="practice-choice">C</button>
+        </div>
+        <div id="feedback2" class="mt-3 text-sm font-medium"></div>
+        <button id="retry2" class="hidden mt-3 bg-secondary text-white px-4 py-2 rounded hover:bg-primary transition" onclick="reiniciar(2)">Volver a intentar</button>
+      </div>
+
+      <div id="felicitacion" class="hidden bg-green-100 p-6 mt-8 rounded-lg shadow text-center">
+        <h2 class="text-2xl font-bold text-green-700 mb-2">🎉 ¡Muy bien!</h2>
+        <p class="text-gray-800">¡Has completado la lección de la letra C con éxito!</p>
+        <img src="../images/medalla.png" alt="Medalla" class="mx-auto w-20 h-20 my-4">
+        <a href="leccion-s.html" class="inline-block bg-primary text-white px-6 py-2 rounded hover:bg-purple-800 transition">Ir a la letra S →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-dark text-gray-300 py-6 text-center mt-12">
+    <p>&copy; 2025 GRAFI. Todos los derechos reservados.</p>
+  </footer>
+
+<script src="../JS/lecciones.js"></script>
+<script src="../JS/leccion_c.js"></script>
+</body>
+</html>

@@ -165,7 +165,7 @@ $(".start-lesson").click(function() {
 
   4: `<div class="lesson-container">
         <div class="flex justify-between items-center mb-4">
-          <h3>Módulo 2 - Lección 1: La letra 'X'</h3>
+          <h3>Módulo 2 - Lección 2: La letra 'X'</h3>
           <button class="close-lesson bg-red-200 hover:bg-red-300 text-red-800 font-medium px-4 py-1 rounded-lg shadow-sm transition duration-200 ease-in-out">
             ❌ Cerrar
           </button>
@@ -299,7 +299,6 @@ function loadPracticeQuestion() {
     }
   });
 }
-
  
 
   // Menú móvil
