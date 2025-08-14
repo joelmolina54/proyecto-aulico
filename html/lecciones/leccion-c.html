@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección C - GRAFI</title>
+  <link rel="shortcut icon" href="../../assets/images/savila.png" type="image/x-icon">
+  <!-- CDNs -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="shortcut icon" href="../../assets/images/savila.png" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8fafc;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+    }
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.3);
+    }
+    .btn-secondary {
+      background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(244, 114, 182, 0.3);
+    }
+    .progress-ring__circle {
+      transition: stroke-dashoffset 0.5s ease;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+    .animate-bounce-slow {
+      animation: bounce-slow 2s infinite;
+    }
+    @keyframes bounce-slow {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .shake {
+      animation: shake 0.5s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="../../index.html" class="flex items-center text-xl font-bold text-white hover:text-purple-200 transition">
+        <img src="../../assets/images/savila.png" alt="Logo GRAFI" class="w-8 h-8 mr-2">
+        <span>Grafema</span>
+      </a>
+      <div class="flex items-center space-x-4">
+        <a href="../lecciones.html" class="text-white hover:text-purple-200 font-medium transition flex items-center">
+          <i class="fas fa-arrow-left mr-2"></i> Volver
+        </a>
+        <div class="flex items-center">
+          <span class="mr-2 text-sm">Progreso</span>
+          <div class="w-24 bg-white bg-opacity-20 rounded-full h-2">
+            <div id="progress-bar" class="bg-yellow-300 h-2 rounded-full" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <!-- Encabezado con animación -->
+    <header class="text-center mb-12 fade-in">
+      <div class="relative w-32 h-32 mx-auto mb-6">
+        <svg class="w-full h-full" viewBox="0 0 100 100">
+          <circle class="text-gray-200" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+          <circle id="progress-ring" class="text-purple-600 progress-ring__circle" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center text-5xl font-bold text-purple-700 animate-bounce-slow">
+          C
+        </div>
+      </div>
+      </div>
+      <h1 class="text-4xl font-bold text-gray-800 mb-2">Letra <span class="gradient-text bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">C</span></h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">Aprende el sonido de la letra C y su uso correcto.</p>
+    </header>
+
+    <!-- Sección de aprendizaje -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+      <!-- Video explicativo -->
+      <section class="lg:col-span-2 bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+              <i class="fab fa-youtube text-red-600 mr-3 text-2xl"></i> Video explicativo
+            </h2>
+            <div class="relative">
+              <button id="video-menu-btn" class="text-gray-500 hover:text-purple-600">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+              <div id="video-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                <div class="py-1">
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50" onclick="suggestVideo()">Sugerir video</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50" onclick="changeSpeed()">Cambiar velocidad</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="aspect-w-16 aspect-h-9 mb-4">
+            <iframe id="youtube-video" class="w-full h-64 md:h-96 rounded-lg shadow" src="https://www.youtube.com/embed/cm3KMuAQgsc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          
+          <div class="bg-purple-50 rounded-lg p-4">
+            <h3 class="font-medium text-purple-800 mb-2">Resumen del video</h3>
+            <p class="text-gray-700 text-sm">La letra C tiene dos sonidos principales en español: suena como /k/ antes de a, o, u y como /s/ (o /θ/ en España) antes de e, i.</p>
+            <div class="mt-3 flex items-center text-sm text-purple-600">
+              <i class="fas fa-clock mr-2"></i>
+              <span>Duración: 14 min</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Teoría resumida -->
+      <section class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+        <div class="gradient-bg px-6 py-4">
+          <h2 class="text-xl font-bold text-white flex items-center">
+            <i class="fas fa-lightbulb mr-3"></i> Conceptos clave
+          </h2>
+        </div>
+        <div class="p-6">
+          <div class="mb-6">
+            <div class="flex items-start mb-4">
+              <div class="bg-blue-100 p-2 rounded-full mr-3">
+                <i class="fas fa-volume-up text-blue-600"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-800 mb-1">Sonido /k/</h3>
+                <p class="text-gray-600 text-sm">Cuando C va antes de <span class="font-bold">a, o, u</span> o consonante.</p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">casa</span>
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">coco</span>
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">cuna</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="bg-purple-100 p-2 rounded-full mr-3">
+                <i class="fas fa-volume-up text-purple-600"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-800 mb-1">Sonido /s/ o /θ/</h3>
+                <p class="text-gray-600 text-sm">Cuando C va antes de <span class="font-bold">e, i</span>.</p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">cebolla</span>
+                  <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">cine</span>
+                  <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">ciudad</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="fas fa-info-circle text-yellow-500"></i>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-yellow-700">
+                  En América el sonido antes de e, i es /s/, mientras que en España es /θ/ (como el sonido "z").
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Sección de práctica -->
+    <section class="mb-12">
+      <div class="flex items-center mb-6">
+        <h2 class="text-3xl font-bold text-gray-800">
+          <i class="fas fa-dumbbell text-purple-600 mr-3"></i> Practica lo aprendido
+        </h2>
+        <div class="ml-auto flex items-center">
+          <span class="text-sm text-gray-500 mr-2">Nivel de dificultad:</span>
+          <select class="border rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+            <option>Principiante</option>
+            <option>Intermedio</option>
+            <option>Avanzado</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Pestañas de ejercicios -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="border-b border-gray-200">
+          <nav class="flex -mb-px">
+            <button id="tab-ejercicio1" class="tab-button active py-4 px-6 text-center border-b-2 font-medium text-sm border-purple-500 text-purple-600">
+              Ejercicio 1
+            </button>
+            <button id="tab-ejercicio2" class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+              Ejercicio 2
+            </button>
+            <button id="tab-ejercicio3" class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+              Ejercicio 3
+            </button>
+          </nav>
+        </div>
+        
+        <!-- Contenido de las pestañas -->
+        <div class="p-6">
+          <!-- Ejercicio 1 - Selección múltiple -->
+          <div id="content-ejercicio1" class="tab-content active">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Completa las palabras con C o S</h3>
+            <p class="text-gray-600 mb-6">Selecciona la letra correcta para completar cada palabra según su sonido.</p>
+            
+            <div class="space-y-4">
+              <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="c">
+                <div class="md:w-1/3 mb-2 md:mb-0">
+                  <span class="text-gray-700">___asa</span>
+                </div>
+                <div class="md:w-1/3">
+                  <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <option value="">Selecciona una opción</option>
+                    <option value="c">C</option>
+                    <option value="s">S</option>
+                  </select>
+                </div>
+                <div class="md:w-1/3 mt-2 md:mt-0 md:pl-4 ejercicio-feedback hidden">
+                  <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 mr-2 hidden correct-icon"></i>
+                    <i class="fas fa-times-circle text-red-500 mr-2 hidden incorrect-icon"></i>
+                    <span class="text-sm feedback-text"></span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="s">
+                <div class="md:w-1/3 mb-2 md:mb-0">
+                  <span class="text-gray-700">___opa</span>
+                </div>
+                <div class="md:w-1/3">
+                  <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <option value="">Selecciona una opción</option>
+                    <option value="c">C</option>
+                    <option value="s">S</option>
+                  </select>
+                </div>
+                <div class="md:w-1/3 mt-2 md:mt-0 md:pl-4 ejercicio-feedback hidden">
+                  <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 mr-2 hidden correct-icon"></i>
+                    <i class="fas fa-times-circle text-red-500 mr-2 hidden incorrect-icon"></i>
+                    <span class="text-sm feedback-text"></span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="c">
+                <div class="md:w-1/3 mb-2 md:mb-0">
+                  <span class="text-gray-700">___ama</span>
+                </div>
+                <div class="md:w-1/3">
+                  <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <option value="">Selecciona una opción</option>
+                    <option value="c">C</option>
+                    <option value="s">S</option>
+                  </select>
+                </div>
+                <div class="md:w-1/3 mt-2 md:mt-0 md:pl-4 ejercicio-feedback hidden">
+                  <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 mr-2 hidden correct-icon"></i>
+                    <i class="fas fa-times-circle text-red-500 mr-2 hidden incorrect-icon"></i>
+                    <span class="text-sm feedback-text"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-6 flex justify-end">
+              <button id="check-ejercicio1" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                <i class="fas fa-check-circle mr-2"></i> Comprobar respuestas
+              </button>
+            </div>
+          </div>
+          
+          <!-- Ejercicio 2 - Clasificación -->
+          <div id="content-ejercicio2" class="tab-content hidden">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Clasifica las palabras según su sonido</h3>
+            <p class="text-gray-600 mb-6">Arrastra cada palabra al recuadro correspondiente según el sonido de la letra C.</p>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+              <div id="target-k" class="bg-blue-50 border-2 border-dashed border-blue-300 rounded-xl p-4 min-h-32 flex flex-col">
+                <div class="text-center text-blue-700 font-medium mb-2">
+                  <i class="fas fa-volume-up mr-2"></i> Sonido /k/
+                </div>
+                <div class="flex-grow flex flex-wrap gap-2 content-start" id="words-k">
+                  <!-- Palabras con sonido /k/ irán aquí -->
+                </div>
+              </div>
+              
+              <div id="target-theta" class="bg-purple-50 border-2 border-dashed border-purple-300 rounded-xl p-4 min-h-32 flex flex-col">
+                <div class="text-center text-purple-700 font-medium mb-2">
+                  <i class="fas fa-volume-up mr-2"></i> Sonido /s/ o /θ/
+                </div>
+                <div class="flex-grow flex flex-wrap gap-2 content-start" id="words-theta">
+                  <!-- Palabras con sonido /s/ o /θ/ irán aquí -->
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-medium text-gray-700 mb-3">Palabras para clasificar:</h4>
+              <div class="flex flex-wrap gap-3" id="palabras-arrastrar">
+                <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-sonido="k">
+                  <span class="text-gray-800">casa</span>
+                </div>
+                <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-sonido="theta">
+                  <span class="text-gray-800">cielo</span>
+                </div>
+                <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-sonido="k">
+                  <span class="text-gray-800">coche</span>
+                </div>
+                <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-sonido="theta">
+                  <span class="text-gray-800">circo</span>
+                </div>
+              </div>
+            </div>
+            
+            <div id="feedback-arrastrar" class="hidden mt-6">
+              <div class="p-4 rounded-lg bg-green-50 border border-green-200 feedback-content">
+                <div class="flex items-center">
+                  <i class="fas fa-check-circle text-green-500 text-xl mr-3"></i>
+                  <div>
+                    <h4 class="font-bold text-green-800">¡Bien hecho!</h4>
+                    <p class="text-green-700 text-sm">Has clasificado correctamente todos los sonidos de la letra C.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-6 flex justify-between">
+              <button id="reset-ejercicio2" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg font-medium">
+                <i class="fas fa-redo mr-2"></i> Reiniciar
+              </button>
+              <button id="check-ejercicio2" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                <i class="fas fa-check-circle mr-2"></i> Comprobar
+              </button>
+            </div>
+          </div>
+          
+          <!-- Ejercicio 3 - Dictado -->
+          <div id="content-ejercicio3" class="tab-content hidden">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Ejercicio de dictado</h3>
+            <p class="text-gray-600 mb-6">Escucha atentamente y escribe las palabras que contengan la letra C.</p>
+            
+            <div class="bg-blue-50 rounded-xl p-6 mb-6">
+              <div class="flex items-center justify-between mb-4">
+                <h4 class="font-medium text-blue-800">Preparado para comenzar</h4>
+                <button id="start-dictation" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm">
+                  <i class="fas fa-microphone mr-2"></i> Iniciar dictado
+                </button>
+              </div>
+              
+              <div id="dictation-audio" class="hidden mb-4">
+                <audio controls class="w-full">
+                  <source src="../../assets/audio/pronunciation_es_cine.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+              
+              <textarea id="dictation-text" class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500" rows="4" placeholder="Escribe aquí las palabras que escuches..."></textarea>
+              
+              <div id="dictation-feedback" class="hidden mt-4 p-4 rounded-lg bg-purple-50 border border-purple-200">
+                <div class="flex items-start">
+                  <i class="fas fa-info-circle text-purple-600 mt-1 mr-3"></i>
+                  <div>
+                    <h4 class="font-bold text-purple-800 mb-1">Retroalimentación</h4>
+                    <p class="text-purple-700 text-sm dictation-feedback-text"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex justify-end">
+              <button id="check-dictation" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                <i class="fas fa-check-circle mr-2"></i> Comprobar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de finalización -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl shadow-lg overflow-hidden p-8 text-center">
+        <div class="max-w-2xl mx-auto">
+          <h2 class="text-2xl font-bold text-white mb-4">¿Listo para completar la lección?</h2>
+          <p class="text-purple-100 mb-6">Has progresado mucho. Completa todos los ejercicios para finalizar esta lección.</p>
+          
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button id="btn-completar" class="bg-white text-purple-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium shadow-md transition">
+              <i class="fas fa-flag-checkered mr-2"></i> Terminar lección
+            </button>
+            
+            <button id="btn-reiniciar-todo" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-6 py-3 rounded-lg font-medium shadow-md transition">
+              <i class="fas fa-redo mr-2"></i> Reiniciar todo
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-300 py-8">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <a href="../../index.html" class="flex items-center text-xl font-bold text-white">
+            <img src="../../assets/images/savila.png" alt="Logo GRAFI" class="w-8 h-8 mr-2">
+            <span>Grafema</span>
+          </a>
+          <p class="mt-2 text-sm">Aprendizaje interactivo de grafemas y fonemas.</p>
+        </div>
+        
+        <div class="flex space-x-4">
+            <a href="https://www.facebook.com/profile.php?id=100009295328147&locale=es_LA" class="text-gray-400 hover:text-white transition">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/joelmolina54/" class="text-gray-400 hover:text-white transition">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://github.com/joelmolina54" class="text-gray-400 hover:text-white transition">
+              <!-- icono de github -->
+              <i class="fab fa-github"></i>
+            </a>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-700 mt-6 pt-6 text-center text-sm">
+        <p>&copy; 2025 GRAFI. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal universal -->
+  <div id="universal-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-xl shadow-2xl overflow-hidden w-full max-w-md transform transition-all">
+      <div id="modal-header" class="gradient-bg p-6 text-center text-white">
+        <i id="modal-icon" class="fas fa-check-circle text-4xl mb-4"></i>
+        <h3 id="modal-title" class="text-2xl font-bold">Título del modal</h3>
+      </div>
+      
+      <div class="p-6 text-center">
+        <p id="modal-message" class="text-gray-600 mb-6">Mensaje del modal aquí.</p>
+        
+        <div class="flex flex-col space-y-3">
+          <button id="modal-primary-btn" class="btn-primary text-white px-6 py-3 rounded-lg font-medium">
+            <i class="fas fa-check mr-2"></i> Aceptar
+          </button>
+          <button id="modal-secondary-btn" class="border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-3 rounded-lg font-medium hidden">
+            <i class="fas fa-times mr-2"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Configuración inicial
+    document.addEventListener('DOMContentLoaded', function() {
+      // Cargar progreso
+      const progreso = localStorage.getItem('progreso-c') || 0;
+      updateProgress(progreso);
+      // Restablecer texto y estilo del botón de estado
+      const btnEstado = document.getElementById('btn-estado-leccion');
+      if (btnEstado) {
+        btnEstado.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Lección completada';
+        btnEstado.classList.remove('bg-green-500', 'text-white');
+        btnEstado.classList.add('bg-blue-500', 'text-white');
+      }
+
+      // Configurar pestañas
+      setupTabs();
+      
+      // Configurar drag and drop
+      setupDragDrop();
+      
+      // Configurar eventos de los botones
+      setupButtons();
+      
+      // Configurar modal universal
+      setupModal();
+      
+      // Comprobar si ya está completado
+      if(progreso == 100) {
+        document.getElementById('btn-completar').innerHTML = '<i class="fas fa-check-circle mr-2"></i> Lección completada';
+        document.getElementById('btn-completar').classList.add('bg-green-100', 'text-green-800', 'hover:bg-green-100');
+        document.getElementById('btn-completar').classList.remove('bg-white', 'text-purple-600', 'hover:bg-gray-100');
+      }
+    });
+
+    // Configurar modal universal
+    function setupModal() {
+      const modal = document.getElementById('universal-modal');
+      
+      // Cerrar modal al hacer clic fuera
+      modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeModal();
+        }
+      });
+      
+      // Configurar botón primario
+      document.getElementById('modal-primary-btn').addEventListener('click', function() {
+        const action = this.getAttribute('data-action');
+        if (action === 'redirect') {
+          window.location.href = '../lecciones.html';
+        }
+        closeModal();
+      });
+      
+      // Configurar botón secundario
+      document.getElementById('modal-secondary-btn').addEventListener('click', closeModal);
+    }
+    
+    // Mostrar modal
+    function showModal(title, message, type = 'info', options = {}) {
+      const modal = document.getElementById('universal-modal');
+      const header = document.getElementById('modal-header');
+      const icon = document.getElementById('modal-icon');
+      const modalTitle = document.getElementById('modal-title');
+      const modalMessage = document.getElementById('modal-message');
+      const primaryBtn = document.getElementById('modal-primary-btn');
+      const secondaryBtn = document.getElementById('modal-secondary-btn');
+      
+      // Configurar tipo de modal
+      switch(type) {
+        case 'success':
+          header.className = 'bg-gradient-to-r from-green-500 to-teal-500 p-6 text-center text-white';
+          icon.className = 'fas fa-check-circle text-4xl mb-4';
+          break;
+        case 'warning':
+          header.className = 'bg-gradient-to-r from-yellow-500 to-amber-500 p-6 text-center text-white';
+          icon.className = 'fas fa-exclamation-triangle text-4xl mb-4';
+          break;
+        case 'error':
+          header.className = 'bg-gradient-to-r from-red-500 to-pink-500 p-6 text-center text-white';
+          icon.className = 'fas fa-times-circle text-4xl mb-4';
+          break;
+        default: // info
+          header.className = 'gradient-bg p-6 text-center text-white';
+          icon.className = 'fas fa-info-circle text-4xl mb-4';
+      }
+      
+      // Configurar contenido
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+      
+      // Configurar botones
+      if (options.primaryText) {
+        primaryBtn.innerHTML = `<i class="fas ${options.primaryIcon || 'fa-check'} mr-2"></i> ${options.primaryText}`;
+      }
+      if (options.primaryAction) {
+        primaryBtn.setAttribute('data-action', options.primaryAction);
+      }
+      
+      if (options.secondaryText) {
+        secondaryBtn.innerHTML = `<i class="fas ${options.secondaryIcon || 'fa-times'} mr-2"></i> ${options.secondaryText}`;
+        secondaryBtn.classList.remove('hidden');
+      } else {
+        secondaryBtn.classList.add('hidden');
+      }
+      
+      // Mostrar modal
+      modal.classList.remove('hidden');
+    }
+    
+    // Cerrar modal
+    function closeModal() {
+      document.getElementById('universal-modal').classList.add('hidden');
+    }
+
+    // Actualizar progreso visual
+    function updateProgress(percent) {
+      document.getElementById('progress-bar').style.width = `${percent}%`;
+      
+      // Actualizar anillo de progreso
+      const circle = document.getElementById('progress-ring');
+      const radius = circle.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      const offset = circumference - (percent / 100) * circumference;
+      circle.style.strokeDashoffset = offset;
+    }
+
+    // Configurar sistema de pestañas
+    function setupTabs() {
+      const tabs = document.querySelectorAll('.tab-button');
+      const contents = document.querySelectorAll('.tab-content');
+      
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Remover clase active de todas las pestañas y contenidos
+          tabs.forEach(t => t.classList.remove('active', 'border-purple-500', 'text-purple-600'));
+          tabs.forEach(t => t.classList.add('border-transparent', 'text-gray-500'));
+          contents.forEach(c => c.classList.remove('active'));
+          contents.forEach(c => c.classList.add('hidden'));
+          
+          // Agregar clase active a la pestaña clickeada
+          tab.classList.add('active', 'border-purple-500', 'text-purple-600');
+          tab.classList.remove('border-transparent', 'text-gray-500');
+          
+          // Mostrar el contenido correspondiente
+          const contentId = tab.id.replace('tab-', 'content-');
+          document.getElementById(contentId).classList.add('active');
+          document.getElementById(contentId).classList.remove('hidden');
+        });
+      });
+    }
+
+    // Configurar drag and drop
+    function setupDragDrop() {
+      const draggables = document.querySelectorAll('.draggable-word');
+      const targets = document.querySelectorAll('[id^="target-"]');
+      
+      draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', () => {
+          draggable.classList.add('opacity-50', 'border-purple-500');
+        });
+        
+        draggable.addEventListener('dragend', () => {
+          draggable.classList.remove('opacity-50', 'border-purple-500');
+        });
+      });
+      
+      targets.forEach(target => {
+        target.addEventListener('dragover', e => {
+          e.preventDefault();
+          const afterElement = getDragAfterElement(target, e.clientY);
+          const draggable = document.querySelector('.draggable-word.border-purple-500');
+          
+          if (afterElement == null) {
+            target.appendChild(draggable);
+          } else {
+            target.insertBefore(draggable, afterElement);
+          }
+        });
+      });
+    }
+    
+    function getDragAfterElement(container, y) {
+      const draggableElements = [...container.querySelectorAll('.draggable-word:not(.border-purple-500)')];
+      
+      return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    // Configurar eventos de los botones
+    function setupButtons() {
+      // Comprobar ejercicio 1 (selección múltiple)
+      document.getElementById('check-ejercicio1').addEventListener('click', function() {
+        let allCorrect = true;
+        const containers = document.querySelectorAll('.ejercicio-container');
+        
+        containers.forEach(container => {
+          const select = container.querySelector('.ejercicio-select');
+          const feedback = container.querySelector('.ejercicio-feedback');
+          const correctIcon = container.querySelector('.correct-icon');
+          const incorrectIcon = container.querySelector('.incorrect-icon');
+          const feedbackText = container.querySelector('.feedback-text');
+          const respuestaCorrecta = container.getAttribute('data-respuesta');
+          
+          feedback.classList.remove('hidden');
+          
+          if (select.value === respuestaCorrecta) {
+            correctIcon.classList.remove('hidden');
+            incorrectIcon.classList.add('hidden');
+            container.classList.add('border-green-200', 'bg-green-50');
+            container.classList.remove('border-red-200', 'bg-red-50', 'shake');
+            
+            if (respuestaCorrecta === 'c') {
+              feedbackText.textContent = '¡Correcto! "C" suena como /k/ antes de a, o, u.';
+              feedbackText.className = 'text-sm text-green-600 feedback-text';
+            } else {
+              feedbackText.textContent = '¡Correcto! En este caso se usa "S".';
+              feedbackText.className = 'text-sm text-green-600 feedback-text';
+            }
+          } else {
+            correctIcon.classList.add('hidden');
+            incorrectIcon.classList.remove('hidden');
+            container.classList.add('border-red-200', 'bg-red-50', 'shake');
+            container.classList.remove('border-green-200', 'bg-green-50');
+            allCorrect = false;
+            
+            if (respuestaCorrecta === 'c') {
+              feedbackText.textContent = 'Incorrecto. La letra "C" suena como /k/ antes de a, o, u.';
+              feedbackText.className = 'text-sm text-red-600 feedback-text';
+            } else {
+              feedbackText.textContent = 'Incorrecto. En este caso se usa "S".';
+              feedbackText.className = 'text-sm text-red-600 feedback-text';
+            }
+          }
+        });
+        
+        if (allCorrect) {
+          updateProgress(30);
+          showModal(
+            '¡Ejercicio completado!', 
+            'Has respondido correctamente todas las preguntas del primer ejercicio.',
+            'success',
+            {
+              primaryText: 'Continuar',
+              primaryIcon: 'fa-arrow-right'
+            }
+          );
+        }
+      });
+      
+      // Comprobar ejercicio 2 (clasificación)
+      document.getElementById('check-ejercicio2').addEventListener('click', function() {
+        // Verificar palabras en zona /k/
+        const palabrasK = document.querySelectorAll('#target-k .draggable-word');
+        let correctK = 0;
+        palabrasK.forEach(palabra => {
+          if (palabra.getAttribute('data-sonido') === 'k') correctK++;
+        });
+        
+        // Verificar palabras en zona /s/ o /θ/
+        const palabrasTheta = document.querySelectorAll('#target-theta .draggable-word');
+        let correctTheta = 0;
+        palabrasTheta.forEach(palabra => {
+          if (palabra.getAttribute('data-sonido') === 'theta') correctTheta++;
+        });
+        
+        const feedback = document.getElementById('feedback-arrastrar');
+        
+        if (correctK === 2 && correctTheta === 2) {
+          feedback.classList.remove('hidden');
+          updateProgress(60);
+          showModal(
+            '¡Clasificación correcta!', 
+            'Has organizado perfectamente las palabras según su sonido.',
+            'success',
+            {
+              primaryText: 'Siguiente ejercicio',
+              primaryIcon: 'fa-arrow-right'
+            }
+          );
+        } else {
+          showModal(
+            '¡Ups! Error en la clasificación',
+            `Tienes ${correctK}/2 palabras correctas en sonido /k/ y ${correctTheta}/2 en sonido /s/ o /θ/.\n\nRevisa las reglas:\n- Sonido /k/: casa, coche\n- Sonido /s/ o /θ/: cielo, circo`,
+            'warning',
+            {
+              primaryText: 'Entendido',
+              primaryIcon: 'fa-thumbs-up'
+            }
+          );
+        }
+      });
+
+      
+      // Reiniciar ejercicio 2
+      document.getElementById('reset-ejercicio2').addEventListener('click', function() {
+        showModal(
+          'Reiniciar ejercicio',
+          '¿Estás seguro de que quieres reiniciar este ejercicio? Se borrarán todas tus respuestas.',
+          'warning',
+          {
+            primaryText: 'Sí, reiniciar',
+            primaryIcon: 'fa-redo',
+            secondaryText: 'Cancelar',
+            secondaryIcon: 'fa-times'
+          }
+        );
+        
+        document.getElementById('modal-primary-btn').addEventListener('click', function() {
+          const palabrasContainer = document.getElementById('palabras-arrastrar');
+          document.querySelectorAll('[id^="words-"]').forEach(container => {
+            while (container.firstChild) {
+              palabrasContainer.appendChild(container.firstChild);
+            }
+          });
+          document.getElementById('feedback-arrastrar').classList.add('hidden');
+          closeModal();
+        }, { once: true });
+      });
+      
+      // Dictado
+      document.getElementById('start-dictation').addEventListener('click', function() {
+        document.getElementById('dictation-audio').classList.remove('hidden');
+        document.getElementById('start-dictation').innerHTML = '<i class="fas fa-volume-up mr-2"></i> Escuchando...';
+        document.getElementById('start-dictation').classList.add('bg-blue-600');
+        document.getElementById('start-dictation').classList.remove('btn-secondary');
+        
+        // Simular audio (en un caso real, aquí iría el reconocimiento de voz)
+        setTimeout(() => {
+          document.getElementById('start-dictation').innerHTML = '<i class="fas fa-check mr-2"></i> Dictado completado';
+          document.getElementById('start-dictation').classList.add('bg-green-500');
+          document.getElementById('start-dictation').classList.remove('bg-blue-600');
+        }, 3000);
+      });
+      
+      // Comprobar dictado
+      document.getElementById('check-dictation').addEventListener('click', function() {
+        const text = document.getElementById('dictation-text').value.toLowerCase();
+        
+        // Palabras esperadas en el dictado (simulado)
+        const expectedWords = ['cine'];
+        const foundWords = expectedWords.filter(word => text.includes(word));
+        
+        if (foundWords.length === expectedWords.length) {
+          updateProgress(100);
+          showModal(
+            '¡Dictado perfecto!',
+            `Has identificado correctamente todas las palabras: ${foundWords.join(', ')}.`,
+            'success',
+            {
+              primaryText: 'Finalizar lección',
+              primaryIcon: 'fa-flag-checkered'
+            }
+          );
+        } else if (foundWords.length > 0) {
+          showModal(
+            'Buen intento',
+            `Has identificado algunas palabras: ${foundWords.join(', ')}. Intenta encontrar las demás.`,
+            'info',
+            {
+              primaryText: 'Intentar de nuevo',
+              primaryIcon: 'fa-redo'
+            }
+          );
+        } else {
+          showModal(
+            'No se encontraron palabras',
+            'No has identificado ninguna palabra con C. Escucha de nuevo el dictado con atención.',
+            'error',
+            {
+              primaryText: 'Volver a escuchar',
+              primaryIcon: 'fa-volume-up'
+            }
+          );
+        }
+      });
+      
+      // Completar lección
+      document.getElementById('btn-completar').addEventListener('click', function() {
+        const progreso = parseInt(document.getElementById('progress-bar').style.width) || 0;
+        
+        if (progreso >= 100) {
+          localStorage.setItem('progreso-c', 100);
+          showModal(
+            '¡Lección completada!',
+            'Has terminado con éxito esta lección sobre la letra C. ¿Qué te gustaría hacer ahora?',
+            'success',
+            {
+              primaryText: 'Volver a lecciones',
+              primaryIcon: 'fa-arrow-left',
+              primaryAction: 'redirect',
+              secondaryText: 'Obtener certificado',
+              secondaryIcon: 'fa-certificate'
+            }
+          );
+        } else {
+          showModal(
+            'Lección incompleta',
+            `¡Aún no has completado todos los ejercicios! Tu progreso actual es del ${progreso}%. Completa al menos el 100% para finalizar la lección.`,
+            'warning',
+            {
+              primaryText: 'Continuar practicando',
+              primaryIcon: 'fa-arrow-right'
+            }
+          );
+        }
+      });
+      
+      // Reiniciar todo
+      document.getElementById('btn-reiniciar-todo').addEventListener('click', function() {
+        showModal(
+          'Reiniciar toda la lección',
+          '¿Estás seguro de que quieres reiniciar toda la lección? Se borrará todo tu progreso en esta lección.',
+          'warning',
+          {
+            primaryText: 'Sí, reiniciar',
+            primaryIcon: 'fa-redo',
+            secondaryText: 'Cancelar',
+            secondaryIcon: 'fa-times'
+          }
+        );
+        
+        document.getElementById('modal-primary-btn').addEventListener('click', function() {
+          // Reiniciar ejercicio 1
+          document.querySelectorAll('.ejercicio-select').forEach(select => {
+            select.value = '';
+          });
+          document.querySelectorAll('.ejercicio-feedback').forEach(feedback => {
+            feedback.classList.add('hidden');
+          });
+          document.querySelectorAll('.ejercicio-container').forEach(container => {
+            container.classList.remove('border-green-200', 'bg-green-50', 'border-red-200', 'bg-red-50', 'shake');
+          });
+          
+          // Reiniciar ejercicio 2
+          const palabrasContainer = document.getElementById('palabras-arrastrar');
+          document.querySelectorAll('[id^="words-"]').forEach(container => {
+            while (container.firstChild) {
+              palabrasContainer.appendChild(container.firstChild);
+            }
+          });
+          document.getElementById('feedback-arrastrar').classList.add('hidden');
+          
+          // Reiniciar ejercicio 3
+          document.getElementById('dictation-audio').classList.add('hidden');
+          document.getElementById('dictation-text').value = '';
+          document.getElementById('dictation-feedback').classList.add('hidden');
+          document.getElementById('start-dictation').innerHTML = '<i class="fas fa-microphone mr-2"></i> Iniciar dictado';
+          document.getElementById('start-dictation').classList.remove('bg-blue-600', 'bg-green-500');
+          document.getElementById('start-dictation').classList.add('btn-secondary');
+          
+          // Reiniciar progreso
+          updateProgress(0);
+          localStorage.removeItem('progreso-c');
+          
+          // Volver a la primera pestaña
+          document.getElementById('tab-ejercicio1').click();
+          
+          closeModal();
+        }, { once: true });
+      });
+    }
+
+    // Menú de video
+    document.getElementById('video-menu-btn').addEventListener('click', function() {
+      document.getElementById('video-menu').classList.toggle('hidden');
+    });
+
+    // Funciones del menú de video
+    function suggestVideo() {
+      showModal(
+        'Sugerir video',
+        '¿Qué video te gustaría ver sobre este tema? Envíanos tus sugerencias.',
+        'info',
+        {
+          primaryText: 'Enviar sugerencia',
+          primaryIcon: 'fa-paper-plane'
+        }
+      );
+      document.getElementById('video-menu').classList.add('hidden');
+    }
+
+    function changeSpeed() {
+      showModal(
+        'Cambiar velocidad',
+        'Selecciona la velocidad de reproducción del video:',
+        'info',
+        {
+          primaryText: 'Aplicar',
+          primaryIcon: 'fa-check'
+        }
+      );
+      document.getElementById('video-menu').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

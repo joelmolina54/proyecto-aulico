@@ -2,24 +2,19 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprende Grafemas - GRAFI</title>
+  <meta name="description" content="Aprende los grafemas C, S, Z y X con lecciones interactivas, actividades y evaluaciones. Mejora tu ortografía y pronunciación con GRAFI.">
+  <link rel="shortcut icon" href="/images/savila.png" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/images/savila.png" type="image/x-icon">
   
-  <title>GRAFI</title>
-  <link rel="shortcut icon" href="images/savila.png" type="image/x-icon" />
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preload" href="models/libro.glb" as="fetch" crossorigin>
-  <!-- jQuery DEBE ir primero -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/examples/js/loaders/GLTFLoader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/examples/js/loaders/FontLoader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/examples/js/geometries/TextGeometry.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
-    
-  <!-- Luego Tailwind -->
+  <!-- CDNs -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -28,182 +23,330 @@
             primary: '#7952b3',
             secondary: '#8a71b0',
             dark: '#2d2d39',
+            success: '#10b981',
+            warning: '#f59e0b',
+            danger: '#ef4444'
           },
           fontFamily: {
             inter: ['Inter', 'sans-serif'],
+            comic: ['"Comic Neue"', 'cursive']
           },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'pulse-slow': 'pulse 3s ease infinite'
+          }
         }
       }
     }
   </script>
- 
 </head>
-<body class="bg-gray-50 text-gray-800">
-
-  <!-- Barra de navegación -->
-
-  <nav class="bg-white shadow-md sticky top-0 z-50">
+<body class="bg-gray-50 text-gray-800 font-inter min-h-screen flex flex-col">
+  <nav class="bg-white shadow-lg sticky top-0 z-50 animate__animated animate__fadeIn">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <a href="images/savila.png" class="flex items-center text-xl font-bold text-gray-900">
-        <img src="images/savila.png" alt="Logo" class="w-8 h-8 mr-2" />
-        GRAFI
+      <a href="./index.html" class="flex items-center text-2xl font-bold text-gray-900 hover:text-primary transition">
+        <img src="./assets/images/savila.png" alt="Logo GRAFI" class="w-10 h-10 mr-2 animate__animated animate__pulse animate__infinite" style="animation-duration: 3s">
+        <span class="hidden sm:inline">Grafema</span>
       </a>
-      <button id="mobile-menu-button" class="md:hidden text-2xl">
-         <i class="fas fa-bars"></i>
-      </button>
       
-      <ul class="hidden md:flex space-x-8">
-        <li><a href="#lessons" class="text-gray-600 hover:text-primary font-medium transition">Clases</a></li>
-        <li><a href="#practice" class="text-gray-600 hover:text-primary font-medium transition">Práctica</a></li>
-        <li><a href="#evaluation" class="text-gray-600 hover:text-primary font-medium transition">Evaluación</a></li>
-        <li><a href="html/logro.html" class="text-gray-600 hover:text-primary font-medium transition">Progreso</a></li>
+      <div class="flex items-center space-x-4">
+        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 transition" aria-label="Cambiar tema">
+          <i class="fas fa-moon text-gray-700"></i>
+        </button>
+        
+        <button id="mobile-menu-button" class="md:hidden text-2xl p-2" aria-label="Abrir menú">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      
+      <ul class="hidden md:flex space-x-6 items-center">
+        <li><a href="./index.html" class="text-gray-600 hover:text-primary font-medium transition flex items-center">
+          <i class="fas fa-home mr-1"></i> Inicio</a></li>
+        <li><a href="./html/lecciones.html" class="text-gray-600 hover:text-primary font-medium transition flex items-center">
+          <i class="fas fa-book-open mr-1"></i> Lecciones</a></li>
+        <li><a href="evaluacion.html" class="text-gray-600 hover:text-primary font-medium transition flex items-center">
+          <i class="fas fa-graduation-cap mr-1"></i> Evaluación</a></li>
       </ul>
     </div>
-    <!-- Menú móvil -->
+    
+    <!-- Menú móvil desplegable -->
     <div class="md:hidden hidden bg-white w-full py-2 px-4 shadow-lg" id="mobile-menu">
-      <a href="#Clases" class="block py-2 text-gray-600 hover:text-primary">Clases</a>
-      <a href="#practice" class="block py-2 text-gray-600 hover:text-primary">Práctica</a>
-      <a href="#evaluation" class="block py-2 text-gray-600 hover:text-primary">Evaluación</a>
-      <a href="html/logro.html" class="block py-2 text-gray-600 hover:text-primary">Progreso</a>
+      <a href="./index.html" class="block py-2 px-4 text-gray-600 hover:text-primary hover:bg-gray-50 rounded transition flex items-center">
+        <i class="fas fa-home mr-2 w-5"></i> Inicio</a>
+      <a href="./html/lecciones.html" class="block py-2 px-4 text-gray-600 hover:text-primary hover:bg-gray-50 rounded transition flex items-center">
+        <i class="fas fa-book-open mr-2 w-5"></i> Lecciones</a>
+      <a href="evaluacion.html" class="block py-2 px-4 text-gray-600 hover:text-primary hover:bg-gray-50 rounded transition flex items-center">
+        <i class="fas fa-graduation-cap mr-2 w-5"></i> Evaluación</a>
     </div>
   </nav>
 
-  <main class="container mx-auto px-4 py-8 max-w-4xl">
-    <!-- Sección de Lecciones -->
-<section id="lessons" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-primary hover:shadow-md transition">
-<div class="flex justify-between items-center mb-4">
-  <h2 class="text-2xl font-bold text-gray-800" id="Clases">Módulos de Aprendizaje</h2>
-  <button id="toggle-all-lessons" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md text-sm hover:bg-gray-300 transition">
-    Mostrar Todas
-  </button>
-</div>
-      <h2 class="text-2xl font-bold mb-4 text-gray-800" id="Clases">Módulo 1: Introducción a la 'C' y la 'S'</h2>
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <section class="text-center mb-12 animate__animated animate__fadeIn">
+      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Aprende los Grafemas</h1>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">Domina el uso de las letras C, S, Z y X con nuestras lecciones interactivas y divertidas actividades.</p>
+      
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <a href="./html/lecciones.html" class="btn-hover-effect relative overflow-hidden bg-primary hover:bg-purple-800 text-white px-8 py-3 rounded-lg font-semibold text-lg shadow-lg transition transform hover:-translate-y-1">
+          <i class="fas fa-book-open mr-2"></i> Comenzar Lecciones
+        </a>
+        <a href="evaluacion.html" class="btn-hover-effect relative overflow-hidden bg-white hover:bg-gray-100 text-primary border-2 border-primary px-8 py-3 rounded-lg font-semibold text-lg shadow-lg transition transform hover:-translate-y-1">
+          <i class="fas fa-graduation-cap mr-2"></i> Realizar Evaluación
+        </a>
+      </div>
+      
+      <div class="max-w-4xl mx-auto">
+        <img src="https://www.shutterstock.com/image-vector/dysgraphia-dyslexia-learning-difficulties-concept-600nw-2180163409.jpg" alt="Ilustración de aprendizaje" class="w-full h-auto max-h-80 object-contain animate-float">
+      </div>
+    </section>
 
-      <div class="mb-6 rounded-lg overflow-hidden bg-purple-50">
-        <div class="flex justify-between items-center p-4 bg-purple-100 cursor-pointer lesson-toggle">
-          <span class="font-semibold text-gray-800">📘 Lección: Conceptos clave</span>
-          <span class="arrow">▼</span>
+    <!-- Tarjetas de grafemas -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-center text-dark mb-8">Grafemas Disponibles</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Tarjeta C -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-8 border-primary transform transition hover:scale-105 hover:shadow-lg">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-14 h-14 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-3xl text-primary mr-4">
+                C
+              </div>
+              <h3 class="text-2xl font-bold text-gray-800">Letra C</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Aprende los dos sonidos de la letra C y cuándo usarla.</p>
+            <div class="progress-container mb-4">
+              <div class="progress-bar" style="width: 25%"></div>
+            </div>
+            <a href="./html/lecciones/leccion-c.html" class="inline-block w-full text-center bg-primary bg-opacity-10 text-primary hover:bg-opacity-20 font-medium py-2 px-4 rounded transition">
+              <i class="fas fa-arrow-right mr-2"></i> Aprender ahora
+            </a>
+          </div>
         </div>
-        <div class="hidden p-4 bg-white lesson-content">
-          <p class="mb-4">Ejemplos: Casa (C), Sopa (S)</p>
-          <div class="space-x-3">
-            <button class="start-lesson px-4 py-2 bg-primary text-white rounded-md hover:bg-purple-800 transition" data-lesson="1">
-              Empezar Lección sobre la C
-            </button>
-            <button class="start-lesson px-4 py-2 bg-primary text-white rounded-md hover:bg-purple-800 transition" data-lesson="2">
-              Empezar Lección sobre la S
-            </button>
+        
+        <!-- Tarjeta S -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-8 border-yellow-500 transform transition hover:scale-105 hover:shadow-lg">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-14 h-14 rounded-full bg-yellow-500 bg-opacity-20 flex items-center justify-center text-3xl text-yellow-600 mr-4">
+                S
+              </div>
+              <h3 class="text-2xl font-bold text-gray-800">Letra S</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Domina el sonido estable de la S y sus reglas ortográficas.</p>
+            <div class="progress-container mb-4">
+              <div class="progress-bar bg-yellow-500" style="width: 10%"></div>
+            </div>
+            <a href="./html/lecciones/leccion-s.html" class="inline-block w-full text-center bg-yellow-500 bg-opacity-10 text-yellow-600 hover:bg-opacity-20 font-medium py-2 px-4 rounded transition">
+              <i class="fas fa-arrow-right mr-2"></i> Aprender ahora
+            </a>
+          </div>
+        </div>
+        
+        <!-- Tarjeta Z -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-8 border-green-500 transform transition hover:scale-105 hover:shadow-lg">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-14 h-14 rounded-full bg-green-500 bg-opacity-20 flex items-center justify-center text-3xl text-green-600 mr-4">
+                Z
+              </div>
+              <h3 class="text-2xl font-bold text-gray-800">Letra Z</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Conoce las particularidades de la Z en diferentes regiones.</p>
+            <div class="progress-container mb-4">
+              <div class="progress-bar bg-green-500" style="width: 5%"></div>
+            </div>
+            <a href="./html/lecciones/leccion-z.html" class="inline-block w-full text-center bg-green-500 bg-opacity-10 text-green-600 hover:bg-opacity-20 font-medium py-2 px-4 rounded transition">
+              <i class="fas fa-arrow-right mr-2"></i> Aprender ahora
+            </a>
+          </div>
+        </div>
+        
+        <!-- Tarjeta X -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-8 border-red-500 transform transition hover:scale-105 hover:shadow-lg">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-14 h-14 rounded-full bg-red-500 bg-opacity-20 flex items-center justify-center text-3xl text-red-600 mr-4">
+                X
+              </div>
+              <h3 class="text-2xl font-bold text-gray-800">Letra X</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Descubre los múltiples sonidos de la letra X.</p>
+            <div class="progress-container mb-4">
+              <div class="progress-bar bg-red-500" style="width: 0%"></div>
+            </div>
+            <a href="./html/lecciones/leccion-x.html" class="inline-block w-full text-center bg-red-500 bg-opacity-10 text-red-600 hover:bg-opacity-20 font-medium py-2 px-4 rounded transition">
+              <i class="fas fa-arrow-right mr-2"></i> Aprender ahora
+            </a>
           </div>
         </div>
       </div>
+    </section>
 
-      <h2 class="text-2xl font-bold mb-4 text-gray-800">Módulo 2: Dominando la 'Z' y la 'X'</h2>
-
-      <div class="mb-6 rounded-lg overflow-hidden bg-orange-50">
-        <div class="lesson-toggle flex justify-between items-center p-4 bg-orange-100 cursor-pointer" id="modulo2">
-          <span class="font-semibold">📙 Lección: Conceptos clave</span>
-          <span class="arrow">▼</span>
-        </div>
-        <div class="hidden p-4 bg-white lesson-content">
-          <p class="mb-2">Aprenderemos los sonidos y usos de las letras 'Z' y 'X' en diferentes contextos.</p>
-          <p class="mb-4">Ejemplos: Zorro (Z), Taxi (X)</p>
-          <div class="space-x-3">
-            <button class="start-lesson px-4 py-2 bg-primary text-white rounded-md hover:bg-purple-800 transition" data-lesson="3">
-              Empezar Lección sobre la Z
-            </button>
-            <button class="start-lesson px-4 py-2 bg-primary text-white rounded-md hover:bg-purple-800 transition" data-lesson="4">
-              Empezar Lección sobre la X
-            </button>
+    <!-- Sección de logros -->
+    <section class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-8 mb-16 border border-purple-100">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+          <h2 class="text-3xl font-bold text-dark mb-4">Tus Logros</h2>
+          <p class="text-gray-600 mb-4">Gana insignias y medallas completando lecciones y actividades. ¡Desbloquea todos los logros disponibles!</p>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow-sm text-center">
+              <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-2">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <p class="font-medium">3/10 Logros</p>
+            </div>
+            
+            <div class="bg-white p-4 rounded-lg shadow-sm text-center">
+              <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-2">
+                <i class="fas fa-star"></i>
+              </div>
+              <p class="font-medium">25% Completado</p>
+            </div>
           </div>
+        </div>
+        
+        <div class="md:w-1/2">
+          <div class="bg-white rounded-xl p-6 shadow-md">
+            <h3 class="text-xl font-semibold mb-4 flex items-center">
+              <i class="fas fa-medal text-yellow-500 mr-2"></i>
+              Logros Recientes
+            </h3>
+            
+            <div class="space-y-3">
+              <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center mr-3">
+                  <i class="fas fa-check"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium">Primera Visita</h4>
+                  <p class="text-sm text-gray-500">Completado hoy</p>
+                </div>
+              </div>
+              
+              <div class="flex items-center p-3 bg-blue-50 rounded-lg">
+                <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-3">
+                  <i class="fas fa-book"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium">Iniciando el Aprendizaje</h4>
+                  <p class="text-sm text-gray-500">Completado ayer</p>
+                </div>
+              </div>
+            </div>
+            
+            <a href="./html/logro.html" class="inline-block mt-4 text-primary hover:text-purple-800 font-medium transition flex items-center">
+              Ver todos los logros <i class="fas fa-chevron-right ml-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de evaluación rápida -->
+    <section class="mb-16">
+      <div class="bg-dark text-white rounded-2xl p-8 md:p-12">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+            <h2 class="text-3xl font-bold mb-4">Evalúa tu Conocimiento</h2>
+            <p class="text-gray-300 mb-6">Realiza nuestra evaluación rápida para medir tu dominio de los grafemas y recibir recomendaciones personalizadas.</p>
+            <a href="evaluacion.html" class="inline-flex items-center bg-white text-dark hover:bg-gray-200 font-semibold px-6 py-3 rounded-lg transition transform hover:-translate-y-1 shadow-lg">
+              <i class="fas fa-play mr-2"></i> Comenzar Evaluación
+            </a>
+          </div>
+          
+          <div class="md:w-1/2">
+            <div class="bg-white bg-opacity-10 p-6 rounded-xl border border-white border-opacity-20">
+              <h3 class="text-xl font-semibold mb-4 flex items-center">
+                <i class="fas fa-chart-line mr-2"></i>
+                Tu Progreso
+              </h3>
+              
+              <div class="mb-6">
+                <div class="flex justify-between mb-1">
+                  <span class="font-medium">Letra C</span>
+                  <span class="font-bold">25%</span>
+                </div>
+                <div class="progress-container">
+                  <div class="progress-bar bg-white" style="width: 25%"></div>
+                </div>
+              </div>
+              
+              <canvas id="mini-progress-chart" height="150"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-dark text-gray-300 py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="text-white font-bold text-lg mb-4 flex items-center">
+            <img src="../assets/images/savila.png" alt="Logo GRAFI" class="w-6 h-6 mr-2">
+            Grafema
+          </h3>
+          <p class="mb-4">Aprende los grafemas de manera interactiva y divertida.</p>
+          <div class="flex space-x-4">
+            <a href="https://www.facebook.com/profile.php?id=100009295328147&locale=es_LA" class="text-gray-400 hover:text-white transition">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/joelmolina54/" class="text-gray-400 hover:text-white transition">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://github.com/joelmolina54" class="text-gray-400 hover:text-white transition">
+              <!-- icono de github -->
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Lecciones</h4>
+          <ul class="space-y-2">
+            <li><a href="./html/lecciones/leccion-c.html" class="hover:text-white transition flex items-center">
+              <i class="fas fa-caret-right mr-2 text-xs opacity-70"></i> Letra C</a></li>
+            <li><a href="./html/lecciones/leccion-s.html" class="hover:text-white transition flex items-center">
+              <i class="fas fa-caret-right mr-2 text-xs opacity-70"></i> Letra S</a></li>
+            <li><a href="./html/lecciones/leccion-z.html" class="hover:text-white transition flex items-center">
+              <i class="fas fa-caret-right mr-2 text-xs opacity-70"></i> Letra Z</a></li>
+            <li><a href="./html/lecciones/leccion-x.html" class="hover:text-white transition flex items-center">
+              <i class="fas fa-caret-right mr-2 text-xs opacity-70"></i> Letra X</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Recursos</h4>
+          <ul class="space-y-2">
+            <li><a href="./html/lecciones.html" class="hover:text-white transition flex items-center">
+              <i class="fas fa-caret-right mr-2 text-xs opacity-70"></i> Guías de estudio</a></li>
+            <li><a href="./html/lecciones.html" class="hover:text-white transition flex items-center">
+              <i class="fas fa-caret-right mr-2 text-xs opacity-70"></i> Ejercicios</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contacto</h4>
+          <ul class="space-y-2">
+            <li class="flex items-center">
+              <i class="fas fa-envelope mr-2 text-sm opacity-70"></i> joelmolina5463@gmail.com</li>
+            <li class="flex items-center">
+              <i class="fas fa-phone mr-2 text-sm opacity-70"></i> +593 963890882</li>
+            <li class="flex items-center">
+              <i class="fas fa-map-marker-alt mr-2 text-sm opacity-70"></i> Manta, Ecuador</li>
+          </ul>
         </div>
       </div>
       
-      <div id="lesson-content-area" class="mt-6 p-6 bg-white border border-gray-200 rounded-lg shadow-sm"></div>
-    </section>
-
-    <!-- Sección de Práctica -->
-    <section id="practice" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-primary hover:shadow-md transition">
-      <h2 class="text-2xl font-bold mb-4 text-gray-800">Práctica</h2>
-      <p class="mb-4">Selecciona la respuesta correcta:</p>
-      <div id="practice-area" class="p-4"></div>
-    </section>
-
-    <!-- Sección de Evaluación -->
-    <section id="evaluation" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-primary hover:shadow-md transition">
-      <h2 class="text-2xl font-bold mb-4 text-gray-800">Evaluación</h2>
-      <p class="mb-4">Pon a prueba tus conocimientos con esta evaluación interactiva.</p>
-      <div id="evaluation-area" class="p-4">
-        <div id="animation-container" class="hidden p-6 flex justify-center items-center text-2xl font-bold text-[#7952b3]">
-        </div>
-        <div id="grafema-selection" class="hidden flex flex-col items-center justify-center text-center p-6 bg-white rounded-lg border-2 border-[#7952b3] shadow-lg">
-            <h2 class="text-2xl font-bold text-[#7952b3] mb-6 ">
-              🌟 ¿Con qué grafema quieres empezar? 🌟
-            </h2>
-            <div class="flex flex-wrap justify-center gap-6">
-              <button data-grafema="C" class="grafema-btn transition-all duration-300 transform hover:scale-110 bg-[#7952b3] text-white text-xl px-6 py-4 rounded-xl shadow-lg hover:bg-purple-800 border-4 border-white hover:border-yellow-200">
-                ✨ C
-              </button>
-              <button data-grafema="S" class="grafema-btn transition-all duration-300 transform hover:scale-110 bg-[#7952b3] text-white text-xl px-6 py-4 rounded-xl shadow-lg hover:bg-purple-800 border-4 border-white hover:border-yellow-200">
-                🌟 S
-              </button>
-              <button data-grafema="Z" class="grafema-btn transition-all duration-300 transform hover:scale-110 bg-[#7952b3] text-white text-xl px-6 py-4 rounded-xl shadow-lg hover:bg-purple-800 border-4 border-white hover:border-yellow-200">
-                💫 Z
-              </button>
-              <button data-grafema="X" class="grafema-btn transition-all duration-300 transform hover:scale-110 bg-[#7952b3] text-white text-xl px-6 py-4 rounded-xl shadow-lg hover:bg-purple-800 border-4 border-white hover:border-yellow-200">
-                🌈 X
-              </button>
-            </div>
-        </div>
-
-          <div id="quiz-container" class="hidden bg-white p-6 rounded-lg border-2 border-[#7952b3] shadow-md">
-            <div id="question-box" class="mb-4">
-              <h3 id="question-text" class="text-xl font-bold text-gray-800 mb-4"></h3>
-              <div id="options" class="space-y-2"></div>
-            </div>
-            <div class="flex items-center justify-between mt-4">
-              <div id="feedback" class="font-medium text-sm"></div>
-              <div class="text-[#7952b3] font-bold" id="timer">Tiempo: 15s</div>
-            </div>
-          </div>
-
-          <div id="result-box" class="hidden mt-6 text-center">
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">¡Evaluación finalizada!</h3>
-            <p id="final-score" class="text-lg text-gray-700 mb-4"></p>
-            <button id="send-score-btn" class="bg-[#7952b3] text-white px-4 py-2 rounded hover:bg-purple-800 transition">Enviar Calificación</button>
-          </div>
+      <div class="border-t border-gray-700 pt-8 text-center text-sm">
+        <p>&copy; 2025 GRAFI. Todos los derechos reservados.</p>
       </div>
-          </section>
-
-
-    <!-- Sección de Progreso -->
-    <section id="progress" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-primary hover:shadow-md transition">
-      <h2 class="text-2xl font-bold mb-4 text-gray-800">Progreso</h2>
-      <p class="mb-4">Visualiza tu progreso a lo largo del tiempo.</p>
-      <canvas id="progress-chart" width="400" height="200"></canvas>
-    </section>
-
-  
-<section id="achievements-preview" class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-green-500 hover:shadow-md transition">
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-2xl font-bold text-gray-800">Mis Logros</h2>
-    <a href="html/logro.html" class="text-primary hover:underline">Ver todos</a>
-  </div>
-      <section id="achievements-section" class="my-8 p-6 bg-white rounded-lg shadow">
-  <h2 class="text-2xl font-bold mb-6 text-center">Mis Logros</h2>
-  <div id="badges-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-    <!-- Los logros se insertarán aquí dinámicamente -->
-  </div>
-</section>
-</section>
- </main>
-
-  <footer class="bg-dark text-gray-300 py-8 mt-12">
-    <div class="container mx-auto px-4 text-center">
-      <p>&copy; 2025 GRAFI. Todos los derechos reservados.</p>
     </div>
   </footer>
-  
-<script src="js.js"></script>
-<script src="JS/logros.js"></script>
-<script src="JS/evaluacion.js"></script>
-  </body>
+    
+    <script src="/assets/js/menu-movil.js"></script>
+    <script src="/assets/js/tema-oscuro.js"></script>
+    <script src="/assets/js/grafica.js"></script>
+</body>
+</html>
