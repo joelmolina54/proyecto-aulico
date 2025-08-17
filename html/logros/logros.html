@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,18 @@
     <link rel="stylesheet" href="../../assets/css/logros.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #5b21b6;
+            --secondary: #4f46e5;
+            --secondary-dark: #3730a3;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
         .animate-fade-in-up {
             animation: fadeInUp 0.5s ease-out;
         }
@@ -25,21 +37,105 @@
             from { opacity: 1; transform: translateY(0); }
             to { opacity: 0; transform: translateY(20px); }
         }
+        
         .gradient-bg {
-            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+        }
+        
+        .achievement-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .progress-ring__circle {
+            transition: stroke-dasharray 0.6s ease;
+        }
+        
+        /* Efecto de brillo al pasar el mouse */
+        .glow-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: none;
+        }
+        
+        .glow-effect:hover::after {
+            left: 100%;
+            transition: left 0.7s ease-in-out;
+        }
+        
+        /* Transición suave para el modo oscuro */
+        .transition-colors {
+            transition-property: background-color, border-color, color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
         }
     </style>
+    <script>
+    tailwind.config = {
+    darkMode: 'class',
+    theme: {
+        extend: {
+        colors: {
+            primary: '#7c3aed',
+            'primary-dark': '#5b21b6',
+            secondary: '#4f46e5',
+            'secondary-dark': '#3730a3',
+        }
+        }
+    }
+    }
+    </script>
 </head>
-<body class="min-h-screen flex flex-col bg-gray-50">
+<body class="min-h-screen flex flex-col bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors">
     <!-- Navbar -->
-    <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+    <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50 glow-effect">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <a href="../../index.html" class="flex items-center text-xl font-bold text-white hover:text-purple-200 transition">
                 <img src="../../assets/images/savila.png" alt="Logo GRAFI" class="w-8 h-8 mr-2">
                 <span>Grafema</span>
             </a>
             <div class="flex items-center space-x-4">
-                <a href="../../index.html" class="text-white hover:text-purple-200 font-medium transition flex items-center">
+                <!-- Botón modo oscuro -->
+                <button id="theme-toggle" type="button" class="p-2 rounded-full focus:outline-none hover:bg-white/10 transition-colors">
+                    <i id="theme-icon" class="fas fa-moon text-xl"></i>
+                </button>
+                
+                <a href="../../index.html" class="hidden md:inline-flex items-center px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-white/10 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i> Volver
+                </a>
+                
+                <!-- Menú móvil -->
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-full focus:outline-none hover:bg-white/10 transition-colors">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Menú móvil (oculto por defecto) -->
+        <div id="mobile-menu" class="hidden md:hidden gradient-bg pb-4 px-4 transition-all duration-300 ease-out">
+            <div class="flex flex-col space-y-2">
+                <a href="../../index.html" class="px-3 py-2 rounded-md text-base font-medium text-white hover:bg-white/10 transition-colors flex items-center">
                     <i class="fas fa-arrow-left mr-2"></i> Volver
                 </a>
             </div>
@@ -48,22 +144,24 @@
 
     <!-- Contenido Principal -->
     <main class="flex-grow container mx-auto px-4 py-8">
-        <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">Mis Logros</h1>
-            <button id="reset-achievements" class="bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200 transition">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent dark:from-purple-400 dark:to-indigo-400">
+                Mis Logros
+            </h1>
+            <button id="reset-achievements" class="flex items-center px-4 py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50">
                 <i class="fas fa-undo mr-2"></i> Reiniciar Logros
             </button>
         </div>
         
         <!-- Panel de Progreso -->
-        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <h2 class="text-xl font-semibold text-gray-800">Progreso General</h2>
-                    <p class="text-gray-600">Desbloquea todos los logros disponibles</p>
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8 border border-gray-200 dark:border-gray-700 transition-colors">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Progreso General</h2>
+                    <p class="text-gray-600 dark:text-gray-300">Desbloquea todos los logros disponibles</p>
                 </div>
                 
-                <div class="flex items-center">
+                <div class="flex flex-col sm:flex-row items-center gap-6">
                     <div class="relative w-24 h-24">
                         <svg class="w-full h-full" viewBox="0 0 36 36">
                             <path
@@ -84,17 +182,19 @@
                                 stroke="#4f46e5"
                                 stroke-width="3"
                                 stroke-dasharray="0, 100"
+                                class="progress-ring__circle dark:stroke-indigo-400"
                             />
                         </svg>
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <span id="progress-percentage" class="text-lg font-bold text-indigo-600">0%</span>
+                            <span id="progress-percentage" class="text-lg font-bold text-indigo-600 dark:text-indigo-400">0%</span>
                         </div>
                     </div>
-                    <div class="ml-4">
-                        <p class="text-gray-700"><span id="unlocked-count" class="font-bold">0</span> de <span id="total-count" class="font-bold">0</span> logros</p>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-                            <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <div class="text-center sm:text-left">
+                        <p class="text-gray-700 dark:text-gray-300"><span id="unlocked-count" class="font-bold">0</span> de <span id="total-count" class="font-bold">0</span> logros</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2 dark:bg-gray-700">
+                            <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500 dark:bg-indigo-400" style="width: 0%"></div>
                         </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">¡Sigue así para desbloquear todos los logros!</p>
                     </div>
                 </div>
             </div>
@@ -111,28 +211,28 @@
         <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
         
         <div class="fixed inset-0 flex items-center justify-center p-4">
-            <div class="bg-white rounded-xl shadow-xl transform transition-all max-w-md w-full animate-fade-in-up">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl transform transition-all max-w-md w-full animate-fade-in-up border border-gray-200 dark:border-gray-700">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold text-gray-900">Reiniciar Logros</h3>
-                        <button id="modal-close" class="text-gray-400 hover:text-gray-500">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Reiniciar Logros</h3>
+                        <button id="modal-close" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
                     
                     <div class="mb-6">
-                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
-                            <i class="fas fa-exclamation text-red-600 text-xl"></i>
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-900/30 mb-4">
+                            <i class="fas fa-exclamation text-red-600 dark:text-red-400 text-xl"></i>
                         </div>
-                        <p class="text-center text-gray-700 mb-2">¿Estás seguro de que quieres reiniciar todos tus logros?</p>
-                        <p class="text-center text-sm text-gray-500">Esta acción no se puede deshacer y perderás todo tu progreso.</p>
+                        <p class="text-center text-gray-700 dark:text-gray-300 mb-2">¿Estás seguro de que quieres reiniciar todos tus logros?</p>
+                        <p class="text-center text-sm text-gray-500 dark:text-gray-400">Esta acción no se puede deshacer y perderás todo tu progreso.</p>
                     </div>
                     
                     <div class="flex justify-end space-x-3">
-                        <button id="modal-cancel" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition">
+                        <button id="modal-cancel" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             Cancelar
                         </button>
-                        <button id="modal-confirm" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                        <button id="modal-confirm" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors dark:bg-red-700 dark:hover:bg-red-800">
                             Sí, Reiniciar
                         </button>
                     </div>
@@ -140,7 +240,6 @@
             </div>
         </div>
     </div>
-
 
     <script src="../../assets/js/achievements.js"></script>
     <script>
@@ -155,35 +254,60 @@
         const achievements = window.achievements.loadAchievements();
         container.innerHTML = '';
 
+        const colorMap = {
+            'purple': { bg: 'bg-purple-100', text: 'text-purple-600', darkBg: 'bg-purple-900/30', darkText: 'text-purple-300' },
+            'indigo': { bg: 'bg-indigo-100', text: 'text-indigo-600', darkBg: 'bg-indigo-900/30', darkText: 'text-indigo-300' },
+            'blue': { bg: 'bg-blue-100', text: 'text-blue-600', darkBg: 'bg-blue-900/30', darkText: 'text-blue-300' },
+            'green': { bg: 'bg-green-100', text: 'text-green-600', darkBg: 'bg-green-900/30', darkText: 'text-green-300' },
+            'yellow': { bg: 'bg-yellow-100', text: 'text-yellow-600', darkBg: 'bg-yellow-900/30', darkText: 'text-yellow-300' },
+            'red': { bg: 'bg-red-100', text: 'text-red-600', darkBg: 'bg-red-900/30', darkText: 'text-red-300' },
+            'pink': { bg: 'bg-pink-100', text: 'text-pink-600', darkBg: 'bg-pink-900/30', darkText: 'text-pink-300' },
+        };
+
         Object.values(achievements).forEach(achievement => {
             const isUnlocked = achievement.unlocked;
+            const colors = colorMap[achievement.color] || colorMap['indigo'];
+            
             const card = document.createElement('div');
-            card.className = `bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-${achievement.color}-500 mb-4 transition hover:shadow-lg`;
+            card.className = `achievement-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border-l-4 border-${achievement.color}-500 mb-4 transition-colors hover:shadow-lg dark:border-${achievement.color}-400 relative`;
+            
             card.innerHTML = `
                 <div class="p-6">
                     <div class="flex items-start">
                         <div class="flex-shrink-0">
-                            <div class="w-12 h-12 bg-${achievement.color}-100 text-${achievement.color}-600 rounded-full flex items-center justify-center text-xl">
+                            <div class="w-12 h-12 ${colors.bg} ${colors.text} dark:${colors.darkBg} dark:${colors.darkText} rounded-full flex items-center justify-center text-xl transition-colors">
                                 <i class="fas ${isUnlocked ? achievement.icon : 'fa-lock'}"></i>
                             </div>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-lg font-semibold text-gray-800">${achievement.title}</h3>
-                            <p class="text-sm text-gray-600 mt-1">${achievement.description}</p>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">${achievement.title}</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">${achievement.description}</p>
                             <div class="mt-3">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${isUnlocked ? `bg-${achievement.color}-100 text-${achievement.color}-800` : 'bg-gray-100 text-gray-800'}">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${isUnlocked ? `${colors.bg} ${colors.text} dark:${colors.darkBg} dark:${colors.darkText}` : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'} transition-colors">
                                     <i class="fas ${isUnlocked ? 'fa-unlock' : 'fa-lock'} mr-1"></i> ${isUnlocked ? 'Desbloqueado' : 'Bloqueado'}
                                 </span>
-                                ${isUnlocked ? `<p class="text-xs text-gray-500 mt-1">${formatAchievementDate(achievement.date)}</p>` : ''}
+                                ${isUnlocked ? `
+                                <div class="mt-2 flex items-center">
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                                        <i class="fas fa-calendar-alt mr-1"></i> ${formatAchievementDate(achievement.date)}
+                                    </span>
+                                </div>
+                                ` : ''}
                             </div>
                         </div>
                     </div>
+                    ${isUnlocked ? `
+                    <div class="absolute top-0 right-0 mt-2 mr-2">
+                        <span class="text-xs px-2 py-1 rounded-full ${colors.bg} ${colors.text} dark:${colors.darkBg} dark:${colors.darkText}">
+                            <i class="fas fa-check-circle mr-1"></i> Completado
+                        </span>
+                    </div>
+                    ` : ''}
                 </div>
             `;
             container.appendChild(card);
         });
     }
-    
     
     // Formatear fecha del logro
     function formatAchievementDate(dateString) {
@@ -268,8 +392,80 @@
         });
     }
 
+// Función para manejar el modo oscuro
+function setupDarkMode() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    
+    // Verificar preferencia del sistema o localStorage
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme');
+    
+    // Aplicar tema inicial
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('theme', 'light');
+    }
+    
+    // Escuchar cambios en el botón
+    themeToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        
+        if (isDark) {
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+    
+    // Escuchar cambios en las preferencias del sistema
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+    });
+}
+
+    // Función para manejar el menú móvil
+    function setupMobileMenu() {
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            // Cambiar icono
+            const icon = menuButton.querySelector('i');
+            if (isOpen) {
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                icon.classList.replace('fa-times', 'fa-bars');
+            }
+        });
+    }
+
     // Inicialización cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', () => {
+        // Configurar modo oscuro
+        setupDarkMode();
+        
+        // Configurar menú móvil
+        setupMobileMenu();
+
         // Inicializar el sistema de logros
         if (window.achievements) {
             window.achievements.initializeAchievements();
@@ -286,11 +482,11 @@
             if (await handleReset()) {
                 // Mostrar notificación de éxito
                 const notification = document.createElement('div');
-                notification.className = 'fixed top-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg max-w-xs z-50 animate-fade-in-up';
+                notification.className = 'fixed top-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg max-w-xs z-50 animate-fade-in-up dark:bg-green-900/30 dark:border-green-700 dark:text-green-300';
                 notification.innerHTML = `
                     <div class="flex items-start">
                         <div class="flex-shrink-0">
-                            <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                            <i class="fas fa-check-circle text-green-500 dark:text-green-400 text-xl"></i>
                         </div>
                         <div class="ml-3">
                             <h3 class="font-bold">¡Logros reiniciados!</h3>
@@ -313,4 +509,4 @@
     });
     </script>
 </body>
-</html>         
+</html>
