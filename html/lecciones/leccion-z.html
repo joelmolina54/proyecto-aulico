@@ -4,97 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lección Z - GRAFI</title>
-  <!-- Eliminé el favicon duplicado -->
   <link rel="shortcut icon" href="../../assets/images/savila.png" type="image/x-icon">
   <!-- CDNs -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f8fafc;
-    }
-    .gradient-bg {
-      background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
-    }
-    .card-hover {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
-      transition: all 0.3s ease;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.3);
-    }
-    .btn-secondary {
-      background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
-      transition: all 0.3s ease;
-    }
-    .btn-secondary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px -1px rgba(244, 114, 182, 0.3);
-    }
-    .progress-ring__circle {
-      transition: stroke-dashoffset 0.5s ease;
-      transform: rotate(-90deg);
-      transform-origin: 50% 50%;
-    }
-    .animate-bounce-slow {
-      animation: bounce-slow 2s infinite;
-    }
-    @keyframes bounce-slow {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-10px);
+  <link rel="shortcut icon" href="../../assets/images/savila.png" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/temaleccion.css">
+  <link rel="stylesheet" href="../../assets/css/selecciones.css">
+    <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              800: '#1e293b',
+              900: '#0f172a',
+            }
+          }
+        }
       }
     }
-    .fade-in {
-      animation: fadeIn 0.5s ease-in;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .shake {
-      animation: shake 0.5s;
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-5px); }
-      40%, 80% { transform: translateX(5px); }
-    }
-  </style>
+  </script>
 </head>
-<body class="min-h-screen flex flex-col">
-  <!-- Navbar -->
-  <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <a href="../../index.html" class="flex items-center text-xl font-bold text-white hover:text-purple-200 transition">
-        <img src="../../assets/images//savila.png" alt="Logo GRAFI" class="w-8 h-8 mr-2">
-        <span>Grafema</span>
+<body class="bg-gray-50 dark:bg-dark-900 text-gray-800 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+<nav class="gradient-bg dark:bg-gradient-to-r dark:from-purple-900 dark:to-purple-800 text-white shadow-lg dark:shadow-purple-900/50 sticky top-0 z-50 transition-colors duration-300">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    
+    <!-- Logo -->
+    <a href="../../index.html" class="flex items-center text-xl font-bold text-white hover:text-purple-200 dark:text-purple-100 dark:hover:text-purple-300 transition">
+      <img src="../../assets/images/savila.png" alt="Logo GRAFI" class="w-8 h-8 mr-2">
+      <span>Grafema</span>
+    </a>
+    
+    <!-- Botón mobile menu -->
+    <button id="mobile-menu-button" class="md:hidden p-2 rounded-full focus:outline-none bg-white bg-opacity-20 dark:bg-purple-800/30 hover:bg-white hover:bg-opacity-30 dark:hover:bg-purple-700/50 transition">
+      <i class="fas fa-bars text-white dark:text-yellow-300"></i>
+    </button>
+
+    <!-- Contenido del nav (desktop) -->
+    <div class="hidden md:flex items-center space-x-4">
+      <a href="../lecciones.html" class="text-white hover:text-purple-200 dark:text-purple-100 dark:hover:text-purple-300 font-medium transition flex items-center">
+        <i class="fas fa-arrow-left mr-2"></i> Volver
       </a>
-      <div class="flex items-center space-x-4">
-        <a href="../lecciones.html" class="text-white hover:text-purple-200 font-medium transition flex items-center">
-          <i class="fas fa-arrow-left mr-2"></i> Volver
-        </a>
-        <div class="flex items-center">
-          <span class="mr-2 text-sm">Progreso</span>
-          <div class="w-24 bg-white bg-opacity-20 rounded-full h-2">
-            <div id="progress-bar" class="bg-yellow-300 h-2 rounded-full" style="width: 0%"></div>
-          </div>
+      
+      <div class="flex items-center">
+        <span class="mr-2 text-sm text-white dark:text-purple-200">Progreso</span>
+        <div class="w-24 bg-white bg-opacity-20 dark:bg-purple-700/30 rounded-full h-2 overflow-hidden">
+          <div id="progress-bar" class="bg-yellow-300 dark:bg-amber-400 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
+        <button id="dark-mode-toggle" class="ml-4 p-2 rounded-full focus:outline-none bg-white bg-opacity-20 dark:bg-purple-800/30 hover:bg-white hover:bg-opacity-30 dark:hover:bg-purple-700/50 transition">
+          <i class="fas fa-moon text-white dark:text-yellow-300"></i>
+        </button>
       </div>
     </div>
-  </nav>
+  </div>
+
+  <!-- Menú móvil -->
+  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4">
+    <a href="../lecciones.html" class="block text-white dark:text-purple-100 hover:text-purple-200 dark:hover:text-purple-300 py-2 border-b border-white border-opacity-10">Volver</a>
+    <div class="mt-2 flex items-center">
+      <span class="mr-2 text-sm text-white dark:text-purple-200">Progreso</span>
+      <div class="w-24 bg-white bg-opacity-20 dark:bg-purple-700/30 rounded-full h-2 overflow-hidden">
+        <div id="progress-bar-mobile" class="bg-yellow-300 dark:bg-amber-400 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+      </div>
+      <button id="dark-mode-toggle-mobile" class="ml-4 p-2 rounded-full focus:outline-none bg-white bg-opacity-20 dark:bg-purple-800/30 hover:bg-white hover:bg-opacity-30 dark:hover:bg-purple-700/50 transition">
+        <i class="fas fa-moon text-white dark:text-yellow-300"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
 
   <main class="flex-grow container mx-auto px-4 py-8">
     <!-- Encabezado con animación -->
@@ -135,9 +116,7 @@
           </div>
           
           <div class="aspect-w-16 aspect-h-9 mb-4">
-            <iframe id="youtube-video" class="w-full h-64 md:h-96 rounded-lg shadow" src="https://www.youtube.com/embed/YkCn0r1-OPU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          
+            <iframe id="youtube-video" class="w-full h-64 md:h-96 rounded-lg shadow" src="https://www.youtube.com/embed/EII0XT40bFE?si=ZahvI_cbXNzTywvB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           <div class="bg-purple-50 rounded-lg p-4">
             <h3 class="font-medium text-purple-800 mb-2">Resumen del video</h3>
             <p class="text-gray-700 text-sm">La letra Z en español tiene un sonido fricativo que varía según la región, pero suele pronunciarse como /θ/ en España y /s/ en gran parte de Latinoamérica.</p>
@@ -247,12 +226,12 @@
         <p class="text-gray-600 mb-6">Selecciona la letra correcta para completar cada palabra según su sonido.</p>
         
         <div class="space-y-4">
-          <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="z">
+          <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 dark:border-gray-600 ejercicio-container"  data-respuesta="z">
             <div class="md:w-1/3 mb-2 md:mb-0">
-              <span class="text-gray-700">___orro</span>
+              <span class="text-gray-700 dark:text-gray-300">___orro</span>
             </div>
             <div class="md:w-1/3">
-              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500">
+              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600">
                 <option value="">Selecciona una opción</option>
                 <option value="z">Z</option>
                 <option value="s">S</option>
@@ -269,10 +248,10 @@
           
           <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="z">
             <div class="md:w-1/3 mb-2 md:mb-0">
-              <span class="text-gray-700">pa___</span>
+              <span class="text-gray-700 dark:text-gray-300">pa___</span>
             </div>
             <div class="md:w-1/3">
-              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500">
+              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600">
                 <option value="">Selecciona una opción</option>
                 <option value="z">Z</option>
                 <option value="s">S</option>
@@ -289,10 +268,10 @@
           
           <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="z">
             <div class="md:w-1/3 mb-2 md:mb-0">
-              <span class="text-gray-700">me___cla</span>
+              <span class="text-gray-700 dark:text-gray-300"> me___cla</span>
             </div>
             <div class="md:w-1/3">
-              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500">
+              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600">
                 <option value="">Selecciona una opción</option>
                 <option value="z">Z</option>
                 <option value="s">S</option>
@@ -322,14 +301,14 @@
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div id="target-inicial" class="bg-blue-50 border-2 border-dashed border-blue-300 rounded-xl p-4 min-h-32 flex flex-col">
-            <div class="text-center text-blue-700 font-medium mb-2">
+            <div class="text-center text-blue-700 dark:text-blue-300 font-medium mb-2">
               <i class="fas fa-volume-up mr-2"></i> Z inicial
             </div>
             <div class="flex-grow flex flex-wrap gap-2 content-start" id="words-inicial"></div>
           </div>
           
           <div id="target-media" class="bg-purple-50 border-2 border-dashed border-purple-300 rounded-xl p-4 min-h-32 flex flex-col">
-            <div class="text-center text-purple-700 font-medium mb-2">
+            <div class="text-center text-green-700 dark:text-green-300 font-medium mb-2">
               <i class="fas fa-volume-up mr-2"></i> Z media
             </div>
             <div class="flex-grow flex flex-wrap gap-2 content-start" id="words-media"></div>
@@ -344,22 +323,22 @@
         </div>
         
         <div id="palabras-arrastrar" class="flex flex-wrap gap-3 p-4 bg-gray-50 rounded-lg">
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="inicial">
+          <div  class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="inicial">
             <span class="text-gray-800">zorro</span>
           </div>
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="media">
+          <div  class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="media">
             <span class="text-gray-800">pizza</span>
           </div>
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="final">
+          <div  class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="final">
             <span class="text-gray-800">luz</span>
           </div>
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="inicial">
+          <div  class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="inicial">
             <span class="text-gray-800">zapato</span>
           </div>
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="media">
+          <div  class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="media">
             <span class="text-gray-800">mezcla</span>
           </div>
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="final">
+          <div  class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="final">
             <span class="text-gray-800">raíz</span>
           </div>
         </div>
@@ -377,7 +356,7 @@
         </div>
         
         <div class="mt-6 flex justify-between">
-          <button id="reset-ejercicio2" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg font-medium">
+          <button id="reset-ejercicio2" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 px-6 py-2 rounded-lg font-medium">
             <i class="fas fa-redo mr-2"></i> Reiniciar
           </button>
           <button id="check-ejercicio2" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
@@ -405,8 +384,8 @@
         </div>
         
         <div class="mb-6">
-          <label for="dictation-text" class="block text-gray-700 font-medium mb-2">Escribe las palabras que escuches:</label>
-          <textarea id="dictation-text" rows="4" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+          <label for="dictation-text" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Escribe las palabras que escuches:</label>
+          <textarea id="dictation-text" rows="4"class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600"></textarea>
         </div>
         
         <div id="dictation-feedback" class="hidden p-4 rounded-lg bg-purple-50 border border-purple-200 mb-6">
@@ -505,15 +484,23 @@
   </div>
 </div>
 
-
-  <!-- Scripts -->
+  <script src="/assets/js/achievements.js"></script>
+  <script src="../../assets/js/temaleccionesclases.js"></script>
+  <script src="../../assets/js/menu-movil.js"></script>
 <script>
-  // Configuración inicial
+  // Variables globales para el progreso
+  let progresoActual = 0;
+  const progresoPorEjercicio = {
+    ejercicio1: 30,
+    ejercicio2: 30,
+    ejercicio3: 40
+  };
+
+  // Configuración inicial al cargar la página
   document.addEventListener('DOMContentLoaded', function() {
-    // Cargar progreso
-    const progreso = localStorage.getItem('progreso-z') || 0;
-    document.getElementById('progress-bar').style.width = `${progreso}%`;
-    updateProgress(progreso);
+    // Inicializar progreso
+    progresoActual = parseInt(localStorage.getItem('progreso-z')) || 0;
+    updateProgress(progresoActual);
 
     // Configurar pestañas
     setupTabs();
@@ -525,10 +512,10 @@
     setupButtons();
 
     // Comprobar si ya está completado
-    if(progreso == 100) {
+    if(progresoActual === 100) {
       const btnCompletar = document.getElementById('btn-completar');
       btnCompletar.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Lección completada';
-      btnCompletar.classList.add('bg-green-100', 'text-green-800', 'hover:bg-green-100');
+      btnCompletar.classList.add('bg-green-500', 'text-white');
     }
   });
 
@@ -536,6 +523,7 @@
   function updateProgress(percent) {
     document.getElementById('progress-bar').style.width = `${percent}%`;
 
+    // Actualizar anillo de progreso
     const circle = document.getElementById('progress-ring');
     if (circle) {
       const radius = circle.r.baseVal.value;
@@ -574,7 +562,7 @@
     });
   }
 
-  // Drag and drop
+  // Configurar drag and drop
   function setupDragDrop() {
     const draggables = document.querySelectorAll('.draggable-word');
     const targets = document.querySelectorAll('[id^="target-"]');
@@ -618,119 +606,169 @@
     }, { offset: Number.NEGATIVE_INFINITY }).element;
   }
 
-  // Configuración de botones
+  // Configuración de botones (VERSIÓN CORREGIDA)
   function setupButtons() {
     // Ejercicio 1: selección múltiple
-    const checkEjercicio1 = document.getElementById('check-ejercicio1');
-    if (checkEjercicio1) {
-      checkEjercicio1.addEventListener('click', function() {
-        let allCorrect = true;
-        const containers = document.querySelectorAll('.ejercicio-container');
+    document.getElementById('check-ejercicio1').addEventListener('click', function() {
+      let allCorrect = true;
+      const containers = document.querySelectorAll('.ejercicio-container');
 
-        containers.forEach(container => {
-          const select = container.querySelector('.ejercicio-select');
-          const feedback = container.querySelector('.ejercicio-feedback');
-          const correctIcon = container.querySelector('.correct-icon');
-          const incorrectIcon = container.querySelector('.incorrect-icon');
-          const feedbackText = container.querySelector('.feedback-text');
-          const respuestaCorrecta = container.getAttribute('data-respuesta');
+      containers.forEach(container => {
+        const select = container.querySelector('.ejercicio-select');
+        const feedback = container.querySelector('.ejercicio-feedback');
+        const correctIcon = container.querySelector('.correct-icon');
+        const incorrectIcon = container.querySelector('.incorrect-icon');
+        const feedbackText = container.querySelector('.feedback-text');
+        const respuestaCorrecta = container.getAttribute('data-respuesta');
 
-          if (!select || !select.value) {
-            allCorrect = false;
-            return;
+        if (!select || !select.value) {
+          allCorrect = false;
+          return;
+        }
+
+        if (feedback) feedback.classList.remove('hidden');
+
+        if (select.value === respuestaCorrecta) {
+          if (correctIcon) correctIcon.classList.remove('hidden');
+          if (incorrectIcon) incorrectIcon.classList.add('hidden');
+          container.classList.add('border-green-200', 'bg-green-50');
+          container.classList.remove('border-red-200', 'bg-red-50', 'shake');
+          if (feedbackText) {
+            feedbackText.textContent = `¡Correcto! La respuesta es "${respuestaCorrecta.toUpperCase()}".`;
+            feedbackText.className = 'text-sm text-green-600 feedback-text';
           }
-
-          if (feedback) feedback.classList.remove('hidden');
-
-          if (select.value === respuestaCorrecta) {
-            if (correctIcon) correctIcon.classList.remove('hidden');
-            if (incorrectIcon) incorrectIcon.classList.add('hidden');
-            container.classList.add('border-green-200', 'bg-green-50');
-            container.classList.remove('border-red-200', 'bg-red-50', 'shake');
-            if (feedbackText) {
-              feedbackText.textContent = `¡Correcto! La respuesta es "${respuestaCorrecta}".`;
-              feedbackText.className = 'text-sm text-green-600 feedback-text';
-            }
-          } else {
-            if (correctIcon) correctIcon.classList.add('hidden');
-            if (incorrectIcon) incorrectIcon.classList.remove('hidden');
-            container.classList.add('border-red-200', 'bg-red-50', 'shake');
-            container.classList.remove('border-green-200', 'bg-green-50');
-            allCorrect = false;
-            if (feedbackText) {
-              feedbackText.textContent = `Incorrecto. La respuesta correcta es "${respuestaCorrecta}".`;
-              feedbackText.className = 'text-sm text-red-600 feedback-text';
-            }
-          }
-        });
-
-        if (allCorrect) {
-          updateProgress(100);
-          showModal({
-            title: '¡Ejercicio completado!',
-            message: 'Has respondido correctamente todas las preguntas.',
-            icon: 'fas fa-check-circle text-green-500',
-            primaryText: 'Continuar'
-          });
         } else {
-          showModal({
-            title: 'Respuestas incorrectas',
-            message: 'Algunas respuestas no son correctas. Revisa los mensajes de retroalimentación.',
-            icon: 'fas fa-exclamation-circle text-yellow-500',
-            primaryText: 'Entendido'
-          });
+          if (correctIcon) correctIcon.classList.add('hidden');
+          if (incorrectIcon) incorrectIcon.classList.remove('hidden');
+          container.classList.add('border-red-200', 'bg-red-50', 'shake');
+          container.classList.remove('border-green-200', 'bg-green-50');
+          allCorrect = false;
+          if (feedbackText) {
+            feedbackText.textContent = `Incorrecto. La respuesta correcta es "${respuestaCorrecta.toUpperCase()}".`;
+            feedbackText.className = 'text-sm text-red-600 feedback-text';
+          }
         }
       });
-    }
 
-    // Botón Terminar lección
-    const btnCompletar = document.getElementById('btn-completar');
-    if (btnCompletar) {
-      btnCompletar.addEventListener('click', function() {
-        const progreso = parseInt(document.getElementById('progress-bar').style.width) || 0;
-        
-        if (progreso >= 100) {
-          localStorage.setItem('progreso-z', 100);
-          showModal({
-            title: '¡Lección completada!',
-            message: 'Has terminado con éxito esta lección sobre la letra Z.',
-            icon: 'fas fa-check-circle text-green-500',
-            primaryText: 'Volver a lecciones',
-            onPrimary: () => {
-              window.location.href = '../lecciones.html';
-            }
-          });
-        } else {
-          showModal({
-            title: 'Lección incompleta',
-            message: `¡Aún no has completado todos los ejercicios! Tu progreso actual es del ${progreso}%.`,
-            icon: 'fas fa-exclamation-triangle text-yellow-500',
-            primaryText: 'Continuar practicando'
-          });
-        }
-      });
-    }
-
-    // Botón Reiniciar todo
-    const btnReiniciar = document.getElementById('btn-reiniciar-todo');
-    if (btnReiniciar) {
-      btnReiniciar.addEventListener('click', function() {
+      if (allCorrect && progresoActual < 30) {
+        progresoActual = progresoPorEjercicio.ejercicio1;
+        updateProgress(progresoActual);
         showModal({
-          title: 'Reiniciar lección',
-          message: '¿Seguro que quieres reiniciar todo el progreso de esta lección?',
-          icon: 'fas fa-exclamation-triangle text-yellow-500',
-          primaryText: 'Sí, reiniciar',
-          secondaryText: 'Cancelar',
-          onPrimary: () => {
-            localStorage.removeItem('progreso-z');
-            location.reload();
+          title: '¡Ejercicio 1 completado!',
+          message: `Progreso actual: ${progresoActual}% - Completa los demás ejercicios.`,
+          icon: 'fas fa-check-circle text-green-500',
+          primaryText: 'Continuar'
+        });
+      }
+    });
+
+    // Ejercicio 2: clasificación
+    document.getElementById('check-ejercicio2').addEventListener('click', function() {
+      let palabrasCorrectas = 0;
+      const totalPalabras = 6; // Total de palabras a clasificar
+
+      // Verificar palabras en cada categoría
+      document.querySelectorAll('[id^="target-"]').forEach(target => {
+        const posicionEsperada = target.id.split('-')[1];
+        const palabras = target.querySelectorAll('.draggable-word');
+        
+        palabras.forEach(palabra => {
+          if (palabra.getAttribute('data-posicion') === posicionEsperada) {
+            palabrasCorrectas++;
           }
         });
       });
-    }
+
+      if (palabrasCorrectas === totalPalabras && progresoActual < 60) {
+        progresoActual = progresoPorEjercicio.ejercicio1 + progresoPorEjercicio.ejercicio2;
+        updateProgress(progresoActual);
+        showModal({
+          title: '¡Ejercicio 2 completado!',
+          message: `Progreso actual: ${progresoActual}% - Solo falta el dictado.`,
+          icon: 'fas fa-check-circle text-green-500',
+          primaryText: 'Continuar'
+        });
+      } else {
+        showModal({
+          title: '¡Ups! Error en la clasificación',
+          message: `Tienes ${palabrasCorrectas}/${totalPalabras} palabras correctas.`,
+          icon: 'fas fa-exclamation-circle text-yellow-500',
+          primaryText: 'Entendido'
+        });
+      }
+    });
+
+    // Ejercicio 3: dictado
+    document.getElementById('check-dictation').addEventListener('click', function() {
+      const textoUsuario = document.getElementById('dictation-text').value.toLowerCase();
+      const palabrasEsperadas = ['zapato']; // Palabras con Z que debería escuchar
+      const palabrasEncontradas = palabrasEsperadas.filter(palabra => textoUsuario.includes(palabra));
+
+      if (palabrasEncontradas.length === palabrasEsperadas.length) {
+        progresoActual = 100;
+        updateProgress(progresoActual);
+        showModal({
+          title: '¡Dictado perfecto!',
+          message: '¡Has completado el 100% de la lección!',
+          icon: 'fas fa-trophy text-yellow-500',
+          primaryText: 'Finalizar'
+        });
+      } else {
+        showModal({
+          title: 'Buen intento',
+          message: `Encontraste ${palabrasEncontradas.length} de ${palabrasEsperadas.length} palabras.`,
+          icon: 'fas fa-info-circle text-blue-500',
+          primaryText: 'Intentar de nuevo'
+        });
+      }
+    });
+
+    // Botón "Terminar lección" (Versión corregida)
+    document.getElementById('btn-completar').addEventListener('click', function() {
+      if (progresoActual >= 100) {
+        localStorage.setItem('progreso-z', '100');
+        this.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Lección completada';
+        this.classList.add('bg-green-500', 'text-white');
+        
+        showModal({
+          title: '¡Lección completada!',
+          message: 'La lección Z se ha marcado como completada.',
+          icon: 'fas fa-check-circle text-green-500',
+          primaryText: 'Volver a lecciones',
+          onPrimary: () => window.location.href = '../lecciones.html'
+        });
+      } else {
+        showModal({
+          title: 'Lección incompleta',
+          message: `Completa todos los ejercicios (${progresoActual}% actual).`,
+          icon: 'fas fa-exclamation-triangle text-yellow-500',
+          primaryText: 'Entendido'
+        });
+      }
+    });
+
+    // Botón "Reiniciar todo"
+    document.getElementById('btn-reiniciar-todo').addEventListener('click', function() {
+      showModal({
+        title: 'Reiniciar lección',
+        message: '¿Seguro que quieres reiniciar todo tu progreso en esta lección?',
+        icon: 'fas fa-exclamation-triangle text-yellow-500',
+        primaryText: 'Sí, reiniciar',
+        secondaryText: 'Cancelar',
+        onPrimary: () => {
+          localStorage.removeItem('progreso-z');
+          location.reload();
+        }
+      });
+    });
+
+    // Menú de video
+    document.getElementById('video-menu-btn').addEventListener('click', function() {
+      document.getElementById('video-menu').classList.toggle('hidden');
+    });
   }
 
-  // Sistema de modal
+  // Función para mostrar modales
   function showModal({ title, message, icon, primaryText, secondaryText, onPrimary }) {
     const modal = document.getElementById('universal-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -742,16 +780,16 @@
     // Configurar contenido
     modalTitle.textContent = title;
     modalMessage.textContent = message;
-    modalIcon.className = icon + ' text-4xl mb-4';
-    
+    modalIcon.className = icon;
+
     // Configurar botón primario
     primaryBtn.innerHTML = `<i class="fas fa-check mr-2"></i> ${primaryText}`;
     primaryBtn.onclick = function() {
-      if (onPrimary) onPrimary();
       modal.classList.add('hidden');
+      if (onPrimary) onPrimary();
     };
 
-    // Configurar botón secundario si existe
+    // Configurar botón secundario
     if (secondaryText) {
       secondaryBtn.innerHTML = `<i class="fas fa-times mr-2"></i> ${secondaryText}`;
       secondaryBtn.classList.remove('hidden');
@@ -766,17 +804,7 @@
     modal.classList.remove('hidden');
   }
 
-  // Menú de video
-  const videoMenuBtn = document.getElementById('video-menu-btn');
-  if (videoMenuBtn) {
-    videoMenuBtn.addEventListener('click', function() {
-      const videoMenu = document.getElementById('video-menu');
-      if (videoMenu) {
-        videoMenu.classList.toggle('hidden');
-      }
-    });
-  }
-
+  // Funciones del menú de video
   function suggestVideo() {
     showModal({
       title: 'Sugerir video',
@@ -784,21 +812,18 @@
       icon: 'fas fa-info-circle text-blue-500',
       primaryText: 'Enviar sugerencia'
     });
-    const videoMenu = document.getElementById('video-menu');
-    if (videoMenu) videoMenu.classList.add('hidden');
+    document.getElementById('video-menu').classList.add('hidden');
   }
 
   function changeSpeed() {
     showModal({
       title: 'Cambiar velocidad',
-      message: 'Selecciona la velocidad de reproducción del video:',
+      message: 'Selecciona la velocidad de reproducción:',
       icon: 'fas fa-tachometer-alt text-blue-500',
       primaryText: 'Aplicar'
     });
-    const videoMenu = document.getElementById('video-menu');
-    if (videoMenu) videoMenu.classList.add('hidden');
+    document.getElementById('video-menu').classList.add('hidden');
   }
 </script>
-
 </body>
 </html>

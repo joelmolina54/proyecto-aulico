@@ -1,0 +1,114 @@
+/* Efectos para el tema oscuro */
+    .dark {
+    --tw-bg-opacity: 1;
+    }
+
+    .dark .btn-hover-effect::before {
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
+    }
+
+    .dark .progress-container {
+    position: relative;
+    overflow: hidden;
+    }
+    .dark .progress-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.1), 
+        transparent);
+    animation: progressShine 2.5s infinite;
+    z-index: 1;
+    }
+    .dark .progress-bar {
+    background-color: #3b82f6;
+    }
+
+    /* Efecto de brillo al pasar el mouse en modo oscuro */
+    .dark .card-hover-effect:hover {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Transiciones suaves */
+    * {
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    
+    @keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+    }
+    .dark .group:hover {
+    box-shadow: 0 0 0 1px rgba(192, 132, 252, 0.3);
+    }
+    /* Animación para el título */
+    @keyframes titleUnderline {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+    }
+
+    h2 span {
+    animation: titleUnderline 1s ease-out forwards;
+    }
+        /* Efectos para la sección de logros */
+    .dark .recent-achievements-container {
+    position: relative;
+    }
+    .dark .recent-achievements-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(192, 132, 252, 0.5), 
+        transparent);
+    }
+
+    .dark .recent-achievements-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(192, 132, 252, 0.5), 
+        transparent);
+    }
+
+    /* Animación para los iconos de logros */
+    .dark .fa-trophy, .dark .fa-star, .dark .fa-medal {
+    text-shadow: 0 0 8px rgba(216, 180, 254, 0.4);
+    }
+
+    /* Efecto hover para las tarjetas pequeñas */
+    .dark .bg-purple-900\/20:hover {
+    background-color: rgba(76, 29, 149, 0.3) !important;
+    box-shadow: 0 4px 15px -3px rgba(126, 34, 206, 0.2) !important;
+    }
+
+    /* Efecto de brillo sutil */
+    .dark section {
+    position: relative;
+    overflow: hidden;
+    }
+
+    .dark section::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    }

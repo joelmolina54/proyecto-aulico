@@ -14,272 +14,368 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="./assets/css/style.css">
 
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#7952b3',
-            secondary: '#8a71b0',
-            dark: '#2d2d39',
-            success: '#10b981',
-            warning: '#f59e0b',
-            danger: '#ef4444'
-          },
-          fontFamily: {
-            inter: ['Inter', 'sans-serif'],
-            comic: ['"Comic Neue"', 'cursive']
-          },
-          animation: {
-            'float': 'float 3s ease-in-out infinite',
-            'pulse-slow': 'pulse 3s ease infinite'
-          }
-        }
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        primary: '#7952b3',
+        secondary: '#8a71b0',
+        dark: {
+          900: '#0f172a',  // Azul muy oscuro (base)
+          800: '#1e293b',   // Azul oscuro
+          700: '#334155',   // Azul grisáceo
+          600: '#475569'    // Azul más claro
+        },
+        success: '#10b981',
+        warning: '#f59e0b',
+        danger: '#ef4444'
+      },
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+        comic: ['"Comic Neue"', 'cursive']
+      },
+      animation: {
+        'float': 'float 3s ease-in-out infinite',
+        'pulse-slow': 'pulse 3s ease infinite'
+      },
+      backgroundImage: {
+        'dark-gradient': 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e40af 100%)'
       }
     }
-  </script>
+  }
+}
+</script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-inter min-h-screen flex flex-col">
-  <nav class="bg-white shadow-lg sticky top-0 z-50 animate__animated animate__fadeIn">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <a href="./index.html" class="flex items-center text-2xl font-bold text-gray-900 hover:text-primary transition">
-        <img src="./assets/images/savila.png" alt="Logo GRAFI" class="w-10 h-10 mr-2 animate__animated animate__pulse animate__infinite" style="animation-duration: 3s">
-        <span class="hidden sm:inline">Grafema</span>
-      </a>
+<body class="bg-gray-50 dark:bg-dark-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+<nav class="bg-white dark:bg-gradient-to-r dark:from-[#1a1a2e] dark:to-[#111827] shadow-md dark:shadow-xl dark:shadow-purple-900/30 sticky top-0 z-50 animate__animated animate__fadeIn backdrop-blur-md border-b border-gray-200 dark:border-purple-900/40">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    
+    <!-- Logo -->
+    <a href="./index.html" class="flex items-center text-2xl font-bold text-gray-900 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-400 transition">
+      <img src="./assets/images/savila.png" alt="Logo GRAFI" class="w-10 h-10 mr-2 animate__animated animate__pulse animate__infinite" style="animation-duration: 3s">
+      <span class="hidden sm:inline">Grafema</span>
+    </a>
+    
+    <!-- Botones -->
+    <div class="flex items-center space-x-3">
+      <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-purple-900/40 transition-all duration-300" aria-label="Cambiar tema">
+        <i class="fas fa-moon text-gray-700 dark:text-purple-300"></i>
+      </button>
       
-      <div class="flex items-center space-x-4">
-        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 transition" aria-label="Cambiar tema">
-          <i class="fas fa-moon text-gray-700"></i>
-        </button>
-        
-        <button id="mobile-menu-button" class="md:hidden text-2xl p-2" aria-label="Abrir menú">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-      
-      <ul class="hidden md:flex space-x-6 items-center">
-        <li><a href="./index.html" class="text-gray-600 hover:text-primary font-medium transition flex items-center">
-          <i class="fas fa-home mr-1"></i> Inicio</a></li>
-        <li><a href="./html/lecciones.html" class="text-gray-600 hover:text-primary font-medium transition flex items-center">
-          <i class="fas fa-book-open mr-1"></i> Lecciones</a></li>
-        <li><a href="evaluacion.html" class="text-gray-600 hover:text-primary font-medium transition flex items-center">
-          <i class="fas fa-graduation-cap mr-1"></i> Evaluación</a></li>
-      </ul>
+      <button id="mobile-menu-button" class="md:hidden text-2xl p-2 text-gray-700 dark:text-purple-300 hover:text-purple-500 dark:hover:text-purple-400 transition" aria-label="Abrir menú">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
     
-    <!-- Menú móvil desplegable -->
-    <div class="md:hidden hidden bg-white w-full py-2 px-4 shadow-lg" id="mobile-menu">
-      <a href="./index.html" class="block py-2 px-4 text-gray-600 hover:text-primary hover:bg-gray-50 rounded transition flex items-center">
-        <i class="fas fa-home mr-2 w-5"></i> Inicio</a>
-      <a href="./html/lecciones.html" class="block py-2 px-4 text-gray-600 hover:text-primary hover:bg-gray-50 rounded transition flex items-center">
-        <i class="fas fa-book-open mr-2 w-5"></i> Lecciones</a>
-      <a href="evaluacion.html" class="block py-2 px-4 text-gray-600 hover:text-primary hover:bg-gray-50 rounded transition flex items-center">
-        <i class="fas fa-graduation-cap mr-2 w-5"></i> Evaluación</a>
-    </div>
-  </nav>
+    <!-- Menú Desktop -->
+    <ul class="hidden md:flex space-x-6 items-center">
+      <li>
+        <a href="./index.html" class="flex items-center font-medium text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition">
+          <i class="fas fa-home mr-1"></i> Inicio
+        </a>
+      </li>
+      <li>
+        <a href="./html/lecciones.html" class="flex items-center font-medium text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition">
+          <i class="fas fa-book-open mr-1"></i> Lecciones
+        </a>
+      </li>
+      <li>
+        <a href="./evaluacion/evaluacion.html" class="flex items-center font-medium text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition">
+          <i class="fas fa-graduation-cap mr-1"></i> Evaluación
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Menú Móvil -->
+  <div class="md:hidden hidden bg-white dark:bg-[#1f1f2e] w-full py-2 px-4 shadow-lg border-t border-gray-200 dark:border-purple-900/40" id="mobile-menu">
+    <a href="./index.html" class="block py-2 px-4 rounded flex items-center text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-50 dark:hover:bg-purple-900/20 transition">
+      <i class="fas fa-home mr-2 w-5"></i> Inicio
+    </a>
+    <a href="./html/lecciones.html" class="block py-2 px-4 rounded flex items-center text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-50 dark:hover:bg-purple-900/20 transition">
+      <i class="fas fa-book-open mr-2 w-5"></i> Lecciones
+    </a>
+    <a href="./evaluacion/evaluacion.html" class="block py-2 px-4 rounded flex items-center text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-50 dark:hover:bg-purple-900/20 transition">
+      <i class="fas fa-graduation-cap mr-2 w-5"></i> Evaluación
+    </a>
+  </div>
+</nav>
 
-  <main class="flex-grow container mx-auto px-4 py-8">
+
+<main class="bg-white dark:bg-dark-800 flex-grow container mx-auto px-4 py-8  rounded-2xl shadow-sm dark:shadow-lg transition-all duration-500 dark:border dark:border-primary/20">
+
     <section class="text-center mb-12 animate__animated animate__fadeIn">
-      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Aprende los Grafemas</h1>
-      <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">Domina el uso de las letras C, S, Z y X con nuestras lecciones interactivas y divertidas actividades.</p>
-      
-      <div class="flex flex-wrap justify-center gap-4 mb-12">
-        <a href="./html/lecciones.html" class="btn-hover-effect relative overflow-hidden bg-primary hover:bg-purple-800 text-white px-8 py-3 rounded-lg font-semibold text-lg shadow-lg transition transform hover:-translate-y-1">
-          <i class="fas fa-book-open mr-2"></i> Comenzar Lecciones
-        </a>
-        <a href="evaluacion.html" class="btn-hover-effect relative overflow-hidden bg-white hover:bg-gray-100 text-primary border-2 border-primary px-8 py-3 rounded-lg font-semibold text-lg shadow-lg transition transform hover:-translate-y-1">
-          <i class="fas fa-graduation-cap mr-2"></i> Realizar Evaluación
-        </a>
-      </div>
-      
-      <div class="max-w-4xl mx-auto">
-        <img src="https://www.shutterstock.com/image-vector/dysgraphia-dyslexia-learning-difficulties-concept-600nw-2180163409.jpg" alt="Ilustración de aprendizaje" class="w-full h-auto max-h-80 object-contain animate-float">
-      </div>
-    </section>
+  <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-fuchsia-500 to-indigo-500 mb-4">
+    Aprende los Grafemas
+  </h1>
+  <p class="text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-8">
+    Domina el uso de las letras C, S, Z y X con nuestras lecciones interactivas y divertidas actividades.
+  </p>
+  
+  <div class="flex flex-wrap justify-center gap-4 mb-12">
+    <a href="./html/lecciones.html" 
+        class="relative overflow-hidden px-8 py-3 rounded-lg font-semibold text-lg shadow-lg
+              bg-gradient-to-r from-purple-500 via-fuchsia-500 to-indigo-500
+              text-white hover:from-purple-600 hover:via-fuchsia-600 hover:to-indigo-600
+              transition-all transform hover:-translate-y-1">
+      <i class="fas fa-book-open mr-2"></i> Comenzar Lecciones
+    </a>
+    <a href="evaluacion.html" 
+        class="relative overflow-hidden px-8 py-3 rounded-lg font-semibold text-lg shadow-lg
+              bg-white dark:bg-gray-800 text-purple-700 dark:text-purple-400 border-2 border-purple-500
+              hover:bg-purple-50 dark:hover:bg-purple-900/40 transition-all transform hover:-translate-y-1">
+      <i class="fas fa-graduation-cap mr-2"></i> Realizar Evaluación
+    </a>
+  </div>
+  
+  <div class="max-w-4xl mx-auto">
+    <img src="./assets/images/chicaestudiando.png" 
+          alt="Ilustración de aprendizaje" 
+          class="w-full h-auto max-h-80 object-contain animate-float rounded-xl shadow-xl">
+  </div>
+</section>
 
-    <!-- Tarjetas de grafemas -->
-    <section class="mb-16">
-      <h2 class="text-3xl font-bold text-center text-dark mb-8">Grafemas Disponibles</h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Tarjeta C -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-8 border-primary transform transition hover:scale-105 hover:shadow-lg">
-          <div class="p-6">
-            <div class="flex items-center mb-4">
-              <div class="w-14 h-14 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-3xl text-primary mr-4">
-                C
-              </div>
-              <h3 class="text-2xl font-bold text-gray-800">Letra C</h3>
+
+      <!-- Tarjetas de grafemas -->
+  <section class="mb-16">
+    <h2 class="text-3xl font-bold text-center text-dark dark:text-purple-100 mb-8 relative inline-block mx-auto">
+      Grafemas Disponibles
+      <span class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-primary dark:from-purple-500 dark:to-purple-300 rounded-full"></span>
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Tarjeta C -->
+      <div class="bg-white dark:bg-gradient-to-br dark:from-dark-700 dark:to-purple-900/20 border-l-8 border-primary dark:border-purple-400 rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:hover:shadow-purple-900/30 group relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-100 to-white opacity-0 dark:from-purple-900/30 dark:to-purple-900/10 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
+        <div class="p-6 relative z-10">
+          <div class="flex items-center mb-4">
+            <div class="w-14 h-14 rounded-full bg-primary bg-opacity-20 dark:bg-purple-900/30 flex items-center justify-center text-3xl text-primary dark:text-purple-300 mr-4 transition-colors duration-300 group-hover:bg-opacity-30 dark:group-hover:bg-purple-900/40">
+              C
             </div>
-            <p class="text-gray-600 mb-4">Aprende los dos sonidos de la letra C y cuándo usarla.</p>
-            <div class="progress-container mb-4">
-              <div class="progress-bar" style="width: 25%"></div>
-            </div>
-            <a href="./html/lecciones/leccion-c.html" class="inline-block w-full text-center bg-primary bg-opacity-10 text-primary hover:bg-opacity-20 font-medium py-2 px-4 rounded transition">
-              <i class="fas fa-arrow-right mr-2"></i> Aprender ahora
-            </a>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-purple-100">Letra C</h3>
           </div>
-        </div>
-        
-        <!-- Tarjeta S -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-8 border-yellow-500 transform transition hover:scale-105 hover:shadow-lg">
-          <div class="p-6">
-            <div class="flex items-center mb-4">
-              <div class="w-14 h-14 rounded-full bg-yellow-500 bg-opacity-20 flex items-center justify-center text-3xl text-yellow-600 mr-4">
-                S
-              </div>
-              <h3 class="text-2xl font-bold text-gray-800">Letra S</h3>
-            </div>
-            <p class="text-gray-600 mb-4">Domina el sonido estable de la S y sus reglas ortográficas.</p>
-            <div class="progress-container mb-4">
-              <div class="progress-bar bg-yellow-500" style="width: 10%"></div>
-            </div>
-            <a href="./html/lecciones/leccion-s.html" class="inline-block w-full text-center bg-yellow-500 bg-opacity-10 text-yellow-600 hover:bg-opacity-20 font-medium py-2 px-4 rounded transition">
-              <i class="fas fa-arrow-right mr-2"></i> Aprender ahora
-            </a>
+          <p class="text-gray-600 dark:text-purple-200 mb-4">Aprende los dos sonidos de la letra C y cuándo usarla.</p>
+          <div class="progress-container mb-4 bg-gray-200 dark:bg-purple-900/30 rounded-full overflow-hidden">
+            <div class="progress-bar h-2 bg-primary dark:bg-gradient-to-r dark:from-purple-400 dark:to-primary transition-all duration-1000" style="width: 25%"></div>
           </div>
-        </div>
-        
-        <!-- Tarjeta Z -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-8 border-green-500 transform transition hover:scale-105 hover:shadow-lg">
-          <div class="p-6">
-            <div class="flex items-center mb-4">
-              <div class="w-14 h-14 rounded-full bg-green-500 bg-opacity-20 flex items-center justify-center text-3xl text-green-600 mr-4">
-                Z
-              </div>
-              <h3 class="text-2xl font-bold text-gray-800">Letra Z</h3>
-            </div>
-            <p class="text-gray-600 mb-4">Conoce las particularidades de la Z en diferentes regiones.</p>
-            <div class="progress-container mb-4">
-              <div class="progress-bar bg-green-500" style="width: 5%"></div>
-            </div>
-            <a href="./html/lecciones/leccion-z.html" class="inline-block w-full text-center bg-green-500 bg-opacity-10 text-green-600 hover:bg-opacity-20 font-medium py-2 px-4 rounded transition">
-              <i class="fas fa-arrow-right mr-2"></i> Aprender ahora
-            </a>
-          </div>
-        </div>
-        
-        <!-- Tarjeta X -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-8 border-red-500 transform transition hover:scale-105 hover:shadow-lg">
-          <div class="p-6">
-            <div class="flex items-center mb-4">
-              <div class="w-14 h-14 rounded-full bg-red-500 bg-opacity-20 flex items-center justify-center text-3xl text-red-600 mr-4">
-                X
-              </div>
-              <h3 class="text-2xl font-bold text-gray-800">Letra X</h3>
-            </div>
-            <p class="text-gray-600 mb-4">Descubre los múltiples sonidos de la letra X.</p>
-            <div class="progress-container mb-4">
-              <div class="progress-bar bg-red-500" style="width: 0%"></div>
-            </div>
-            <a href="./html/lecciones/leccion-x.html" class="inline-block w-full text-center bg-red-500 bg-opacity-10 text-red-600 hover:bg-opacity-20 font-medium py-2 px-4 rounded transition">
-              <i class="fas fa-arrow-right mr-2"></i> Aprender ahora
-            </a>
-          </div>
+          <a href="./html/lecciones/leccion-c.html" class="inline-flex items-center justify-center w-full text-center bg-primary bg-opacity-10 dark:bg-purple-900/20 text-primary dark:text-purple-300 hover:bg-opacity-20 font-medium py-2 px-4 rounded transition-all duration-300 group-hover:shadow group-hover:shadow-purple-500/20">
+            <i class="fas fa-arrow-right mr-2 transition-transform group-hover:translate-x-1"></i> Aprender ahora
+          </a>
         </div>
       </div>
-    </section>
+      
+      <!-- Tarjeta S -->
+      <div class="bg-white dark:bg-gradient-to-br dark:from-dark-700 dark:to-amber-900/20 border-l-8 border-yellow-500 dark:border-amber-400 rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:hover:shadow-amber-900/30 group relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-amber-100 to-white opacity-0 dark:from-amber-900/30 dark:to-amber-900/10 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
+        <div class="p-6 relative z-10">
+          <div class="flex items-center mb-4">
+            <div class="w-14 h-14 rounded-full bg-yellow-500 bg-opacity-20 dark:bg-amber-900/30 flex items-center justify-center text-3xl text-yellow-600 dark:text-amber-300 mr-4 transition-colors duration-300 group-hover:bg-opacity-30 dark:group-hover:bg-amber-900/40">
+              S
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-amber-100">Letra S</h3>
+          </div>
+          <p class="text-gray-600 dark:text-amber-200 mb-4">Domina el sonido estable de la S y sus reglas ortográficas.</p>
+          <div class="progress-container mb-4 bg-gray-200 dark:bg-amber-900/30 rounded-full overflow-hidden">
+            <div class="progress-bar h-2 bg-yellow-500 dark:bg-gradient-to-r dark:from-amber-400 dark:to-yellow-500 transition-all duration-1000" style="width: 10%"></div>
+          </div>
+          <a href="./html/lecciones/leccion-s.html" class="inline-flex items-center justify-center w-full text-center bg-yellow-500 bg-opacity-10 dark:bg-amber-900/20 text-yellow-600 dark:text-amber-300 hover:bg-opacity-20 font-medium py-2 px-4 rounded transition-all duration-300 group-hover:shadow group-hover:shadow-amber-500/20">
+            <i class="fas fa-arrow-right mr-2 transition-transform group-hover:translate-x-1"></i> Aprender ahora
+          </a>
+        </div>
+      </div>
+      
+      <!-- Tarjeta Z -->
+      <div class="bg-white dark:bg-gradient-to-br dark:from-dark-700 dark:to-emerald-900/20 border-l-8 border-green-500 dark:border-emerald-400 rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:hover:shadow-emerald-900/30 group relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-green-100 to-white opacity-0 dark:from-emerald-900/30 dark:to-emerald-900/10 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
+        <div class="p-6 relative z-10">
+          <div class="flex items-center mb-4">
+            <div class="w-14 h-14 rounded-full bg-green-500 bg-opacity-20 dark:bg-emerald-900/30 flex items-center justify-center text-3xl text-green-600 dark:text-emerald-300 mr-4 transition-colors duration-300 group-hover:bg-opacity-30 dark:group-hover:bg-emerald-900/40">
+              Z
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-emerald-100">Letra Z</h3>
+          </div>
+          <p class="text-gray-600 dark:text-emerald-200 mb-4">Conoce las particularidades de la Z en diferentes regiones.</p>
+          <div class="progress-container mb-4 bg-gray-200 dark:bg-emerald-900/30 rounded-full overflow-hidden">
+            <div class="progress-bar h-2 bg-green-500 dark:bg-gradient-to-r dark:from-emerald-400 dark:to-green-500 transition-all duration-1000" style="width: 5%"></div>
+          </div>
+          <a href="./html/lecciones/leccion-z.html" class="inline-flex items-center justify-center w-full text-center bg-green-500 bg-opacity-10 dark:bg-emerald-900/20 text-green-600 dark:text-emerald-300 hover:bg-opacity-20 font-medium py-2 px-4 rounded transition-all duration-300 group-hover:shadow group-hover:shadow-emerald-500/20">
+            <i class="fas fa-arrow-right mr-2 transition-transform group-hover:translate-x-1"></i> Aprender ahora
+          </a>
+        </div>
+      </div>
+      
+      <!-- Tarjeta X -->
+      <div class="bg-white dark:bg-gradient-to-br dark:from-dark-700 dark:to-rose-900/20 border-l-8 border-red-500 dark:border-rose-400 rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:hover:shadow-rose-900/30 group relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-red-100 to-white opacity-0 dark:from-rose-900/30 dark:to-rose-900/10 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
+        <div class="p-6 relative z-10">
+          <div class="flex items-center mb-4">
+            <div class="w-14 h-14 rounded-full bg-red-500 bg-opacity-20 dark:bg-rose-900/30 flex items-center justify-center text-3xl text-red-600 dark:text-rose-300 mr-4 transition-colors duration-300 group-hover:bg-opacity-30 dark:group-hover:bg-rose-900/40">
+              X
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-rose-100">Letra X</h3>
+          </div>
+          <p class="text-gray-600 dark:text-rose-200 mb-4">Descubre los múltiples sonidos de la letra X.</p>
+          <div class="progress-container mb-4 bg-gray-200 dark:bg-rose-900/30 rounded-full overflow-hidden">
+            <div class="progress-bar h-2 bg-red-500 dark:bg-gradient-to-r dark:from-rose-400 dark:to-red-500 transition-all duration-1000" style="width: 0%"></div>
+          </div>
+          <a href="./html/lecciones/leccion-x.html" class="inline-flex items-center justify-center w-full text-center bg-red-500 bg-opacity-10 dark:bg-rose-900/20 text-red-600 dark:text-rose-300 hover:bg-opacity-20 font-medium py-2 px-4 rounded transition-all duration-300 group-hover:shadow group-hover:shadow-rose-500/20">
+            <i class="fas fa-arrow-right mr-2 transition-transform group-hover:translate-x-1"></i> Aprender ahora
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Sección de logros -->
-    <section class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-8 mb-16 border border-purple-100">
-      <div class="flex flex-col md:flex-row items-center">
+    <!-- Sección de Logros -->
+    <section class="bg-gradient-to-r from-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-purple-900/40 dark:to-indigo-900/40 rounded-2xl p-8 mb-16 border border-purple-100 dark:border-purple-500/30 shadow-lg dark:shadow-purple-900/20 relative overflow-hidden">
+      <!-- Efecto de partículas decorativas -->
+      <div class="absolute inset-0 opacity-10 dark:opacity-15 pointer-events-none">
+        <div class="absolute top-10 left-20 w-8 h-8 rounded-full bg-purple-300 blur-xl"></div>
+        <div class="absolute bottom-20 right-16 w-10 h-10 rounded-full bg-indigo-300 blur-xl"></div>
+        <div class="absolute top-1/3 right-1/4 w-6 h-6 rounded-full bg-blue-300 blur-lg"></div>
+      </div>
+      
+      <div class="flex flex-col md:flex-row items-center relative z-10">
+        <!-- Columna izquierda -->
         <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8">
-          <h2 class="text-3xl font-bold text-dark mb-4">Tus Logros</h2>
-          <p class="text-gray-600 mb-4">Gana insignias y medallas completando lecciones y actividades. ¡Desbloquea todos los logros disponibles!</p>
+          <h2 class="text-3xl font-bold text-dark dark:text-purple-100 mb-4 relative inline-block">
+            Tus Logros
+            <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-primary dark:from-purple-300 dark:to-purple-500 rounded-full"></span>
+          </h2>
+          <p class="text-gray-600 dark:text-purple-200 mb-6">Gana insignias y medallas completando lecciones y actividades. ¡Desbloquea todos los logros disponibles!</p>
           
           <div class="grid grid-cols-2 gap-4">
-            <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-              <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-2">
+            <!-- Tarjeta de contador de logros -->
+            <div class="bg-white dark:bg-purple-900/20 p-4 rounded-lg shadow-sm dark:shadow-none text-center border border-gray-100 dark:border-purple-800/50 transition-all hover:shadow-md dark:hover:shadow-purple-900/10 hover:-translate-y-1">
+              <div class="w-12 h-12 bg-yellow-100 dark:bg-amber-900/30 text-yellow-600 dark:text-amber-300 rounded-full flex items-center justify-center text-2xl mx-auto mb-2 transition-colors">
                 <i class="fas fa-trophy"></i>
               </div>
-              <p class="font-medium">3/10 Logros</p>
+              <p class="font-medium text-gray-700 dark:text-purple-100 achievement-counter">0/0 Logros</p>
             </div>
             
-            <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-              <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-2">
+            <!-- Tarjeta de porcentaje -->
+            <div class="bg-white dark:bg-purple-900/20 p-4 rounded-lg shadow-sm dark:shadow-none text-center border border-gray-100 dark:border-purple-800/50 transition-all hover:shadow-md dark:hover:shadow-purple-900/10 hover:-translate-y-1">
+              <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 rounded-full flex items-center justify-center text-2xl mx-auto mb-2 transition-colors">
                 <i class="fas fa-star"></i>
               </div>
-              <p class="font-medium">25% Completado</p>
+              <p class="font-medium text-gray-700 dark:text-purple-100 achievement-percentage">0% Completado</p>
             </div>
           </div>
         </div>
         
+        <!-- Columna derecha -->
         <div class="md:w-1/2">
-          <div class="bg-white rounded-xl p-6 shadow-md">
-            <h3 class="text-xl font-semibold mb-4 flex items-center">
-              <i class="fas fa-medal text-yellow-500 mr-2"></i>
+          <div class="bg-white dark:bg-purple-900/20 rounded-xl p-6 shadow-md dark:shadow-none border border-gray-100 dark:border-purple-800/50">
+            <h3 class="text-xl font-semibold mb-4 flex items-center text-gray-800 dark:text-purple-100">
+              <i class="fas fa-medal text-yellow-500 dark:text-amber-300 mr-2"></i>
               Logros Recientes
             </h3>
             
-            <div class="space-y-3">
-              <div class="flex items-center p-3 bg-green-50 rounded-lg">
-                <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center mr-3">
-                  <i class="fas fa-check"></i>
-                </div>
-                <div>
-                  <h4 class="font-medium">Primera Visita</h4>
-                  <p class="text-sm text-gray-500">Completado hoy</p>
-                </div>
-              </div>
-              
-              <div class="flex items-center p-3 bg-blue-50 rounded-lg">
-                <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-3">
-                  <i class="fas fa-book"></i>
-                </div>
-                <div>
-                  <h4 class="font-medium">Iniciando el Aprendizaje</h4>
-                  <p class="text-sm text-gray-500">Completado ayer</p>
-                </div>
+            <div class="space-y-3 recent-achievements-container min-h-[120px]">
+              <!-- Los logros recientes se insertarán aquí dinámicamente -->
+              <div class="text-center py-4 text-gray-500 dark:text-purple-300 dark:bg-purple-900">
+                <i class="fas fa-lock-open text-2xl mb-2 opacity-50"></i>
+                <p>Aún no has desbloqueado logros</p>
               </div>
             </div>
             
-            <a href="./html/logro.html" class="inline-block mt-4 text-primary hover:text-purple-800 font-medium transition flex items-center">
-              Ver todos los logros <i class="fas fa-chevron-right ml-1"></i>
+            <a href="./html/logros/logros.html" class="inline-flex items-center mt-4 text-primary dark:text-purple-300 hover:text-purple-800 dark:hover:text-purple-200 font-medium transition group">
+              Ver todos los logros
+              <i class="fas fa-chevron-right ml-2 group-hover:translate-x-1 transition-transform"></i>
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Sección de evaluación rápida -->
-    <section class="mb-16">
-      <div class="bg-dark text-white rounded-2xl p-8 md:p-12">
-        <div class="flex flex-col md:flex-row items-center">
-          <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8">
-            <h2 class="text-3xl font-bold mb-4">Evalúa tu Conocimiento</h2>
-            <p class="text-gray-300 mb-6">Realiza nuestra evaluación rápida para medir tu dominio de los grafemas y recibir recomendaciones personalizadas.</p>
-            <a href="evaluacion.html" class="inline-flex items-center bg-white text-dark hover:bg-gray-200 font-semibold px-6 py-3 rounded-lg transition transform hover:-translate-y-1 shadow-lg">
-              <i class="fas fa-play mr-2"></i> Comenzar Evaluación
-            </a>
-          </div>
-          
-          <div class="md:w-1/2">
-            <div class="bg-white bg-opacity-10 p-6 rounded-xl border border-white border-opacity-20">
-              <h3 class="text-xl font-semibold mb-4 flex items-center">
-                <i class="fas fa-chart-line mr-2"></i>
-                Tu Progreso
-              </h3>
-              
-              <div class="mb-6">
-                <div class="flex justify-between mb-1">
-                  <span class="font-medium">Letra C</span>
-                  <span class="font-bold">25%</span>
-                </div>
-                <div class="progress-container">
-                  <div class="progress-bar bg-white" style="width: 25%"></div>
-                </div>
-              </div>
-              
-              <canvas id="mini-progress-chart" height="150"></canvas>
+<!-- Sección de evaluación en index.html -->
+<section class="mb-16">
+  <div class="bg-gradient-to-r from-purple-800 to-indigo-900 text-white rounded-2xl p-8 md:p-12 shadow-xl">
+    <div class="flex flex-col md:flex-row items-center">
+      <!-- Columna izquierda -->
+      <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+        <h2 class="text-3xl font-bold mb-4">Historial de Evaluaciones</h2>
+        
+        <div id="no-results-message">
+          <p class="text-purple-200 mb-6">Realiza tu primera evaluación para comenzar a ver resultados.</p>
+          <a href="./evaluacion/evaluacion.html" class="inline-flex items-center bg-white text-purple-700 hover:bg-gray-100 font-semibold px-6 py-3 rounded-lg transition transform hover:-translate-y-1 shadow-lg hover:shadow-xl duration-300">
+            <i class="fas fa-play mr-2"></i> Comenzar Evaluación
+          </a>
+        </div>
+        
+        <div id="results-container" class="hidden">
+          <div class="flex items-center mb-4">
+            <div class="relative w-20 h-20 mr-4">
+              <svg class="w-full h-full" viewBox="0 0 100 100">
+                <circle class="text-white opacity-20" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+                <circle id="result-ring-index" class="text-yellow-300" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+              </svg>
+              <div id="result-score-index" class="absolute inset-0 flex items-center justify-center text-xl font-bold">0%</div>
+            </div>
+            <div>
+              <h3 id="result-title-index" class="text-xl font-bold"></h3>
+              <p id="result-message-index" class="text-purple-200 text-sm"></p>
+              <p id="attempts-count" class="text-purple-300 text-xs mt-1"></p>
             </div>
           </div>
+          
+          <div class="flex space-x-4">
+            <a href="./evaluacion/evaluacion.html" class="flex-1 inline-flex items-center justify-center bg-white text-purple-700 hover:bg-gray-100 font-semibold px-4 py-2 rounded-lg transition shadow-lg">
+              <i class="fas fa-plus mr-2"></i> Nuevo Intento
+            </a>
+            <button id="reset-progress" class="flex-1 inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg transition shadow-lg">
+              <i class="fas fa-trash-alt mr-2"></i> Reiniciar
+            </button>
+          </div>
         </div>
       </div>
-    </section>
+      
+      <!-- Columna derecha con gráfico -->
+      <div class="md:w-1/2 w-full">
+        <div class="bg-white bg-opacity-10 p-6 rounded-xl border border-white border-opacity-20 backdrop-blur-sm h-full">
+          <h3 class="text-xl font-semibold mb-4 flex items-center">
+            <i class="fas fa-history mr-2 text-yellow-300"></i>
+            Progreso General
+          </h3>
+          <div class="h-64">
+            <canvas id="progress-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Modal para confirmar reinicio -->
+<div id="reset-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity duration-300">
+  <div class="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-xl p-8 max-w-md w-full mx-4 shadow-2xl border border-blue-500/30">
+    <div class="text-center">
+      <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="fas fa-exclamation text-white text-2xl"></i>
+      </div>
+      <h3 class="text-2xl font-bold mb-2 text-white">¿Reiniciar progreso?</h3>
+      <p class="text-purple-200 mb-6">Esta acción eliminará todos tus resultados históricos y no se puede deshacer.</p>
+      
+      <div class="flex justify-center space-x-4">
+        <button id="cancel-reset" class="bg-white bg-opacity-10 hover:bg-opacity-20 text-white px-6 py-2 rounded-lg font-medium transition">
+          Cancelar
+        </button>
+        <button id="confirm-reset" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition">
+          Sí, Reiniciar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
   </main>
 
-  <footer class="bg-dark text-gray-300 py-12">
+  <footer class="bg-dark-800 dark:bg-gradient-to-b dark:from-dark-900 dark:to-blue-900/50 text-gray-300 py-12">
     <div class="container mx-auto px-4">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
         <div>
@@ -348,5 +444,274 @@
     <script src="/assets/js/menu-movil.js"></script>
     <script src="/assets/js/tema-oscuro.js"></script>
     <script src="/assets/js/grafica.js"></script>
+    <script src="/assets/js/achievements.js"></script>       
+<!-- Script para mostrar resultados -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Script de reinicio cargado'); 
+    // Obtener historial guardado
+  const evaluationHistory = JSON.parse(localStorage.getItem('evaluationHistory')) || [];
+
+ // Elementos del DOM
+  const resetBtn = document.getElementById('reset-progress');
+  const resetModal = document.getElementById('reset-modal');
+  const cancelReset = document.getElementById('cancel-reset');
+  const confirmReset = document.getElementById('confirm-reset');
+  const modalContent = resetModal.querySelector('div > div');
+
+    // Verifica que todos los elementos existen
+  if (!resetBtn || !resetModal || !cancelReset || !confirmReset || !modalContent) {
+    console.error('No se encontraron todos los elementos necesarios para el modal');
+    return;
+  }
+
+  
+  // Mostrar resultados si existen
+  if (evaluationHistory.length > 0) {
+    updateResultsDisplay(evaluationHistory);
+  }
+  
+ // Configurar botón de reinicio
+  resetBtn.addEventListener('click', function() {
+    console.log('Botón de reinicio clickeado');
+    resetModal.classList.remove('hidden');
+    setTimeout(() => {
+      modalContent.classList.remove('scale-95', 'opacity-0');
+    }, 10);
+  });
+// Configurar modal
+  cancelReset.addEventListener('click', closeModal);
+  confirmReset.addEventListener('click', function() {
+    console.log('Confirmado reinicio de progreso');
+    localStorage.removeItem('evaluationHistory');
+    closeModal();
+    location.reload(); // Recargar la página para reflejar los cambios
+  });
+
+  
+function closeModal() {
+    console.log('Cerrando modal');
+    modalContent.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+      resetModal.classList.add('hidden');
+    }, 300);
+  }
+});
+  // Función para actualizar la visualización
+  function updateResultsDisplay(history) {
+    document.getElementById('no-results-message').classList.add('hidden');
+    document.getElementById('results-container').classList.remove('hidden');
+    
+    // Calcular promedio
+    const totalAttempts = history.length;
+    const averageScore = Math.round(history.reduce((sum, attempt) => sum + attempt.percentage, 0) / totalAttempts);
+    
+    // Actualizar porcentaje
+    document.getElementById('result-score-index').textContent = `${averageScore}%`;
+    document.getElementById('attempts-count').textContent = `${totalAttempts} intento${totalAttempts !== 1 ? 's' : ''}`;
+    
+    // Actualizar anillo de progreso
+    const circle = document.getElementById('result-ring-index');
+    const radius = circle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (averageScore / 100) * circumference;
+    circle.style.strokeDasharray = circumference;
+    circle.style.strokeDashoffset = circumference;
+    setTimeout(() => {
+      circle.style.strokeDashoffset = offset;
+    }, 100);
+    
+    // Actualizar mensaje
+    const title = document.getElementById('result-title-index');
+    const message = document.getElementById('result-message-index');
+    
+    if (averageScore >= 80) {
+      title.textContent = "¡Dominio Excelente!";
+      message.textContent = `Promedio de ${averageScore}% en tus evaluaciones`;
+    } else if (averageScore >= 60) {
+      title.textContent = "¡Buen Progreso!";
+      message.textContent = `Promedio de ${averageScore}% en tus evaluaciones`;
+    } else {
+      title.textContent = "¡Sigue Practicando!";
+      message.textContent = `Promedio de ${averageScore}% en tus evaluaciones`;
+    }
+    
+    // Crear gráfico de barras horizontales
+    const ctx = document.getElementById('progress-chart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: history.map((_, i) => `Intento ${i + 1}`),
+        datasets: [{
+          label: 'Porcentaje',
+          data: history.map(attempt => attempt.percentage),
+          backgroundColor: [
+            'rgba(253, 224, 71, 0.7)',
+            'rgba(124, 58, 237, 0.7)',
+            'rgba(74, 222, 128, 0.7)',
+            'rgba(96, 165, 250, 0.7)',
+            'rgba(244, 63, 94, 0.7)'
+          ].concat(Array(5).fill('rgba(156, 163, 175, 0.7)')),
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+          borderWidth: 1,
+          borderRadius: 4
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 100,
+            ticks: {
+              color: 'rgba(255, 255, 255, 0.7)',
+              callback: function(value) {
+                return value + '%';
+              }
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          },
+          y: {
+            ticks: {
+              color: 'rgba(255, 255, 255, 0.7)'
+            },
+            grid: {
+              display: false
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `${context.raw}% de aciertos`;
+              }
+            }
+          }
+        },
+        animation: {
+          duration: 1000
+        }
+      }
+    });
+  }
+</script>
+
+<!-- Estilos para el modal -->
+<style>
+  #reset-modal div {
+    transition: all 0.3s ease-out;
+  }
+  
+  #reset-modal div:not(.scale-95) {
+    transform: scale(1);
+    opacity: 1;
+  }
+  
+  .progress-bar-animation {
+    animation: progressAnimation 1s ease-out forwards;
+  }
+  
+  @keyframes progressAnimation {
+    from { width: 0%; }
+    to { width: var(--progress-width); }
+  }
+</style>
+<script>
+// Función para actualizar la sección de logros en el index
+function updateAchievementsSection() {
+    // Verificar si las funciones necesarias están disponibles
+    if (typeof getAchievementProgress === 'undefined' || typeof loadAchievements === 'undefined') {
+        console.error('El archivo achievements.js no se ha cargado correctamente');
+        return;
+    }
+
+    // Obtener progreso de logros
+    const progress = getAchievementProgress();
+    
+    // Actualizar contadores
+    const counterElement = document.querySelector('.achievement-counter');
+    const percentageElement = document.querySelector('.achievement-percentage');
+    
+    if (counterElement) {
+        counterElement.textContent = `${progress.unlocked}/${progress.total} Logros`;
+    }
+    
+    if (percentageElement) {
+        percentageElement.textContent = `${progress.percentage}% Completado`;
+    }
+    
+    // Mostrar logros recientes (últimos 3 desbloqueados)
+    const achievements = loadAchievements();
+    const recentAchievements = Object.values(achievements)
+        .filter(a => a.unlocked)
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 3);
+    
+    const container = document.querySelector('.recent-achievements-container');
+    if (!container) return;
+    
+    if (recentAchievements.length > 0) {
+        container.innerHTML = '';
+        recentAchievements.forEach(achievement => {
+            container.innerHTML += `
+                <div class="flex items-center p-3 bg-gray-50 rounded-lg mb-2 last:mb-0 dark:bg-purple-600/20">
+                    <div class="w-10 h-10 bg-${achievement.color}-100 text-${achievement.color}-600 rounded-full flex items-center justify-center text-xl mr-3">
+                        <i class="fas ${achievement.icon}"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-medium">${achievement.title}</h4>
+                        <p class="text-sm text-gray-500">${formatAchievementDate(achievement.date)}</p>
+                    </div>
+                </div>
+            `;
+        });
+    } else {
+        container.innerHTML = `
+            <div class="text-center py-4 text-gray-500">
+                Aún no has desbloqueado logros
+            </div>
+        `;
+    }
+}
+
+// Función para formatear fecha (consistente con tu página de logros)
+function formatAchievementDate(dateString) {
+    if (!dateString) return 'recientemente';
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) return 'hoy';
+    if (diffDays === 1) return 'ayer';
+    if (diffDays < 7) return `hace ${diffDays} días`;
+    return date.toLocaleDateString();
+}
+
+// Cargar cuando la página esté lista
+document.addEventListener('DOMContentLoaded', () => {
+    // Actualizar la sección de logros
+    updateAchievementsSection();
+    
+    // Escuchar eventos de nuevos logros desbloqueados
+    document.addEventListener('achievementUnlocked', updateAchievementsSection);
+});
+
+// Si necesitas cargar el achievements.js dinámicamente
+if (typeof getAchievementProgress === 'undefined') {
+    const script = document.createElement('script');
+    script.src = './assets/js/achievements.js';
+    script.onload = updateAchievementsSection;
+    document.body.appendChild(script);
+}
+</script>
+
 </body>
 </html>

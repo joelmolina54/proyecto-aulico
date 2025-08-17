@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación de Grafemas | GRAFI</title>
+<link rel="shortcut icon" href="assets/images/savila.png" type="image/x-icon">
+<!-- CDNs -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="../assets/images/savila.png" type="image/x-icon">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+        extend: {
+            colors: {
+            primary: {
+                50: '#f5f3ff',
+                100: '#ede9fe',
+                200: '#ddd6fe',
+                300: '#c4b5fd',
+                400: '#a78bfa',
+                500: '#8b5cf6',
+                600: '#7c3aed',
+                700: '#6d28d9',
+                800: '#5b21b6',
+                900: '#4c1d95',
+            },
+            secondary: {
+                50: '#eef2ff',
+                100: '#e0e7ff',
+                200: '#c7d2fe',
+                300: '#a5b4fc',
+                400: '#818cf8',
+                500: '#6366f1',
+                600: '#4f46e5',
+                700: '#4338ca',
+                800: '#3730a3',
+                900: '#312e81',
+            }
+            }
+        }
+        }
+    }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+        --color-primary: #7c3aed;
+        --color-secondary: #4f46e5;
+        --color-light: #a78bfa;
+        --color-success: #10b981;
+        --color-error: #ef4444;
+        --color-warning: #f59e0b;
+        }
+        body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8fafc;
+        }
+        .dark body {
+        background-color: #0f172a;
+        }
+        .gradient-bg {
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+        }
+        .progress-ring {
+        transition: stroke-dashoffset 0.5s ease;
+        }
+        .question-card {
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--color-primary);
+        }
+        .dark .question-card {
+        background-color: #1e293b;
+        color: #f8fafc;
+        }
+        .question-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.3);
+        }
+        .option-item {
+        transition: all 0.2s ease;
+        }
+        .dark .option-item {
+        background-color: #334155;
+        color: #e2e8f0;
+        }
+        .option-item:hover {
+        transform: translateX(5px);
+        }
+        .btn-evaluation {
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+        transition: all 0.3s ease;
+        }
+        .btn-evaluation:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.4);
+        }
+        .correct-answer {
+        background-color: rgba(16, 185, 129, 0.1);
+        border-left: 4px solid var(--color-success);
+        }
+        .dark .correct-answer {
+        background-color: rgba(16, 185, 129, 0.2);
+        }
+        .wrong-answer {
+        background-color: rgba(239, 68, 68, 0.1);
+        border-left: 4px solid var(--color-error);
+        }
+        .dark .wrong-answer {
+        background-color: rgba(239, 68, 68, 0.2);
+        }
+        .explanation {
+        background-color: rgba(245, 158, 11, 0.1);
+        border-left: 4px solid var(--color-warning);
+        }
+        .dark .explanation {
+        background-color: rgba(245, 158, 11, 0.2);
+        }
+        .dark .text-gray-800 {
+        color: #f8fafc;
+        }
+        .dark .text-gray-600 {
+        color: #cbd5e1;
+        }
+        .dark .bg-white {
+        background-color: #1e293b;
+        }
+        .dark .text-gray-700 {
+        color: #e2e8f0;
+        }
+        .dark .bg-purple-50 {
+        background-color: #1e1b4b;
+        }
+        .dark .border-purple-100 {
+        border-color: #3730a3;
+        }
+        .dark .text-purple-800 {
+        color: #c4b5fd;
+        }
+        .dark footer {
+        background-color: #020617;
+        }
+        .dark #answers-section .bg-white {
+        background-color: #1e293b;
+        }
+        .dark #answers-section .text-gray-700 {
+        color: #e2e8f0;
+        }
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+<!-- Navbar -->
+    <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <a href="../index.html" class="flex items-center text-xl font-bold text-white hover:text-purple-200 transition">
+            <img src="../assets/images/savila.png" alt="Logo GRAFI" class="w-8 h-8 mr-2">
+            <span>Grafema</span>
+        </a>
+        <div class="flex items-center space-x-4">
+            <!-- Botón de dark mode -->
+            <button id="theme-toggle" class="p-2 rounded-full focus:outline-none">
+            <i class="fas fa-moon hidden dark:block"></i>
+            <i class="fas fa-sun block dark:hidden"></i>
+            </button>
+            <a href="../index.html" class="text-white hover:text-purple-200 font-medium transition flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> <span class="hidden sm:inline">Volver</span>
+            </a>
+            <!-- Menú móvil -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md focus:outline-none">
+            <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        </div>
+        <!-- Menú móvil (oculto por defecto) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-purple-800 px-4 py-2">
+        <a href="../index.html" class="block text-white hover:text-purple-200 font-medium transition py-2">
+            <i class="fas fa-arrow-left mr-2"></i> Volver al inicio
+        </a>
+        </div>
+    </nav>
+    <!-- Contenido Principal -->
+<main class="flex-grow container mx-auto px-4 py-8">
+    <!-- Encabezado -->
+    <header class="text-center mb-12">
+    <div class="relative w-32 h-32 mx-auto mb-6">
+        <svg class="w-full h-full" viewBox="0 0 100 100">
+        <circle class="text-gray-200" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+        <circle id="progress-ring" class="text-purple-600 progress-ring" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center text-4xl font-bold text-purple-700">
+        <i class="fas fa-star"></i>
+        </div>
+    </div>
+    <h1 class="text-4xl font-bold text-gray-800 mb-2">Evaluación de Grafemas</h1>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Demuestra lo que has aprendido sobre los sonidos de las letras</p>
+    </header>
+
+    <!-- Sección de Evaluación -->
+    <section class="mb-12">
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <!-- Barra de progreso de la evaluación -->
+        <div class="bg-purple-50 px-6 py-4 border-b border-purple-100">
+        <div class="flex items-center justify-between">
+            <span class="font-medium text-purple-800">Progreso de la evaluación</span>
+            <span id="progress-text" class="font-bold text-purple-600">0/5</span>
+        </div>
+        <div class="w-full bg-purple-100 rounded-full h-2.5 mt-2">
+            <div id="progress-bar" class="bg-purple-600 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+        </div>
+
+        <!-- Contenedor de preguntas -->
+        <div class="p-6" id="questions-container">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+        </div>
+
+        <!-- Controles de navegación -->
+        <div class="bg-purple-50 px-6 py-4 border-t border-purple-100 flex justify-between">
+        <button id="btn-prev" class="bg-white text-purple-600 border border-purple-300 px-4 py-2 rounded-lg font-medium shadow-sm hover:bg-purple-50 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            <i class="fas fa-arrow-left mr-2"></i> Anterior
+        </button>
+        <button id="btn-next" class="btn-evaluation text-white px-6 py-2 rounded-lg font-medium shadow">
+            Siguiente <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+        <button id="btn-finish" class="btn-evaluation text-white px-6 py-2 rounded-lg font-medium shadow hidden">
+            Finalizar <i class="fas fa-check ml-2"></i>
+        </button>
+        </div>
+    </div>
+    </section>
+
+    <!-- Sección de Resultados (oculta inicialmente) -->
+    <section id="results-section" class="hidden mb-12">
+    <div class="bg-gradient-to-r from-purple-700 to-purple-900 text-white rounded-xl shadow-lg overflow-hidden p-8 text-center">
+        <div class="max-w-2xl mx-auto">
+        <div class="w-32 h-32 mx-auto mb-6 relative">
+            <svg class="w-full h-full" viewBox="0 0 100 100">
+            <circle class="text-white opacity-20" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+            <circle id="result-ring" class="text-yellow-300 progress-ring" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+            </svg>
+            <div id="result-score" class="absolute inset-0 flex items-center justify-center text-3xl font-bold"></div>
+        </div>
+        
+        <h2 class="text-3xl font-bold mb-4" id="result-title">Resultado de la Evaluación</h2>
+        <p class="text-purple-100 mb-6" id="result-message"></p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white bg-opacity-10 p-6 rounded-lg border border-white border-opacity-20">
+            <h3 class="font-semibold mb-2 flex items-center justify-center">
+                <i class="fas fa-check-circle mr-2 text-green-300"></i>
+                <span id="correct-answers">0</span> Correctas
+            </h3>
+            </div>
+            <div class="bg-white bg-opacity-10 p-6 rounded-lg border border-white border-opacity-20">
+            <h3 class="font-semibold mb-2 flex items-center justify-center">
+                <i class="fas fa-times-circle mr-2 text-red-300"></i>
+                <span id="wrong-answers">0</span> Incorrectas
+            </h3>
+            </div>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="../html/lecciones.html" class="bg-white text-purple-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium shadow-md transition">
+            <i class="fas fa-book mr-2"></i> Continuar Aprendiendo
+            </a>
+            <button id="btn-retry" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-6 py-3 rounded-lg font-medium shadow-md transition">
+            <i class="fas fa-redo mr-2"></i> Intentar Nuevamente
+            </button>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Sección de Respuestas Detalladas -->
+    <section id="answers-section" class="hidden mb-12">
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="bg-purple-600 text-white px-6 py-4">
+            <h2 class="text-xl font-bold">Respuestas detalladas</h2>
+            <p class="text-purple-100">Revisa tus respuestas correctas e incorrectas</p>
+        </div>
+        
+        <div class="p-6 space-y-6" id="answers-container">
+            <!-- Las respuestas detalladas se insertarán aquí -->
+        </div>
+    </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-gray-300 py-8">
+    <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+        <a href="../index.html" class="flex items-center text-xl font-bold text-white">
+            <img src="../assets/images/savila.png" alt="Logo GRAFI" class="w-8 h-8 mr-2">
+            <span>Grafema</span>
+        </a>
+        <p class="mt-2 text-sm">Aprendizaje interactivo de grafemas y fonemas.</p>
+        </div>
+        
+        <div class="flex space-x-4">
+        <a href="https://www.facebook.com/profile.php?id=100009295328147&locale=es_LA" class="text-gray-400 hover:text-white transition">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/joelmolina54/" class="text-gray-400 hover:text-white transition">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://github.com/joelmolina54" class="text-gray-400 hover:text-white transition">
+            <i class="fab fa-github"></i>
+        </a>
+        </div>
+    </div>
+    
+    <div class="border-t border-gray-700 mt-6 pt-6 text-center text-sm">
+        <p>&copy; 2025 GRAFI. Todos los derechos reservados.</p>
+    </div>
+    </div>
+</footer>
+    <script>
+        // Controlador del tema oscuro
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Comprobar preferencias del usuario
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+        } else {
+        html.classList.remove('dark');
+        }
+        
+        // Alternar tema
+        themeToggle.addEventListener('click', () => {
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // Menú móvil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+<script>
+    // Datos de la evaluación
+    const evaluationData = {
+    title: "Evaluación de Grafemas",
+    description: "Demuestra tu conocimiento sobre los sonidos de las letras",
+    questions: [
+        {
+        id: 1,
+        text: "¿Cuál es el sonido principal de la letra S en español?",
+        options: [
+            { id: 1, text: "/k/ como en 'casa'", correct: false },
+            { id: 2, text: "/s/ como en 'sol'", correct: true },
+            { id: 3, text: "/θ/ como en 'zapato' (España)", correct: false },
+            { id: 4, text: "/ch/ como en 'chico'", correct: false }
+        ],
+        explanation: "La letra S en español siempre representa el sonido /s/, aunque en algunas variantes dialectales puede sonar ligeramente diferente."
+        },
+        {
+        id: 2,
+        text: "¿En cuál de estas palabras la letra C suena como /k/?",
+        options: [
+            { id: 1, text: "Cielo", correct: false },
+            { id: 2, text: "Cebra", correct: false },
+            { id: 3, text: "Casa", correct: true },
+            { id: 4, text: "Circo", correct: false }
+        ],
+        explanation: "La letra C suena como /k/ cuando va antes de las vocales a, o, u o de consonantes, como en 'casa', 'coco' o 'claro'."
+        },
+        {
+        id: 3,
+        text: "Selecciona la palabra que contiene un sonido diferente:",
+        options: [
+            { id: 1, text: "Casa", correct: false },
+            { id: 2, text: "Sapo", correct: false },
+            { id: 3, text: "Cebra", correct: true },
+            { id: 4, text: "Sol", correct: false }
+        ],
+        explanation: "En 'cebra' la C suena como /s/ (o /θ/ en España), mientras que en las otras palabras la C/S tienen su sonido regular."
+        },
+        {
+        id: 4,
+        text: "¿Cuál es la pronunciación correcta de la palabra 'zapato' en América?",
+        options: [
+            { id: 1, text: "/sa-pa-to/", correct: true },
+            { id: 2, text: "/θa-pa-to/", correct: false },
+            { id: 3, text: "/za-pa-to/", correct: false },
+            { id: 4, text: "/cha-pa-to/", correct: false }
+        ],
+        explanation: "En América, la Z se pronuncia como /s/, a diferencia de España donde suena como /θ/."
+        },
+        {
+        id: 5,
+        text: "¿En cuál de estas palabras la S está al final de sílaba?",
+        options: [
+            { id: 1, text: "Silla", correct: false },
+            { id: 2, text: "Casa", correct: true },
+            { id: 3, text: "Sol", correct: false },
+            { id: 4, text: "Sapo", correct: false }
+        ],
+        explanation: "En 'casa' la S está al final de la sílaba 'ca-sa', mientras que en las otras palabras está al inicio."
+        }
+    ]
+    };
+
+    // Variables de estado
+    let currentQuestion = 0;
+    let userAnswers = [];
+    let score = 0;
+
+    // Elementos del DOM
+    const questionsContainer = document.getElementById('questions-container');
+    const progressText = document.getElementById('progress-text');
+    const progressBar = document.getElementById('progress-bar');
+    const progressRing = document.getElementById('progress-ring');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const btnFinish = document.getElementById('btn-finish');
+    const resultsSection = document.getElementById('results-section');
+    const answersSection = document.getElementById('answers-section');
+    const answersContainer = document.getElementById('answers-container');
+    const resultScore = document.getElementById('result-score');
+    const resultTitle = document.getElementById('result-title');
+    const resultMessage = document.getElementById('result-message');
+    const correctAnswersEl = document.getElementById('correct-answers');
+    const wrongAnswersEl = document.getElementById('wrong-answers');
+    const btnRetry = document.getElementById('btn-retry');
+
+    // Inicializar la evaluación
+    function initEvaluation() {
+    showQuestion(currentQuestion);
+    updateProgress();
+    }
+
+    // Mostrar pregunta
+    function showQuestion(index) {
+    const question = evaluationData.questions[index];
+    
+    questionsContainer.innerHTML = `
+        <div class="question-card bg-white rounded-lg p-6 mb-6 shadow-md">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">${question.text}</h3>
+        <div class="space-y-3" id="options-container">
+            ${question.options.map(option => `
+            <div class="option-item flex items-center bg-purple-50 rounded-lg p-3 cursor-pointer border border-transparent hover:border-purple-300" data-option="${option.id}">
+                <div class="w-5 h-5 rounded-full border-2 border-purple-300 mr-3 flex-shrink-0 flex items-center justify-center">
+                <div class="w-3 h-3 rounded-full bg-purple-600 hidden"></div>
+                </div>
+                <span class="text-gray-700">${option.text}</span>
+            </div>
+            `).join('')}
+        </div>
+        <div id="explanation" class="hidden mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r">
+            <p class="text-sm text-yellow-700">${question.explanation}</p>
+        </div>
+        </div>
+    `;
+
+    // Marcar respuesta seleccionada si existe
+    if (userAnswers[index] !== undefined) {
+        selectOption(userAnswers[index].optionId);
+    }
+
+    // Manejar selección de opciones
+    document.querySelectorAll('.option-item').forEach(item => {
+        item.addEventListener('click', function() {
+        const optionId = parseInt(this.getAttribute('data-option'));
+        selectOption(optionId);
+        saveAnswer(index, optionId);
+        });
+    });
+
+    // Actualizar botones de navegación
+    btnPrev.disabled = index === 0;
+    btnNext.classList.toggle('hidden', index === evaluationData.questions.length - 1);
+    btnFinish.classList.toggle('hidden', index !== evaluationData.questions.length - 1);
+    }
+
+    // Seleccionar opción
+    function selectOption(optionId) {
+    document.querySelectorAll('.option-item').forEach(item => {
+        const isSelected = parseInt(item.getAttribute('data-option')) === optionId;
+        item.classList.toggle('bg-purple-100', isSelected);
+        item.classList.toggle('border-purple-400', isSelected);
+        item.querySelector('div > div').classList.toggle('hidden', !isSelected);
+    });
+    }
+
+    // Guardar respuesta
+    function saveAnswer(questionIndex, optionId) {
+    const question = evaluationData.questions[questionIndex];
+    const isCorrect = question.options.find(opt => opt.id === optionId)?.correct || false;
+    
+    userAnswers[questionIndex] = {
+        questionId: question.id,
+        optionId: optionId,
+        isCorrect: isCorrect
+    };
+    }
+
+    // Actualizar progreso
+    function updateProgress() {
+    const answered = userAnswers.filter(a => a !== undefined).length;
+    const total = evaluationData.questions.length;
+    
+    progressText.textContent = `${answered}/${total}`;
+    progressBar.style.width = `${(answered / total) * 100}%`;
+    
+    // Actualizar anillo de progreso
+    const radius = progressRing.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (answered / total) * circumference;
+    progressRing.style.strokeDashoffset = offset;
+    }
+
+    // Mostrar resultados
+    function showResults() {
+    // Calcular puntaje
+    score = userAnswers.filter(a => a?.isCorrect).length;
+    const totalQuestions = evaluationData.questions.length;
+    const percentage = Math.round((score / totalQuestions) * 100);
+    
+    // Actualizar UI de resultados
+    resultScore.textContent = `${percentage}%`;
+    correctAnswersEl.textContent = score;
+    wrongAnswersEl.textContent = totalQuestions - score;
+    
+    // Actualizar anillo de resultados
+    const resultRing = document.getElementById('result-ring');
+    const radius = resultRing.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (percentage / 100) * circumference;
+    resultRing.style.strokeDashoffset = offset;
+    
+    // Determinar mensaje según puntaje
+    if (percentage >= 80) {
+        resultTitle.textContent = "¡Excelente!";
+        resultMessage.textContent = "Dominas los sonidos de los grafemas. ¡Sigue así!";
+    } else if (percentage >= 60) {
+        resultTitle.textContent = "¡Buen trabajo!";
+        resultMessage.textContent = "Tienes un buen conocimiento, pero puedes mejorar.";
+    } else {
+        resultTitle.textContent = "¡Sigue practicando!";
+        resultMessage.textContent = "Revisa las lecciones y vuelve a intentarlo.";
+    }
+    
+    // Mostrar sección de resultados
+    resultsSection.classList.remove('hidden');
+    
+    // Mostrar respuestas detalladas
+    showDetailedAnswers();
+    
+    // Desplazar a la sección de resultados
+    resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+     // Guardar resultados en el historial
+    const currentAttempt = {
+        date: new Date().toISOString(),
+        percentage: Math.round((score / totalQuestions) * 100),
+        correct: score,
+        total: totalQuestions
+    };
+    
+    // Obtener historial existente o crear uno nuevo
+    const evaluationHistory = JSON.parse(localStorage.getItem('evaluationHistory')) || [];
+    evaluationHistory.push(currentAttempt);
+    
+    // Guardar en localStorage (máximo 10 intentos)
+    localStorage.setItem('evaluationHistory', JSON.stringify(evaluationHistory.slice(-10)));
+}
+    
+
+    // Mostrar respuestas detalladas
+    function showDetailedAnswers() {
+    answersContainer.innerHTML = '';
+    
+    evaluationData.questions.forEach((question, index) => {
+        const userAnswer = userAnswers[index];
+        const selectedOption = question.options.find(opt => opt.id === userAnswer?.optionId);
+        const correctOption = question.options.find(opt => opt.correct);
+        
+        const answerCard = document.createElement('div');
+        answerCard.className = `p-6 rounded-lg shadow-md mb-4 ${
+            userAnswer?.isCorrect ? 'correct-answer' : 'wrong-answer'
+        }`;
+        
+        answerCard.innerHTML = `
+            <h3 class="text-lg font-bold mb-3">${question.text}</h3>
+            
+            <div class="mb-3">
+                <p class="font-medium ${userAnswer?.isCorrect ? 'text-green-600' : 'text-red-600'}">
+                    <i class="fas fa-${userAnswer?.isCorrect ? 'check' : 'times'} mr-2"></i>
+                    Tu respuesta: ${selectedOption?.text || 'No respondida'}
+                </p>
+                ${!userAnswer?.isCorrect ? `
+                <p class="font-medium text-green-600 mt-1">
+                    <i class="fas fa-check mr-2"></i>
+                    Respuesta correcta: ${correctOption.text}
+                </p>
+                ` : ''}
+            </div>
+            
+            <div class="explanation mt-3 p-3 rounded-r">
+                <p class="text-sm"><strong>Explicación:</strong> ${question.explanation}</p>
+            </div>
+        `;
+        
+        answersContainer.appendChild(answerCard);
+    });
+    
+    answersSection.classList.remove('hidden');
+    }
+
+    // Event Listeners
+    btnPrev.addEventListener('click', () => {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion(currentQuestion);
+    }
+    });
+
+    btnNext.addEventListener('click', () => {
+    if (currentQuestion < evaluationData.questions.length - 1) {
+        currentQuestion++;
+        showQuestion(currentQuestion);
+        updateProgress();
+    }
+    });
+
+    btnFinish.addEventListener('click', () => {
+    showResults();
+    });
+
+    btnRetry.addEventListener('click', () => {
+    // Reiniciar evaluación
+    currentQuestion = 0;
+    userAnswers = [];
+    score = 0;
+    
+    // Ocultar resultados y respuestas
+    resultsSection.classList.add('hidden');
+    answersSection.classList.add('hidden');
+    
+    // Mostrar primera pregunta
+    showQuestion(currentQuestion);
+    updateProgress();
+    
+    // Desplazar al inicio
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Iniciar la evaluación al cargar la página
+    document.addEventListener('DOMContentLoaded', initEvaluation);
+</script>
+</body>
+</html>

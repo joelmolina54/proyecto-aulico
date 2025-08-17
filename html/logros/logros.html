@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Logros - Grafema</title>
+    <link rel="shortcut icon" href="../../assets/images/savila.png" type="image/x-icon">
+    <!-- CDNs -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/logros.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out;
+        }
+        .animate-fade-out {
+            animation: fadeOut 0.5s ease-in;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(20px); }
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gray-50">
+    <!-- Navbar -->
+    <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="../../index.html" class="flex items-center text-xl font-bold text-white hover:text-purple-200 transition">
+                <img src="../../assets/images/savila.png" alt="Logo GRAFI" class="w-8 h-8 mr-2">
+                <span>Grafema</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <a href="../../index.html" class="text-white hover:text-purple-200 font-medium transition flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i> Volver
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Mis Logros</h1>
+            <button id="reset-achievements" class="bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200 transition">
+                <i class="fas fa-undo mr-2"></i> Reiniciar Logros
+            </button>
+        </div>
+        
+        <!-- Panel de Progreso -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-xl font-semibold text-gray-800">Progreso General</h2>
+                    <p class="text-gray-600">Desbloquea todos los logros disponibles</p>
+                </div>
+                
+                <div class="flex items-center">
+                    <div class="relative w-24 h-24">
+                        <svg class="w-full h-full" viewBox="0 0 36 36">
+                            <path
+                                d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                stroke="#e6e6e6"
+                                stroke-width="3"
+                                stroke-dasharray="100, 100"
+                            />
+                            <path
+                                id="progress-circle"
+                                d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                stroke="#4f46e5"
+                                stroke-width="3"
+                                stroke-dasharray="0, 100"
+                            />
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span id="progress-percentage" class="text-lg font-bold text-indigo-600">0%</span>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-gray-700"><span id="unlocked-count" class="font-bold">0</span> de <span id="total-count" class="font-bold">0</span> logros</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                            <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Lista de Logros -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="achievements-container">
+            <!-- Los logros se insertarán aquí dinámicamente -->
+        </div>
+    </main>
+
+    <!-- Modal para reiniciar logros -->
+    <div id="reset-modal" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
+        
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl shadow-xl transform transition-all max-w-md w-full animate-fade-in-up">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-900">Reiniciar Logros</h3>
+                        <button id="modal-close" class="text-gray-400 hover:text-gray-500">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                            <i class="fas fa-exclamation text-red-600 text-xl"></i>
+                        </div>
+                        <p class="text-center text-gray-700 mb-2">¿Estás seguro de que quieres reiniciar todos tus logros?</p>
+                        <p class="text-center text-sm text-gray-500">Esta acción no se puede deshacer y perderás todo tu progreso.</p>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button id="modal-cancel" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition">
+                            Cancelar
+                        </button>
+                        <button id="modal-confirm" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                            Sí, Reiniciar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../../assets/js/achievements.js"></script>
+    <script>
+    // Función para mostrar todos los logros
+    function displayAllAchievements() {
+        const container = document.getElementById('achievements-container');
+        if (!container || !window.achievements) {
+            console.error('No se pudo cargar el contenedor de logros o el sistema de logros');
+            return;
+        }
+
+        const achievements = window.achievements.loadAchievements();
+        container.innerHTML = '';
+
+        Object.values(achievements).forEach(achievement => {
+            const isUnlocked = achievement.unlocked;
+            const card = document.createElement('div');
+            card.className = `bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-${achievement.color}-500 mb-4 transition hover:shadow-lg`;
+            card.innerHTML = `
+                <div class="p-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-${achievement.color}-100 text-${achievement.color}-600 rounded-full flex items-center justify-center text-xl">
+                                <i class="fas ${isUnlocked ? achievement.icon : 'fa-lock'}"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">${achievement.title}</h3>
+                            <p class="text-sm text-gray-600 mt-1">${achievement.description}</p>
+                            <div class="mt-3">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${isUnlocked ? `bg-${achievement.color}-100 text-${achievement.color}-800` : 'bg-gray-100 text-gray-800'}">
+                                    <i class="fas ${isUnlocked ? 'fa-unlock' : 'fa-lock'} mr-1"></i> ${isUnlocked ? 'Desbloqueado' : 'Bloqueado'}
+                                </span>
+                                ${isUnlocked ? `<p class="text-xs text-gray-500 mt-1">${formatAchievementDate(achievement.date)}</p>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+    
+    
+    // Formatear fecha del logro
+    function formatAchievementDate(dateString) {
+        if (!dateString) return 'Recientemente';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    // Actualizar la UI de progreso
+    function updateProgressUI() {
+        if (!window.achievements) {
+            console.error('El sistema de logros no está disponible');
+            return;
+        }
+
+        const progress = window.achievements.getAchievementProgress();
+        document.getElementById('progress-percentage').textContent = `${progress.percentage}%`;
+        document.getElementById('unlocked-count').textContent = progress.unlocked;
+        document.getElementById('total-count').textContent = progress.total;
+        document.getElementById('progress-bar').style.width = `${progress.percentage}%`;
+        
+        // Actualizar el círculo de progreso
+        const circle = document.getElementById('progress-circle');
+        if (circle) {
+            circle.setAttribute('stroke-dasharray', `${progress.percentage}, 100`);
+        }
+    }
+
+    // Manejar el reinicio de logros
+    async function handleReset() {
+        const modal = document.getElementById('reset-modal');
+        if (!modal) return;
+
+        modal.classList.remove('hidden');
+        
+        return new Promise((resolve) => {
+            const cleanUp = () => {
+                modal.classList.add('hidden');
+                document.getElementById('modal-confirm').removeEventListener('click', confirm);
+                document.getElementById('modal-cancel').removeEventListener('click', cancel);
+                document.getElementById('modal-close').removeEventListener('click', cancel);
+            };
+
+            const confirm = () => {
+                if (window.achievements) {
+                    // Crear copia resetada de todos los logros
+                    const resetAchievements = {};
+                    Object.keys(window.achievements.allAchievements).forEach(key => {
+                        resetAchievements[key] = {
+                            ...window.achievements.allAchievements[key], 
+                            unlocked: false, 
+                            date: null
+                        };
+                    });
+                    window.achievements.saveAchievements(resetAchievements);
+                    
+                    // Resetear otros datos de progreso
+                    localStorage.removeItem('firstVisit');
+                    localStorage.removeItem('lastVisitDate');
+                    localStorage.removeItem('visitStreak');
+                    localStorage.removeItem('lessonsCompleted');
+                    localStorage.removeItem('completedLessons');
+                }
+                cleanUp();
+                resolve(true);
+            };
+
+            const cancel = () => {
+                cleanUp();
+                resolve(false);
+            };
+
+            document.getElementById('modal-confirm').addEventListener('click', confirm);
+            document.getElementById('modal-cancel').addEventListener('click', cancel);
+            document.getElementById('modal-close').addEventListener('click', cancel);
+        });
+    }
+
+    // Inicialización cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', () => {
+        // Inicializar el sistema de logros
+        if (window.achievements) {
+            window.achievements.initializeAchievements();
+        } else {
+            console.error('El sistema de logros no se cargó correctamente');
+        }
+
+        // Mostrar los logros
+        displayAllAchievements();
+        updateProgressUI();
+
+        // Configurar el botón de reinicio
+        document.getElementById('reset-achievements').addEventListener('click', async () => {
+            if (await handleReset()) {
+                // Mostrar notificación de éxito
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg max-w-xs z-50 animate-fade-in-up';
+                notification.innerHTML = `
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="font-bold">¡Logros reiniciados!</h3>
+                            <p class="text-sm">Todos los logros han sido restablecidos.</p>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                setTimeout(() => {
+                    notification.classList.add('animate-fade-out');
+                    setTimeout(() => notification.remove(), 500);
+                }, 3000);
+
+                // Actualizar la UI
+                displayAllAchievements();
+                updateProgressUI();
+            }
+        });
+    });
+    </script>
+</body>
+</html>         

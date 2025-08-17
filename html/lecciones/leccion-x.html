@@ -5,95 +5,120 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lección X - GRAFI</title>
   <link rel="shortcut icon" href="../../assets/images/savila.png" type="image/x-icon">
+  <!-- CDNs -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; }
-    .gradient-bg { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); }
-    .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
-    .btn-primary { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); transition: all 0.3s ease; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(124,58,237,0.3); }
-    .btn-secondary { background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%); transition: all 0.3s ease; }
-    .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(244,114,182,0.3); }
-    .progress-ring__circle { transition: stroke-dashoffset 0.5s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
-    .animate-bounce-slow { animation: bounce-slow 2s infinite; }
-    @keyframes bounce-slow { 0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);} }
-    .fade-in { animation: fadeIn 0.5s ease-in; }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-    .shake { animation: shake 0.5s; }
-    @keyframes shake { 0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-5px);}40%,80%{transform:translateX(5px);} }
-  </style>
+  <link rel="shortcut icon" href="../../assets/images/savila.png" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/temaleccion.css">
+  <link rel="stylesheet" href="../../assets/css/selecciones.css">
+    <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              800: '#1e293b',
+              900: '#0f172a',
+            }
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="min-h-screen flex flex-col">
-  <!-- Navbar -->
-  <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <a href="../../index.html" class="flex items-center text-xl font-bold text-white hover:text-purple-200 transition">
-        <img src="../../assets/images/savila.png" alt="Logo GRAFI" class="w-8 h-8 mr-2">
-        <span>Grafema</span>
+<body class="bg-gray-50 dark:bg-dark-900 text-gray-800 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+<nav class="gradient-bg dark:bg-gradient-to-r dark:from-purple-900 dark:to-purple-800 text-white shadow-lg dark:shadow-purple-900/50 sticky top-0 z-50 transition-colors duration-300">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    
+    <!-- Logo -->
+    <a href="../../index.html" class="flex items-center text-xl font-bold text-white hover:text-purple-200 dark:text-purple-100 dark:hover:text-purple-300 transition">
+      <img src="../../assets/images/savila.png" alt="Logo GRAFI" class="w-8 h-8 mr-2">
+      <span>Grafema</span>
+    </a>
+    
+    <!-- Botón mobile menu -->
+    <button id="mobile-menu-button" class="md:hidden p-2 rounded-full focus:outline-none bg-white bg-opacity-20 dark:bg-purple-800/30 hover:bg-white hover:bg-opacity-30 dark:hover:bg-purple-700/50 transition">
+      <i class="fas fa-bars text-white dark:text-yellow-300"></i>
+    </button>
+
+    <!-- Contenido del nav (desktop) -->
+    <div class="hidden md:flex items-center space-x-4">
+      <a href="../lecciones.html" class="text-white hover:text-purple-200 dark:text-purple-100 dark:hover:text-purple-300 font-medium transition flex items-center">
+        <i class="fas fa-arrow-left mr-2"></i> Volver
       </a>
-      <div class="flex items-center space-x-4">
-        <a href="../lecciones.html" class="text-white hover:text-purple-200 font-medium transition flex items-center">
-          <i class="fas fa-arrow-left mr-2"></i> Volver
-        </a>
-        <div class="flex items-center">
-          <span class="mr-2 text-sm">Progreso</span>
-          <div class="w-24 bg-white bg-opacity-20 rounded-full h-2">
-            <div id="progress-bar" class="bg-yellow-300 h-2 rounded-full" style="width: 0%"></div>
-          </div>
+      
+      <div class="flex items-center">
+        <span class="mr-2 text-sm text-white dark:text-purple-200">Progreso</span>
+        <div class="w-24 bg-white bg-opacity-20 dark:bg-purple-700/30 rounded-full h-2 overflow-hidden">
+          <div id="progress-bar" class="bg-yellow-300 dark:bg-amber-400 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
+        <button id="dark-mode-toggle" class="ml-4 p-2 rounded-full focus:outline-none bg-white bg-opacity-20 dark:bg-purple-800/30 hover:bg-white hover:bg-opacity-30 dark:hover:bg-purple-700/50 transition">
+          <i class="fas fa-moon text-white dark:text-yellow-300"></i>
+        </button>
       </div>
     </div>
-  </nav>
+  </div>
 
-  <main class="flex-grow container mx-auto px-4 py-8">
+  <!-- Menú móvil -->
+  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4">
+    <a href="../lecciones.html" class="block text-white dark:text-purple-100 hover:text-purple-200 dark:hover:text-purple-300 py-2 border-b border-white border-opacity-10">Volver</a>
+    <div class="mt-2 flex items-center">
+      <span class="mr-2 text-sm text-white dark:text-purple-200">Progreso</span>
+      <div class="w-24 bg-white bg-opacity-20 dark:bg-purple-700/30 rounded-full h-2 overflow-hidden">
+        <div id="progress-bar-mobile" class="bg-yellow-300 dark:bg-amber-400 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+      </div>
+      <button id="dark-mode-toggle-mobile" class="ml-4 p-2 rounded-full focus:outline-none bg-white bg-opacity-20 dark:bg-purple-800/30 hover:bg-white hover:bg-opacity-30 dark:hover:bg-purple-700/50 transition">
+        <i class="fas fa-moon text-white dark:text-yellow-300"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+  <main class="bg-white dark:bg-dark-800 dark:bg-opacity-90 flex-grow container mx-auto px-4 py-8 shadow-sm dark:shadow-none">
     <!-- Encabezado con animación -->
     <header class="text-center mb-12 fade-in">
       <div class="relative w-32 h-32 mx-auto mb-6">
         <svg class="w-full h-full" viewBox="0 0 100 100">
-          <circle class="text-gray-200" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
-          <circle id="progress-ring" class="text-purple-600 progress-ring__circle" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+          <circle class="text-gray-200 dark:text-purple-900/40" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+          <circle id="progress-ring" class="text-purple-600 dark:text-amber-400 progress-ring__circle" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
         </svg>
-        <div class="absolute inset-0 flex items-center justify-center text-5xl font-bold text-purple-700 animate-bounce-slow">
+        <div class="absolute inset-0 flex items-center justify-center text-5xl font-bold text-purple-700 dark:text-amber-400 animate-bounce-slow">
           X
         </div>
       </div>
-      <h1 class="text-4xl font-bold text-gray-800 mb-2">Letra <span class="gradient-text bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">X</span></h1>
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto">Aprende el sonido de la letra X y su uso correcto.</p>
+      <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-2">
+        Letra 
+        <span class="bg-gradient-to-r from-purple-600 to-blue-500 dark:from-amber-400 dark:to-yellow-300 bg-clip-text text-transparent">
+          X
+        </span>
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Aprende el sonido de la letra S en español y su uso correcto.
+      </p>
+    </header>
     </header>
 
     <!-- Sección de aprendizaje -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
       <!-- Video explicativo -->
-      <section class="lg:col-span-2 bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+        <section class="lg:col-span-2 bg-white dark:bg-dark-700 rounded-xl shadow-lg dark:shadow-purple-900/20 overflow-hidden card-hover transition-all duration-300">
         <div class="p-6">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center">
               <i class="fab fa-youtube text-red-600 mr-3 text-2xl"></i> Video explicativo
             </h2>
-            <div class="relative">
-              <button id="video-menu-btn" class="text-gray-500 hover:text-purple-600">
-                <i class="fas fa-ellipsis-v"></i>
-              </button>
-              <div id="video-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                <div class="py-1">
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50" onclick="suggestVideo()">Sugerir video</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50" onclick="changeSpeed()">Cambiar velocidad</a>
-                </div>
-              </div>
-            </div>
           </div>
           
           <div class="aspect-w-16 aspect-h-9 mb-4">
-            <iframe id="youtube-video" class="w-full h-64 md:h-96 rounded-lg shadow" src="https://www.youtube.com/embed/YkCn0r1-OPU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe class="w-full h-64 md:h-96 rounded-lg shadow" src="https://www.youtube.com/embed/WhjIkXYtnto?si=aWNv0GBnvjf0EGNV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
           
-          <div class="bg-purple-50 rounded-lg p-4">
-            <h3 class="font-medium text-purple-800 mb-2">Resumen del video</h3>
-            <p class="text-gray-700 text-sm">La letra X en español puede pronunciarse /ks/ o /s/ según la palabra y el contexto.</p>
-            <div class="mt-3 flex items-center text-sm text-purple-600">
+          <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-100 dark:border-purple-800">
+            <h3 class="font-medium text-purple-800 dark:text-purple-200 mb-2">Resumen del video</h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">La letra X en español puede pronunciarse /ks/ o /s/ según la palabra y el contexto.</p>
+            <div class="mt-3 flex items-center text-sm text-purple-600 dark:text-purple-300">
               <i class="fas fa-clock mr-2"></i>
               <span>Duración: 7 min</span>
             </div>
@@ -102,8 +127,8 @@
       </section>
 
       <!-- Teoría resumida -->
-      <section class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
-        <div class="gradient-bg px-6 py-4">
+      <section class="bg-white dark:bg-dark-700 rounded-xl shadow-lg dark:shadow-purple-900/20 overflow-hidden card-hover transition-all duration-300">
+        <div class="gradient-bg dark:bg-gradient-to-r dark:from-purple-900 dark:to-purple-800 px-6 py-4">
           <h2 class="text-xl font-bold text-white flex items-center">
             <i class="fas fa-lightbulb mr-3"></i> Conceptos clave
           </h2>
@@ -111,43 +136,43 @@
         <div class="p-6">
           <div class="mb-6">
             <div class="flex items-start mb-4">
-              <div class="bg-blue-100 p-2 rounded-full mr-3">
-                <i class="fas fa-volume-up text-blue-600"></i>
+              <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full mr-3">
+                <i class="fas fa-volume-up text-blue-600 dark:text-blue-400"></i>
               </div>
               <div>
-                <h3 class="font-bold text-gray-800 mb-1">Sonido /ks/ o /s/</h3>
-                <p class="text-gray-600 text-sm">La letra X puede sonar como /ks/ en palabras como "taxi" o "examen" y como /s/ en palabras como "xilófono".</p>
+                <h3 class="font-bold text-gray-800 dark:text-gray-100 mb-1">Sonido /ks/ o /s/</h3>
+                <p class="text-gray-600 dark:text-gray-300 text-sm">La letra X puede sonar como /ks/ en palabras como "taxi" o "examen" y como /s/ en palabras como "xilófono".</p>
                 <div class="mt-2 flex flex-wrap gap-2">
-                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">taxi</span>
-                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">examen</span>
-                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">xilófono</span>
+                  <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-full text-sm">taxi</span>
+                  <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-full text-sm">examen</span>
+                  <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-full text-sm">xilófono</span>
                 </div>
               </div>
             </div>
             
             <div class="flex items-start">
-              <div class="bg-purple-100 p-2 rounded-full mr-3">
-                <i class="fas fa-volume-up text-purple-600"></i>
+              <div class="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-full mr-3">
+                <i class="fas fa-volume-up text-purple-600 dark:text-purple-400"></i>
               </div>
               <div>
-                <h3 class="font-bold text-gray-800 mb-1">Uso de la X</h3>
-                <p class="text-gray-600 text-sm">Se usa principalmente en medio o final de palabra y en algunas abreviaturas:</p>
+                <h3 class="font-bold text-gray-800 dark:text-gray-100 mb-1">Uso de la X</h3>
+                <p class="text-gray-600 dark:text-gray-300 text-sm">Se usa principalmente en medio o final de palabra y en algunas abreviaturas:</p>
                 <div class="mt-2 flex flex-wrap gap-2">
-                  <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">inicio: examen</span>
-                  <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">medio: taxi</span>
-                  <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">final: tórax</span>
+                  <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-3 py-1 rounded-full text-sm">inicio: examen</span>
+                  <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-3 py-1 rounded-full text-sm">medio: taxi</span>
+                  <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-3 py-1 rounded-full text-sm">final: tórax</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r">
+          <div class="bg-yellow-50 dark:bg-amber-900/30 border-l-4 border-yellow-400 dark:border-amber-500 p-4 rounded-r-lg transition-colors duration-300">
             <div class="flex">
               <div class="flex-shrink-0">
-                <i class="fas fa-info-circle text-yellow-500"></i>
+                <i class="fas fa-info-circle text-yellow-500 dark:text-amber-400"></i>
               </div>
               <div class="ml-3">
-                <p class="text-sm text-yellow-700">
+                <p class="text-sm text-yellow-700 dark:text-amber-100">
                   Algunas palabras extranjeras con X se adaptan manteniendo el sonido /ks/, como "xenón" o "xilófono".
                 </p>
               </div>
@@ -161,12 +186,12 @@
 <!-- Sección de práctica -->
 <section class="mb-12">
   <div class="flex items-center mb-6">
-    <h2 class="text-3xl font-bold text-gray-800">
+    <h2 class="text-3xl font-bold text-gray-800 dark:text-white">
       <i class="fas fa-dumbbell text-purple-600 mr-3"></i> Practica lo aprendido
     </h2>
     <div class="ml-auto flex items-center">
-      <span class="text-sm text-gray-500 mr-2">Nivel de dificultad:</span>
-      <select class="border rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <span class="text-sm text-gray-500 dark:text-gray-400 mr-2">Nivel de dificultad:</span>
+      <select class="border rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600">
         <option>Principiante</option>
         <option>Intermedio</option>
         <option>Avanzado</option>
@@ -194,16 +219,16 @@
     <div class="p-6">
       <!-- Ejercicio 1 - Selección múltiple -->
       <div id="content-ejercicio1" class="tab-content active">
-        <h3 class="text-xl font-bold text-gray-800 mb-4">Completa las palabras con X</h3>
-        <p class="text-gray-600 mb-6">Selecciona la letra correcta para completar cada palabra según su sonido.</p>
+        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Completa las palabras con X</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">Selecciona la letra correcta para completar cada palabra según su sonido.</p>
         
         <div class="space-y-4">
-          <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="x">
+          <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 dark:border-gray-600 ejercicio-container" data-respuesta="x">
             <div class="md:w-1/3 mb-2 md:mb-0">
-              <span class="text-gray-700">___ilófono</span>
+              <span class="text-gray-700 dark:text-gray-300">___ilófono</span>
             </div>
             <div class="md:w-1/3">
-              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500">
+              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600">
                 <option value="">Selecciona una opción</option>
                 <option value="x">X</option>
                 <option value="s">S</option>
@@ -218,12 +243,12 @@
             </div>
           </div>
           
-          <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="x">
+          <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 dark:border-gray-600 ejercicio-container" data-respuesta="x">
             <div class="md:w-1/3 mb-2 md:mb-0">
-              <span class="text-gray-700">ta___i</span>
+              <span class="text-gray-700 dark:text-gray-300">ta___i</span>
             </div>
             <div class="md:w-1/3">
-              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500">
+              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600">
                 <option value="">Selecciona una opción</option>
                 <option value="x">X</option>
                 <option value="s">S</option>
@@ -238,12 +263,12 @@
             </div>
           </div>
           
-          <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="x">
+          <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 dark:border-gray-600 ejercicio-container" data-respuesta="x">
             <div class="md:w-1/3 mb-2 md:mb-0">
-              <span class="text-gray-700">e___amen</span>
+              <span class="text-gray-700 dark:text-gray-300">e___amen</span>
             </div>
             <div class="md:w-1/3">
-              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500">
+              <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600">
                 <option value="">Selecciona una opción</option>
                 <option value="x">X</option>
                 <option value="s">S</option>
@@ -266,69 +291,70 @@
         </div>
       </div>
       
+      
       <!-- Ejercicio 2 - Clasificación -->
       <div id="content-ejercicio2" class="tab-content hidden">
-        <h3 class="text-xl font-bold text-gray-800 mb-4">Clasifica las palabras según la posición de la X</h3>
-        <p class="text-gray-600 mb-6">Arrastra cada palabra al área correspondiente según la posición de la letra X en la palabra.</p>
+        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Clasifica las palabras según la posición de la X</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">Arrastra cada palabra al área correspondiente según la posición de la letra X en la palabra.</p>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div id="target-inicial" class="bg-blue-50 border-2 border-dashed border-blue-300 rounded-xl p-4 min-h-32 flex flex-col">
-            <div class="text-center text-blue-700 font-medium mb-2">
+          <div id="target-inicial" class="bg-blue-50 dark:bg-blue-900/20 border-2 border-dashed border-blue-300 dark:border-blue-700 rounded-xl p-4 min-h-32 flex flex-col">
+            <div class="text-center text-blue-700 dark:text-blue-300 font-medium mb-2">
               <i class="fas fa-volume-up mr-2"></i> X inicial
             </div>
             <div class="flex-grow flex flex-wrap gap-2 content-start" id="words-inicial"></div>
           </div>
           
-          <div id="target-media" class="bg-purple-50 border-2 border-dashed border-purple-300 rounded-xl p-4 min-h-32 flex flex-col">
-            <div class="text-center text-purple-700 font-medium mb-2">
+          <div id="target-media" class="bg-purple-50 dark:bg-purple-900/20 border-2 border-dashed border-purple-300 dark:border-purple-700 rounded-xl p-4 min-h-32 flex flex-col">
+            <div class="text-center text-purple-700 dark:text-purple-300 font-medium mb-2">
               <i class="fas fa-volume-up mr-2"></i> X media
             </div>
             <div class="flex-grow flex flex-wrap gap-2 content-start" id="words-media"></div>
           </div>
           
-          <div id="target-final" class="bg-green-50 border-2 border-dashed border-green-300 rounded-xl p-4 min-h-32 flex flex-col">
-            <div class="text-center text-green-700 font-medium mb-2">
+          <div id="target-final" class="bg-green-50 dark:bg-green-900/20 border-2 border-dashed border-green-300 dark:border-green-700 rounded-xl p-4 min-h-32 flex flex-col">
+            <div class="text-center text-green-700 dark:text-green-300 font-medium mb-2">
               <i class="fas fa-volume-up mr-2"></i> X final
             </div>
             <div class="flex-grow flex flex-wrap gap-2 content-start" id="words-final"></div>
           </div>
         </div>
         
-        <div id="palabras-arrastrar" class="flex flex-wrap gap-3 p-4 bg-gray-50">
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="inicial">
-            <span class="text-gray-800">xilófono</span>
+        <div id="palabras-arrastrar" class="flex flex-wrap gap-3 p-4 bg-gray-50 dark:bg-gray-800">
+          <div class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="inicial">
+            <span class="text-gray-800 dark:text-gray-200">xilófono</span>
           </div>
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="media">
-            <span class="text-gray-800">examen</span>
+          <div class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="media">
+            <span class="text-gray-800 dark:text-gray-200">examen</span>
           </div>
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="final">
-            <span class="text-gray-800">taxi</span>
+          <div class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="final">
+            <span class="text-gray-800 dark:text-gray-200">taxi</span>
           </div>
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="inicial">
-            <span class="text-gray-800">xenón</span>
+          <div class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="inicial">
+            <span class="text-gray-800 dark:text-gray-200">xenón</span>
           </div>
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="media">
-            <span class="text-gray-800">máximo</span>
+          <div class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="media">
+            <span class="text-gray-800 dark:text-gray-200">máximo</span>
           </div>
-          <div class="bg-white shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="final">
-            <span class="text-gray-800">anexo</span>
+          <div class="bg-white dark:bg-dark-600 shadow-sm rounded-lg px-4 py-2 cursor-move draggable-word" draggable="true" data-posicion="final">
+            <span class="text-gray-800 dark:text-gray-200">anexo</span>
           </div>
         </div>
         
-        <div id="feedback-arrastrar" class="hidden mt-6">
-          <div class="p-4 rounded-lg bg-green-50 border border-green-200 feedback-content">
+       <div id="feedback-arrastrar" class="hidden mt-6">
+          <div class="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 feedback-content">
             <div class="flex items-center">
-              <i class="fas fa-check-circle text-green-500 text-xl mr-3"></i>
+              <i class="fas fa-check-circle text-green-500 dark:text-green-400 text-xl mr-3"></i>
               <div>
-                <h4 class="font-bold text-green-800">¡Bien hecho!</h4>
-                <p class="text-green-700 text-sm">Has clasificado correctamente todas las palabras según la posición de la X.</p>
+                <h4 class="font-bold text-green-800 dark:text-green-200">¡Bien hecho!</h4>
+                <p class="text-green-700 dark:text-green-300 text-sm">Has clasificado correctamente todas las palabras según la posición de la X.</p>
               </div>
             </div>
           </div>
         </div>
         
         <div class="mt-6 flex justify-between">
-          <button id="reset-ejercicio2" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg font-medium">
+          <button id="reset-ejercicio2" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 px-6 py-2 rounded-lg font-medium">
             <i class="fas fa-redo mr-2"></i> Reiniciar
           </button>
           <button id="check-ejercicio2" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
@@ -339,10 +365,10 @@
       
       <!-- Ejercicio 3 - Dictado -->
       <div id="content-ejercicio3" class="tab-content hidden">
-        <h3 class="text-xl font-bold text-gray-800 mb-4">Dictado con palabras que contienen X</h3>
-        <p class="text-gray-600 mb-6">Escucha atentamente y escribe las palabras que contengan la letra X.</p>
+        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Dictado con palabras que contienen X</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">Escucha atentamente y escribe las palabras que contengan la letra X.</p>
         
-        <div class="bg-blue-50 rounded-lg p-6 mb-6">
+        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-6">
           <div id="dictation-audio" class="hidden">
             <audio controls class="w-full">
               <source src="../../assets/audio/pronunciation_es_xilofono.mp3" type="audio/mpeg">
@@ -356,16 +382,16 @@
         </div>
         
         <div class="mb-6">
-          <label for="dictation-text" class="block text-gray-700 font-medium mb-2">Escribe las palabras que escuches:</label>
-          <textarea id="dictation-text" rows="4" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+          <label for="dictation-text" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Escribe las palabras que escuches:</label>
+          <textarea id="dictation-text" rows="4" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600"></textarea>
         </div>
         
-        <div id="dictation-feedback" class="hidden p-4 rounded-lg bg-purple-50 border border-purple-200 mb-6">
+        <div id="dictation-feedback" class="hidden p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-700 mb-6">
           <div class="flex items-center">
-            <i class="fas fa-info-circle text-purple-600 text-xl mr-3"></i>
+            <i class="fas fa-info-circle text-purple-600 dark:text-purple-400 text-xl mr-3"></i>
             <div>
-              <h4 class="font-bold text-purple-800">Retroalimentación</h4>
-              <p class="text-purple-700 text-sm">Las palabras que contenían X eran: <span id="dictation-words" class="font-bold">xilófono, examen, taxi, xenón, máximo, anexo</span></p>
+              <h4 class="font-bold text-purple-800 dark:text-purple-200">Retroalimentación</h4>
+              <p class="text-purple-700 dark:text-purple-300 text-sm">Las palabras que contenían X eran: <span id="dictation-words" class="font-bold">xilófono, examen, taxi, xenón, máximo, anexo</span></p>
             </div>
           </div>
         </div>
@@ -380,7 +406,6 @@
   </div>
 </section>
 
-</main>
 
     <!-- Sección de finalización -->
 <section class="mb-12">
@@ -401,6 +426,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <!-- Footer -->
 <footer class="bg-gray-800 text-gray-300 py-8">
@@ -458,6 +485,9 @@
 
 
   <!-- Scripts -->
+  <script src="/assets/js/achievements.js"></script>
+  <script src="../../assets/js/temaleccionesclases.js"></script>
+  <script src="../../assets/js/menu-movil.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // Cargar progreso

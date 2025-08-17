@@ -1,0 +1,18 @@
+
+    body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; }
+    .gradient-bg { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); }
+    .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+    .btn-primary { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); transition: all 0.3s ease; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(124,58,237,0.3); }
+    .btn-secondary { background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%); transition: all 0.3s ease; }
+    .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(244,114,182,0.3); }
+    .progress-ring__circle { transition: stroke-dashoffset 0.5s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
+    .animate-bounce-slow { animation: bounce-slow 2s infinite; }
+    @keyframes bounce-slow { 0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);} }
+    .fade-in { animation: fadeIn 0.5s ease-in; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    .shake { animation: shake 0.5s; }
+    @keyframes shake { 0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-5px);}40%,80%{transform:translateX(5px);} }
+
+    
