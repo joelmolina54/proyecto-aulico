@@ -228,7 +228,7 @@
         <div class="space-y-4">
           <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 dark:border-gray-600 ejercicio-container"  data-respuesta="z">
             <div class="md:w-1/3 mb-2 md:mb-0">
-              <span class="text-gray-700 dark:text-gray-300">___orro</span>
+              <span class="text-gray-700 dark:text-blue-400">___orro</span>
             </div>
             <div class="md:w-1/3">
               <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600">
@@ -248,7 +248,7 @@
           
           <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="z">
             <div class="md:w-1/3 mb-2 md:mb-0">
-              <span class="text-gray-700 dark:text-gray-300">pa___</span>
+              <span class="text-gray-700 dark:text-blue-400">pa___</span>
             </div>
             <div class="md:w-1/3">
               <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600">
@@ -268,7 +268,7 @@
           
           <div class="flex flex-col md:flex-row md:items-center p-4 rounded-lg border border-gray-200 ejercicio-container" data-respuesta="z">
             <div class="md:w-1/3 mb-2 md:mb-0">
-              <span class="text-gray-700 dark:text-gray-300"> me___cla</span>
+              <span class="text-gray-700 dark:text-blue-400"> me___cla</span>
             </div>
             <div class="md:w-1/3">
               <select class="w-full border rounded-lg px-3 py-2 ejercicio-select focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600">
@@ -366,44 +366,47 @@
       </div>
       
       <!-- Ejercicio 3 - Dictado -->
-      <div id="content-ejercicio3" class="tab-content hidden">
-        <h3 class="text-xl font-bold text-gray-800 mb-4">Dictado con palabras que contienen Z</h3>
-        <p class="text-gray-600 mb-6">Escucha atentamente y escribe las palabras que contengan la letra Z.</p>
-        
-        <div class="bg-blue-50 rounded-lg p-6 mb-6">
-          <div id="dictation-audio" class="hidden">
-            <audio controls class="w-full">
-              <source src="../../assets/audio/pronunciation_es_zapatos.mp3" type="audio/mpeg">
-              Tu navegador no soporta el elemento de audio.
-            </audio>
-          </div>
-          
-          <button id="start-dictation" class="btn-secondary text-white px-6 py-3 rounded-lg font-medium w-full">
-            <i class="fas fa-microphone mr-2"></i> Iniciar dictado
-          </button>
-        </div>
-        
-        <div class="mb-6">
-          <label for="dictation-text" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Escribe las palabras que escuches:</label>
-          <textarea id="dictation-text" rows="4"class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600"></textarea>
-        </div>
-        
-        <div id="dictation-feedback" class="hidden p-4 rounded-lg bg-purple-50 border border-purple-200 mb-6">
-          <div class="flex items-center">
-            <i class="fas fa-info-circle text-purple-600 text-xl mr-3"></i>
-            <div>
-              <h4 class="font-bold text-purple-800">Retroalimentación</h4>
-              <p class="text-purple-700 text-sm">Las palabras que contenían Z eran: <span id="dictation-words" class="font-bold">zorro, pizza, luz, zapato, mezcla, raíz</span></p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="flex justify-end">
-          <button id="check-dictation" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
-            <i class="fas fa-check-circle mr-2"></i> Comprobar dictado
-          </button>
-        </div>
+      <!-- Ejercicio 3 - Dictado -->
+<div id="content-ejercicio3" class="tab-content hidden">
+  <h3 class="text-xl font-bold text-gray-800 mb-4">Dictado con palabras que contienen Z</h3>
+  <p class="text-gray-600 mb-6">Escucha atentamente el audio y escribe las palabras que contengan la letra Z.</p>
+  
+  <div class="bg-blue-50 rounded-lg p-6 mb-6">
+    <audio id="dictation-audio-player" controls class="w-full mb-4">
+      <source src="../../assets/audio/pronunciation_es_zapatos.mp3" type="audio/mpeg">
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+    
+    <button id="play-dictation" class="btn-secondary text-white px-6 py-3 rounded-lg font-medium">
+      <i class="fas fa-play mr-2"></i> Reproducir audio
+    </button>
+  </div>
+  
+  <div class="mb-6">
+    <label for="dictation-text" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+      Escribe las palabras con Z que escuches:
+    </label>
+    <textarea id="dictation-text" rows="4" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-dark-700 dark:border-gray-600"></textarea>
+  </div>
+  
+  <div id="dictation-feedback" class="hidden p-4 rounded-lg bg-purple-50 border border-purple-200 mb-6">
+    <div class="flex items-center">
+      <i class="fas fa-info-circle text-purple-600 text-xl mr-3"></i>
+      <div>
+        <h4 class="font-bold text-purple-800 dark:text-white">Retroalimentación</h4>
+        <p class="text-purple-700 text-sm dark:text-white">Las palabras que contenían Z eran: 
+          <span id="dictation-words" class="font-bold dark:text-white">zapato, zorro, luz, pez, zumo</span>
+        </p>
       </div>
+    </div>
+  </div>
+  
+  <div class="flex justify-end">
+    <button id="check-dictation" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+      <i class="fas fa-check-circle mr-2"></i> Comprobar
+    </button>
+  </div>
+</div>
     </div>
   </div>
 </section>
@@ -417,7 +420,7 @@
       <p class="text-purple-100 mb-6">Has progresado mucho. Completa todos los ejercicios para finalizar esta lección.</p>
       
       <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <button id="btn-completar" class="bg-white text-purple-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium shadow-md transition">
+        <button id="btn-completar" class="bg-white text-purple-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium shadow-md transition dark:hover:bg-gray-700">
           <i class="fas fa-flag-checkered mr-2"></i> Terminar lección
         </button>
         
@@ -608,59 +611,136 @@
 
   // Configuración de botones (VERSIÓN CORREGIDA)
   function setupButtons() {
-    // Ejercicio 1: selección múltiple
-    document.getElementById('check-ejercicio1').addEventListener('click', function() {
-      let allCorrect = true;
-      const containers = document.querySelectorAll('.ejercicio-container');
+document.getElementById('play-dictation').addEventListener('click', function() {
+  const audioPlayer = document.getElementById('dictation-audio-player');
+  audioPlayer.play();
+});
 
-      containers.forEach(container => {
-        const select = container.querySelector('.ejercicio-select');
-        const feedback = container.querySelector('.ejercicio-feedback');
-        const correctIcon = container.querySelector('.correct-icon');
-        const incorrectIcon = container.querySelector('.incorrect-icon');
-        const feedbackText = container.querySelector('.feedback-text');
-        const respuestaCorrecta = container.getAttribute('data-respuesta');
-
-        if (!select || !select.value) {
-          allCorrect = false;
-          return;
-        }
-
-        if (feedback) feedback.classList.remove('hidden');
-
-        if (select.value === respuestaCorrecta) {
-          if (correctIcon) correctIcon.classList.remove('hidden');
-          if (incorrectIcon) incorrectIcon.classList.add('hidden');
-          container.classList.add('border-green-200', 'bg-green-50');
-          container.classList.remove('border-red-200', 'bg-red-50', 'shake');
-          if (feedbackText) {
-            feedbackText.textContent = `¡Correcto! La respuesta es "${respuestaCorrecta.toUpperCase()}".`;
-            feedbackText.className = 'text-sm text-green-600 feedback-text';
-          }
-        } else {
-          if (correctIcon) correctIcon.classList.add('hidden');
-          if (incorrectIcon) incorrectIcon.classList.remove('hidden');
-          container.classList.add('border-red-200', 'bg-red-50', 'shake');
-          container.classList.remove('border-green-200', 'bg-green-50');
-          allCorrect = false;
-          if (feedbackText) {
-            feedbackText.textContent = `Incorrecto. La respuesta correcta es "${respuestaCorrecta.toUpperCase()}".`;
-            feedbackText.className = 'text-sm text-red-600 feedback-text';
-          }
-        }
-      });
-
-      if (allCorrect && progresoActual < 30) {
-        progresoActual = progresoPorEjercicio.ejercicio1;
-        updateProgress(progresoActual);
-        showModal({
-          title: '¡Ejercicio 1 completado!',
-          message: `Progreso actual: ${progresoActual}% - Completa los demás ejercicios.`,
-          icon: 'fas fa-check-circle text-green-500',
-          primaryText: 'Continuar'
-        });
-      }
+document.getElementById('check-dictation').addEventListener('click', function() {
+  const textoUsuario = document.getElementById('dictation-text').value.toLowerCase();
+  const palabrasEsperadas = ['zapatos']; // Palabras con Z en el audio
+  
+  // Mostrar retroalimentación
+  const feedback = document.getElementById('dictation-feedback');
+  feedback.classList.remove('hidden');
+  
+  // Verificar cuántas palabras correctas escribió el usuario
+  const palabrasCorrectas = palabrasEsperadas.filter(palabra => 
+    textoUsuario.includes(palabra)
+  ).length;
+  
+  if (palabrasCorrectas === palabrasEsperadas.length && progresoActual < 100) {
+    progresoActual = 100;
+    updateProgress(progresoActual);
+    showModal({
+      title: '¡Dictado perfecto!',
+      message: `Identificaste todas las palabras con Z (${palabrasCorrectas}/${palabrasEsperadas.length})`,
+      icon: 'fas fa-trophy text-yellow-500',
+      primaryText: 'Finalizar'
     });
+  } else {
+    showModal({
+      title: 'Buen intento',
+      message: `Identificaste ${palabrasCorrectas} de ${palabrasEsperadas.length} palabras con Z.`,
+      icon: 'fas fa-info-circle text-blue-500',
+      primaryText: 'Entendido'
+    });
+  }
+});
+// Ejercicio 1: selección múltiple (VERSIÓN CORREGIDA)
+document.getElementById('check-ejercicio1').addEventListener('click', function() {
+  let allCorrect = true;
+  let allAnswered = true;
+  const containers = document.querySelectorAll('.ejercicio-container');
+
+  // Primera pasada: Verificar si todas están respondidas y mostrar feedback
+  containers.forEach(container => {
+    const select = container.querySelector('.ejercicio-select');
+    const feedback = container.querySelector('.ejercicio-feedback');
+    const correctIcon = container.querySelector('.correct-icon');
+    const incorrectIcon = container.querySelector('.incorrect-icon');
+    const feedbackText = container.querySelector('.feedback-text');
+    const respuestaCorrecta = container.getAttribute('data-respuesta');
+
+    // Verificar si se seleccionó una opción
+    if (!select || select.value === "") {
+      allAnswered = false;
+      container.classList.add('border-yellow-200', 'bg-yellow-50', 'shake');
+      container.classList.remove('border-green-200', 'bg-green-100', 'border-red-200', 'bg-red-50');
+      
+      if (feedback) {
+        feedback.classList.remove('hidden');
+        if (feedbackText) {
+          feedbackText.textContent = "Por favor selecciona una opción";
+          feedbackText.className = 'text-sm text-yellow-600 feedback-text';
+        }
+        if (correctIcon) correctIcon.classList.add('hidden');
+        if (incorrectIcon) incorrectIcon.classList.add('hidden');
+      }
+      return;
+    }
+
+    // Mostrar feedback
+    if (feedback) feedback.classList.remove('hidden');
+
+    // Verificar respuesta
+    if (select.value === respuestaCorrecta) {
+      if (correctIcon) correctIcon.classList.remove('hidden');
+      if (incorrectIcon) incorrectIcon.classList.add('hidden');
+      container.classList.add('border-green-400', 'bg-green-50');
+      container.classList.remove('border-red-200', 'bg-red-50', 'shake', 'border-yellow-200', 'bg-yellow-50');
+      if (feedbackText) {
+        feedbackText.textContent = `¡Correcto! La respuesta es "${respuestaCorrecta.toUpperCase()}".`;
+        feedbackText.className = 'text-sm text-green-600 feedback-text';
+      }
+    } else {
+      if (correctIcon) correctIcon.classList.add('hidden');
+      if (incorrectIcon) incorrectIcon.classList.remove('hidden');
+      container.classList.add('border-red-200', 'bg-red-50', 'shake');
+      container.classList.remove('border-green-200', 'bg-green-50', 'border-yellow-200', 'bg-yellow-50');
+      allCorrect = false;
+      if (feedbackText) {
+        feedbackText.textContent = `Incorrecto. La respuesta correcta es "${respuestaCorrecta.toUpperCase()}".`;
+        feedbackText.className = 'text-sm text-red-600 feedback-text';
+      }
+    }
+  });
+
+  // Si no todas están respondidas, mostrar advertencia
+  if (!allAnswered) {
+    showModal({
+      title: 'Respuestas incompletas',
+      message: 'Por favor responde todas las preguntas antes de comprobar.',
+      icon: 'fas fa-exclamation-triangle text-yellow-500',
+      primaryText: 'Entendido'
+    });
+    return;
+  }
+
+  // Si todas están correctas y es la primera vez
+  if (allCorrect) {
+    // Verificar si ya tenía este progreso para no mostrar el modal nuevamente
+    const alreadyCompleted = progresoActual >= progresoPorEjercicio.ejercicio1;
+    
+    if (!alreadyCompleted) {
+      progresoActual = progresoPorEjercicio.ejercicio1;
+      updateProgress(progresoActual);
+      showModal({
+        title: '¡Ejercicio 1 completado!',
+        message: `Progreso actual: ${progresoActual}% - Completa los demás ejercicios.`,
+        icon: 'fas fa-check-circle text-green-500',
+        primaryText: 'Continuar'
+      });
+    }
+  } else {
+    showModal({
+      title: 'Corrige los errores',
+      message: 'Algunas respuestas son incorrectas. Revisa los mensajes de retroalimentación.',
+      icon: 'fas fa-exclamation-circle text-red-500',
+      primaryText: 'Entendido'
+    });
+  }
+});
 
     // Ejercicio 2: clasificación
     document.getElementById('check-ejercicio2').addEventListener('click', function() {
